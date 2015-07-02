@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="jquery.visible.js"></script>
+    <script type="text/javascript" src="jwplayer.js"></script>
+</head>
+
+<body>
+<style>
+    .adblock {
+        background: black;
+        text-align: center;
+    }
+
+    .atf {
+        background: green;
+    }
+
+    .btf {
+        background: red;
+    }
+
+</style>
+
+
+<div id="banner" class="adblock" style="width: 900px;height: 90px;">
+    <img src="728x90.jpg">
+</div>
+
+<p>
+    Эта демонстрационная страница показывает возможности плагина jquery.visible.js<br>
+
+    Для видимых блоков устанавливается зеленый фон, для невидимых - красный.<br>
+    Видео баннер останавливает воспроизведение, когда становится невидимым и продолжает воспроизведение при попадании во viewport
+    Страница отслеживает прокрутку страницы и изменение размеров окна браузера.<br>
+    Учитывается вертикальная и горизонтальная позиции.<br>
+    Также можно указывать процент видимости, при котором блок считается видимым. сейчас этот параметр равен 50 %.<br>
+
+    Код можно без труда трансформировать из плагина для jquery в обычную функцию.
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</p>
+
+<div id="vbanner" class="adblock video" data-video-ad="bmw_ad" style="width: 800px;height: 300px;">
+    <div id="bmw_ad"></div>
+</div>
+
+
+
+
+
+
+<script type="text/javascript">
+    jQuery(document).ready( function() {
+        //Init video banner
+
+        jwplayer("bmw_ad").setup({
+            file: "drift.mp4",
+            image: "drift.jpg",
+            primary:"flash"
+
+        });
+
+        //Init ATF\BTF
+        defineFoldForAdBlocks();
+
+        //Play/Pause Videos
+        trackVbanners();
+
+        //Bind to events
+        jQuery(document).scroll(function() {
+            defineFoldForAdBlocks();
+            trackVbanners();
+        });
+
+        jQuery(window).resize(function() {
+            defineFoldForAdBlocks();
+            trackVbanners();
+        });
+    });
+
+
+    function defineFoldForAdBlocks() {
+        jQuery(".adblock").each(function() {
+            jQuery(this).removeClass('atf btf');
+            if (jQuery(this).visible(false,true,'both',50)) {
+                jQuery(this).addClass('atf');
+            } else {
+                jQuery(this).addClass('btf');
+            }
+        });
+    };
+
+    function trackVbanners() {
+        jQuery(".adblock.video[data-video-ad]").each(function() {
+            jQuery(this).removeClass('play pause');
+
+            if (jQuery(this).visible(false,true,'both',50)) {
+                jwplayer(jQuery(this).attr('data-video-ad')).play(true);
+                jQuery(this).addClass('play');
+            } else {
+                jwplayer(jQuery(this).attr('data-video-ad')).pause(true);
+                jQuery(this).addClass('pause');
+            }
+        });
+    }
+
+
+
+
+</script>
+</body>
+</html>
