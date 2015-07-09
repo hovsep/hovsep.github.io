@@ -126,8 +126,7 @@
         var elements = document.querySelectorAll(".adblock");
 
         for (var i = 0, length = elements.length; i < length; i++) {
-            elements[i].className.replace(/\batf\b/,'');
-            elements[i].className.replace(/\bbtf\b/,'');
+            elements[i].className = elements[i].className.replace("atf",'').replace("btf",'');
             if (isVisible(elements[i],false,true,'both', 50)) {
                 elements[i].className = elements[i].className + " atf";
             } else {
@@ -141,8 +140,7 @@
         for (var i = 0, length = elements.length; i < length; i++) {
             var dva = elements[i].attributes['data-video-ad'];
             if (dva !== undefined) {
-                elements[i].className.replace(/\bpause\b/,'');
-                elements[i].className.replace(/\bplay\b/,'');
+                elements[i].className = elements[i].className.replace("play",'').replace("pause",'');
 
                 if (isVisible(elements[i],false,true,'both',50)) {
                     jwplayer(dva).play(true);
