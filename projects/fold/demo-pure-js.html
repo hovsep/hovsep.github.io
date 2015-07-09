@@ -95,14 +95,14 @@
     trackVbanners();
 
     //Bind to events
-    document.addEventListener('onscroll', function() {
+    document.addEventListener('DOMMouseScroll', function() {
         console.log('scroll');
         defineFoldForAdBlocks();
         trackVbanners();
     }, false);
 
 
-    window.addEventListener('onresize',function() {
+    window.addEventListener('resize',function() {
         console.log('resize');
         defineFoldForAdBlocks();
         trackVbanners();
