@@ -138,7 +138,7 @@
     function trackVbanners() {
         var elements = document.querySelectorAll(".adblock-video");
         for (var i = 0, length = elements.length; i < length; i++) {
-            var dva = el.attributes['data-video-ad'];
+            var dva = elements[i].attributes['data-video-ad'];
             if (dva !== undefined) {
                 elements[i].className = "adblock-video";
 
