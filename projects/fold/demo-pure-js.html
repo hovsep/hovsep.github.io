@@ -140,16 +140,15 @@
         for (var i = 0, length = elements.length; i < length; i++) {
             var dva = elements[i].attributes['data-video-ad'];
             if (dva !== undefined) {
+                console.log(dva);
+                console.log(typeof(dva));
                 elements[i].className = elements[i].className.replace("play",'').replace("pause",'');
                 if (isVisible(elements[i],false,true,'both',50)) {
                     elements[i].className = elements[i].className + " play";
                     jwplayer(dva).play(true);
-                    jwplayer("bmw_ad").play(true);
-
                 } else {
                     elements[i].className = elements[i].className + " pause";
                     jwplayer(dva).pause(true);
-                    jwplayer("bmw_ad").pause(true);
                 }
             }
 
