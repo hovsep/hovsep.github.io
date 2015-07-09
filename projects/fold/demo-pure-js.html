@@ -142,13 +142,12 @@
             if (dva !== undefined) {
                 elements[i].className = elements[i].className.replace("play",'').replace("pause",'');
                 if (isVisible(elements[i],false,true,'both',50)) {
-                    console.log('try to play ',dva);
-                    jwplayer(dva).play(true);
                     elements[i].className = elements[i].className + " play";
+                    jwplayer(dva).play(true);
+
                 } else {
-                    console.log('try to pause ',dva);
-                    jwplayer(dva).pause(true);
                     elements[i].className = elements[i].className + " pause";
+                    jwplayer(dva).pause(true);
                 }
             }
 
