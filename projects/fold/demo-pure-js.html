@@ -45,7 +45,7 @@
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </p>
 
-<div id="vbanner" class="adblock video" data-video-ad="bmw_ad" style="width: 1000px;height: 300px;">
+<div id="vbanner" class="adblock-video" data-video-ad="bmw_ad" style="width: 1000px;height: 300px;">
     <div id="bmw_ad"></div>
 </div>
 
@@ -123,7 +123,7 @@
     };
 
     function defineFoldForAdBlocks() {
-        elements = document.querySelectorAll(".adblock");
+        var elements = document.querySelectorAll(".adblock");
 
         for (var i = 0, length = elements.length; i < length; i++) {
             elements[i].className = "adblock";
@@ -136,17 +136,24 @@
     };
 
     function trackVbanners() {
-        /*        jQuery(".adblock.video[data-video-ad]").each(function() {
-         jQuery(this).removeClass('play pause');
+        var elements = document.querySelectorAll(".adblock-video");
+        for (var i = 0, length = elements.length; i < length; i++) {
+            var dva = el.attributes['data-video-ad'];
+            if (dva !== undefined) {
+                elements[i].className = "adblock-video";
 
-         if (jQuery(this).visible(false,true,'both',50)) {
-         jwplayer(jQuery(this).attr('data-video-ad')).play(true);
-         jQuery(this).addClass('play');
-         } else {
-         jwplayer(jQuery(this).attr('data-video-ad')).pause(true);
-         jQuery(this).addClass('pause');
-         }
-         });*/
+                if (isVisible(elements[i],false,true,'both',50)) {
+                    jwplayer(dva).play(true);
+                    elements[i].className = "adblock-video play";
+                } else {
+
+                    jwplayer(dva).pause(true);
+                    elements[i].className = "adblock-video pause";
+                }
+            }
+
+        }
+
     }
 
 //Document.ready
