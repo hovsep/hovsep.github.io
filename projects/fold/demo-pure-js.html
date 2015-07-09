@@ -128,9 +128,9 @@
         for (var i = 0, length = elements.length; i < length; i++) {
             elements[i].className = "adblock";
             if (isVisible(elements[i],false,true,'both', 50)) {
-                elements[i].className = "atf adblock";
+                elements[i].className = elements[i].className + " atf";
             } else {
-                elements[i].className = "btf adblock";
+                elements[i].className = elements[i].className + " btf";
             }
         }
     };
@@ -144,11 +144,11 @@
 
                 if (isVisible(elements[i],false,true,'both',50)) {
                     jwplayer(dva).play(true);
-                    elements[i].className = "adblock-video play";
+                    elements[i].className = elements[i].className + " play";
                 } else {
 
                     jwplayer(dva).pause(true);
-                    elements[i].className = "adblock-video pause";
+                    elements[i].className = elements[i].className + " pause";
                 }
             }
 
