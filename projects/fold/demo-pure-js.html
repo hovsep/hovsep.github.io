@@ -138,17 +138,15 @@
     function trackVbanners() {
         var elements = document.querySelectorAll(".adblock-video");
         for (var i = 0, length = elements.length; i < length; i++) {
-            var dva = elements[i].attributes['data-video-ad'];
-            if (dva !== undefined) {
-                console.log(dva);
-                console.log(typeof(dva));
+            var ad = elements[i].attributes['data-video-ad'];
+            if (ad !== undefined) {
                 elements[i].className = elements[i].className.replace("play",'').replace("pause",'');
                 if (isVisible(elements[i],false,true,'both',50)) {
                     elements[i].className = elements[i].className + " play";
-                    jwplayer(dva).play(true);
+                    jwplayer(ad.value).play(true);
                 } else {
                     elements[i].className = elements[i].className + " pause";
-                    jwplayer(dva).pause(true);
+                    jwplayer(ad.value).pause(true);
                 }
             }
 
