@@ -52,35 +52,101 @@
 
 <script type="text/javascript">
 
+
+
+
+    //Main thing
+    function isVisible(el,partial,hidden,direction,pv){
+        var
+                vpWidth   = window.width(),
+                vpHeight  = window.height(),
+                direction = (direction) ? direction : 'both',
+                clientSize = hidden === true ? el.offsetWidth * el.offsetHeight : true,
+                pvh = 0,
+                pvw = 0;
+
+        if (pv > 0) {
+            pvh = el.height()*pv/100;
+            pvw = el.width()*pv/100;
+        }
+
+
+        if (typeof el.getBoundingClientRect === 'function'){
+
+            // Use this native browser method, if available.
+            var rec = el.getBoundingClientRect(),
+                    tViz = (rec.top + pvh)    >= 0 && (rec.top + pvh)    <  vpHeight,
+                    bViz = (rec.bottom - pvh) >  0 && (rec.bottom - pvh) <= vpHeight,
+                    lViz = (rec.left + pvw)   >= 0 && (rec.left + pvw)  <  vpWidth,
+                    rViz = (rec.right - pvw)  >  0 && (rec.right - pvw)  <= vpWidth,
+                    vVisible   = partial ? tViz || bViz : tViz && bViz,
+                    hVisible   = partial ? lViz || rViz : lViz && rViz;
+
+            if(direction === 'both')
+                return clientSize && vVisible && hVisible;
+            else if(direction === 'vertical')
+                return clientSize && vVisible;
+            else if(direction === 'horizontal')
+                return clientSize && hVisible;
+        } else {
+
+            var viewTop         = window.scrollTop(),
+                    viewBottom      = viewTop + vpHeight,
+                    viewLeft        = window.scrollLeft(),
+                    viewRight       = viewLeft + vpWidth,
+                    offset          = el.offset(),
+                    _top            = offset.top,
+                    _bottom         = _top + el.height(),
+                    _left           = offset.left,
+                    _right          = _left + el.width(),
+                    compareTop      = partial === true ? _bottom : _top,
+                    compareBottom   = partial === true ? _top : _bottom,
+                    compareLeft     = partial === true ? _right : _left,
+                    compareRight    = partial === true ? _left : _right;
+
+            compareTop = compareTop + pvh;
+            compareBottom = compareBottom - pvh;
+            compareRight = compareRight - pvw;
+            compareLeft = compareLeft + pvw;
+
+            if(direction === 'both')
+                return !!clientSize && ((compareBottom <= viewBottom) && (compareTop >= viewTop)) && ((compareRight <= viewRight) && (compareLeft >= viewLeft));
+            else if(direction === 'vertical')
+                return !!clientSize && ((compareBottom <= viewBottom) && (compareTop >= viewTop));
+            else if(direction === 'horizontal')
+                return !!clientSize && ((compareRight <= viewRight) && (compareLeft >= viewLeft));
+        }
+    };
+
     function defineFoldForAdBlocks() {
-/*        jQuery(".adblock").each(function() {
-            jQuery(this).removeClass('atf btf');
-            if (jQuery(this).visible(false,true,'both',50)) {
-                jQuery(this).addClass('atf');
+        elements = document.querySelectorAll(".adblock");
+
+        for (var i = 0, length = nodeList.length; i < length; i++) {
+            elements[i].className = "";
+            if (isVisible(elements[i],false,true,'both',50)) {
+                elements[i].className = "atf";
             } else {
-                jQuery(this).addClass('btf');
+                elements[i].className = "btf";
             }
-        });*/
+        }
     };
 
     function trackVbanners() {
-/*        jQuery(".adblock.video[data-video-ad]").each(function() {
-            jQuery(this).removeClass('play pause');
+        /*        jQuery(".adblock.video[data-video-ad]").each(function() {
+         jQuery(this).removeClass('play pause');
 
-            if (jQuery(this).visible(false,true,'both',50)) {
-                jwplayer(jQuery(this).attr('data-video-ad')).play(true);
-                jQuery(this).addClass('play');
-            } else {
-                jwplayer(jQuery(this).attr('data-video-ad')).pause(true);
-                jQuery(this).addClass('pause');
-            }
-        });*/
+         if (jQuery(this).visible(false,true,'both',50)) {
+         jwplayer(jQuery(this).attr('data-video-ad')).play(true);
+         jQuery(this).addClass('play');
+         } else {
+         jwplayer(jQuery(this).attr('data-video-ad')).pause(true);
+         jQuery(this).addClass('pause');
+         }
+         });*/
     }
 
 //Document.ready
 (function() {
-
-
     jwplayer("bmw_ad").setup({
         file: "drift.mp4",
         image: "drift.jpg",
@@ -95,16 +161,13 @@
     trackVbanners();
 
     //Bind to events
-    console.log('bind');
     document.addEventListener('DOMMouseScroll', function() {
-        console.log('scroll');
         defineFoldForAdBlocks();
         trackVbanners();
     }, false);
 
 
     window.addEventListener('resize',function() {
-        console.log('resize');
         defineFoldForAdBlocks();
         trackVbanners();
     } )
