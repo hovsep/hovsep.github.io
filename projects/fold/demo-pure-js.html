@@ -124,10 +124,8 @@
         for (var i = 0, length = elements.length; i < length; i++) {
             elements[i].className = "";
             if (isVisible(elements[i],false,true,'both', 50)) {
-                console.log('to atf');
                 elements[i].className = "atf adblock";
             } else {
-                console.log('to btf');
                 elements[i].className = "btf adblock";
             }
         }
