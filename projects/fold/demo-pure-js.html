@@ -127,7 +127,6 @@
 
         for (var i = 0, length = elements.length; i < length; i++) {
             elements[i].className = elements[i].className.replace("atf",'').replace("btf",'');
-            console.log('after removing atf,btf', elements[i].className);
             if (isVisible(elements[i],false,true,'both', 50)) {
                 elements[i].className = elements[i].className + " atf";
             } else {
@@ -142,7 +141,6 @@
             var dva = elements[i].attributes['data-video-ad'];
             if (dva !== undefined) {
                 elements[i].className = elements[i].className.replace("play",'').replace("pause",'');
-console.log('after removing play,pause ',elements[i].className);
                 if (isVisible(elements[i],false,true,'both',50)) {
                     jwplayer(dva).play(true);
                     elements[i].className = elements[i].className + " play";
