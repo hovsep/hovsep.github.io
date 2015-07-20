@@ -2,21 +2,6 @@
 <html>
 
 <body>
-<style>
-    .adblock {
-        background: black;
-        text-align: center;
-    }
-
-    .atf {
-        background: green;
-    }
-
-    .btf {
-        background: red;
-    }
-
-</style>
 
 
 <div id="banner" class="adblock">
@@ -95,7 +80,7 @@
         }
     };
 
-    function defineFoldForAdBlocks() {
+    function refreshAds() {
         var elements = document.querySelectorAll(".adblock");
 
         for (var i = 0, length = elements.length; i < length; i++) {
@@ -111,24 +96,18 @@
 
 //Document.ready
 (function() {
-    jwplayer("bmw_ad").setup({
-        file: "drift.mp4",
-        image: "drift.jpg",
-        primary:"flash"
-
-    });
 
     //Init ATF\BTF
-    defineFoldForAdBlocks();
+    refreshAds();
 
     //Bind to events
     document.addEventListener('scroll', function() {
-        defineFoldForAdBlocks();
+        refreshAds();
     }, false);
 
 
     window.addEventListener('resize',function() {
-        defineFoldForAdBlocks();
+        refreshAds();
     },false)
 
 })();
