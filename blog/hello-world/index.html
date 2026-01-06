@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello, World! | Ovsep Avakian</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0b;
+            --bg-secondary: #141416;
+            --text: #e8e6e3;
+            --text-muted: #8a8a8a;
+            --accent: #64cbff;
+            --accent-dim: rgba(100, 203, 255, 0.1);
+            --border: #2a2a2e;
+            --code-bg: #1a1a1d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+            z-index: 1000;
+        }
+
+        main {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            flex: 1;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .breadcrumb {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8125rem;
+            margin-bottom: 2rem;
+        }
+
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+
+        .breadcrumb span {
+            color: var(--text-muted);
+            margin: 0 0.5rem;
+        }
+
+        .breadcrumb .current {
+            color: var(--text);
+        }
+
+        article header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .post-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        h1 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            line-height: 1.3;
+        }
+
+        .content {
+            font-size: 1.0625rem;
+        }
+
+        .content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .content a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+
+        .content a:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        .content h2 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .content ul, .content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .content code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875em;
+            background: var(--code-bg);
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+        }
+
+        .content pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.25rem;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8125rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .content pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .content blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1.25rem;
+            margin: 1.5rem 0;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .post-nav {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .post-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .post-nav a:hover {
+            color: var(--accent);
+        }
+
+        footer {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        footer p {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            main {
+                padding: 3rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.375rem;
+            }
+
+            .content {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="noise"></div>
+    
+    <main>
+        <nav class="breadcrumb">
+            <a href="../../">~</a>
+            <span>/</span>
+            <a href="../">blog</a>
+            <span>/</span>
+            <span class="current">hello-world</span>
+        </nav>
+
+        <article>
+            <header>
+                <p class="post-date">January 6, 2026</p>
+                <h1>Hello, World!</h1>
+            </header>
+
+            <div class="content">
+                <p>
+                    Welcome to my blog! This is a space where I'll share thoughts on software engineering, 
+                    interesting problems I've encountered, and projects I'm working on.
+                </p>
+
+                <h2>What to expect</h2>
+
+                <p>
+                    I plan to write about topics that interest me as a software engineer:
+                </p>
+
+                <ul>
+                    <li>Dataflow and flow-based programming architectures</li>
+                    <li>Distributed systems and their challenges</li>
+                    <li>Developer tools and productivity</li>
+                    <li>Lessons learned from building software</li>
+                </ul>
+
+                <p>
+                    I'll also share updates on my open source projects, including 
+                    <a href="../../projects/fmesh/">F-Mesh</a>, a Flow-Based Programming framework for Go.
+                </p>
+
+                <h2>Why write?</h2>
+
+                <p>
+                    Writing helps me think more clearly. When you have to explain something to others, 
+                    you quickly discover the gaps in your own understanding. It's a forcing function 
+                    for learning deeply.
+                </p>
+
+                <blockquote>
+                    "The best way to learn is to teach."
+                </blockquote>
+
+                <p>
+                    Thanks for stopping by. Stay tuned for more posts!
+                </p>
+            </div>
+
+            <nav class="post-nav">
+                <a href="../">← Back to all posts</a>
+            </nav>
+        </article>
+    </main>
+
+    <footer>
+        <p>© 2026 Ovsep Avakian</p>
+    </footer>
+</body>
+</html>
+
