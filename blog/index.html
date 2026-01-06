@@ -18,10 +18,14 @@
             --border: #2a2a2e;
         }
 
-        * {
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html {
+            overflow-x: hidden;
         }
 
         body {
@@ -32,6 +36,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
 
         .noise {
@@ -48,6 +53,7 @@
 
         main {
             max-width: 640px;
+            width: 100%;
             margin: 0 auto;
             padding: 4rem 2rem;
             flex: 1;
@@ -172,13 +178,47 @@
             text-align: center;
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
             main {
                 padding: 3rem 1.5rem;
             }
 
             h1 {
                 font-size: 1.25rem;
+            }
+
+            .post-item {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            main {
+                padding: 2rem 1rem;
+            }
+
+            h1 {
+                font-size: 1.125rem;
+            }
+
+            .subtitle {
+                font-size: 0.9375rem;
+            }
+
+            .breadcrumb {
+                font-size: 0.75rem;
+            }
+
+            .post-title {
+                font-size: 0.9375rem;
+            }
+
+            .post-excerpt {
+                font-size: 0.875rem;
+            }
+
+            .post-date {
+                font-size: 0.6875rem;
             }
         }
     </style>
