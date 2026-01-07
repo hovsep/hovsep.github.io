@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FMesh – Lego for Programmers | Ovsep Avakian</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0b;
+            --bg-secondary: #141416;
+            --text: #e8e6e3;
+            --text-muted: #8a8a8a;
+            --accent: #64cbff;
+            --border: #2a2a2e;
+            --code-bg: #1a1a1d;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { overflow-x: hidden; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+            z-index: 1000;
+        }
+
+        main {
+            max-width: 680px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            flex: 1;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .breadcrumb {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8125rem;
+            margin-bottom: 2rem;
+        }
+
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb a:hover { color: var(--accent); }
+        .breadcrumb span { color: var(--text-muted); margin: 0 0.5rem; }
+        .breadcrumb .current { color: var(--text); }
+
+        article header {
+            margin-bottom: 4rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .post-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-bottom: 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 500;
+        }
+
+        h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.15;
+            letter-spacing: -0.04em;
+            margin-bottom: 1.5rem;
+        }
+
+        .content {
+            font-size: 1.125rem;
+            line-height: 1.9;
+            color: rgba(232, 230, 227, 0.9);
+        }
+
+        .content > p:first-of-type {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 2rem;
+        }
+
+        .content p {
+            margin-bottom: 1.75rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .content a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(100, 203, 255, 0.4);
+            transition: all 0.2s ease;
+            padding-bottom: 1px;
+        }
+
+        .content a:hover {
+            border-bottom-color: var(--accent);
+            background: rgba(100, 203, 255, 0.15);
+            border-radius: 2px;
+        }
+
+        .content h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+            line-height: 1.25;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .content h2:first-of-type {
+            border-top: none;
+            padding-top: 0;
+        }
+
+        .content ul, .content ol {
+            margin: 2rem 0;
+            padding-left: 0;
+            list-style: none;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem 1.5rem 1.5rem 2rem;
+            border: 1px solid var(--border);
+        }
+
+        .content ul li, .content ol li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.75;
+        }
+
+        .content ul li:last-child, .content ol li:last-child { margin-bottom: 0; }
+        .content ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-weight: 500; }
+        .content ol { counter-reset: list-counter; }
+        .content ol li { counter-increment: list-counter; }
+        .content ol li::before { content: counter(list-counter); position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+        .content strong { color: var(--text); font-weight: 700; }
+        .content em { font-style: italic; color: var(--text); }
+
+        .content code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85em;
+            background: var(--code-bg);
+            padding: 0.2em 0.5em;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            color: var(--accent);
+        }
+
+        .content blockquote {
+            border-left: 4px solid var(--accent);
+            padding: 1.25rem 1.75rem;
+            margin: 2.5rem 0;
+            background: var(--bg-secondary);
+            border-radius: 0 12px 12px 0;
+            color: var(--text);
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+
+        .content blockquote p:last-child { margin-bottom: 0; }
+
+        .post-nav {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .post-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .post-nav a:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+            transform: translateX(-4px);
+        }
+
+        footer {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+            text-align: center;
+        }
+
+        footer p {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            main { padding: 3rem 1.5rem; }
+            h1 { font-size: 2rem; }
+            .content { font-size: 1rem; }
+            .content > p:first-of-type { font-size: 1.1rem; }
+            .content h2 { font-size: 1.5rem; margin-top: 3rem; }
+            .content ul, .content ol { padding: 1.25rem 1.25rem 1.25rem 1.75rem; }
+        }
+
+        @media (max-width: 480px) {
+            main { padding: 2rem 1rem; }
+            h1 { font-size: 1.75rem; }
+            .breadcrumb { font-size: 0.75rem; }
+            .post-date { font-size: 0.75rem; }
+            .content { font-size: 0.95rem; }
+            .content h2 { font-size: 1.25rem; margin-top: 2.5rem; }
+            .content ul, .content ol { padding: 1rem; margin: 1.5rem 0; }
+            .content blockquote { padding: 1rem; font-size: 0.95rem; }
+            .post-nav a { font-size: 0.8rem; padding: 0.6rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="noise"></div>
+    
+    <main>
+        <nav class="breadcrumb">
+            <a href="../../">~</a>
+            <span>/</span>
+            <a href="../">blog</a>
+            <span>/</span>
+            <span class="current">fmesh-lego-for-programmers</span>
+        </nav>
+
+        <article>
+            <header>
+                <p class="post-date">January 7, 2026</p>
+                <h1>FMesh – Lego for Programmers</h1>
+            </header>
+
+            <div class="content">
+                <p>
+                    About a year ago, I quit my job and started looking for a new one. Between interviews, I suddenly had something rare: time. Naturally, I started thinking about a pet project.
+                </p>
+
+                <p>
+                    I had always liked building things. As a kid, I played with gears, motors, and random mechanical parts. My father worked as a car mechanic and regularly brought home discarded components, which felt like treasure. I even dreamed of building my own car. I also played with construction toys like Lego, as most kids did.
+                </p>
+
+                <p>
+                    That interest never really disappeared. I once tried to build a perpetual motion machine. It did not work. Thermodynamics eventually won. Still, the desire to assemble systems from smaller parts stuck with me, and it probably influenced my decision to become a software engineer. I could imagine myself in other engineering fields too: mechanics, aviation, anything where systems came together and did something real.
+                </p>
+
+                <p>
+                    Programming had always felt like a form of building. I could assemble components, connect them, and get a working system. That part was great. What became less exciting over time was what I was building. After more than ten years of web development, microservices, and fintech systems, the novelty wore off. It all started to look the same.
+                </p>
+
+                <p>
+                    I wanted something different. I didn't want another framework that pushed me into controllers, routers, models, and views. I wanted something lower-level and more flexible. Something that let me model systems closer to the real world. An elevator. An engine. A car built from that engine. Or even electronic circuits, where components exchanged signals and logic flowed through connections. Could that be programmed, tested, and debugged like software?
+                </p>
+
+                <p>
+                    That was the moment the idea clicked.
+                </p>
+
+                <p>
+                    <strong>I wanted Lego for programmers.</strong>
+                </p>
+
+                <p>
+                    Better than Lego, actually. Lego with unlimited blocks. Blocks I could design myself, with any behavior or complexity I wanted. Naturally, I decided to build it in Go, my favorite compiled language at the time.
+                </p>
+
+                <h2>Finding the Right Abstraction</h2>
+
+                <p>
+                    I started by looking at existing frameworks and libraries in the same space: actor systems, Flow-Based Programming frameworks, and various concurrency helpers. On paper, many of them looked promising. In practice, they all shared the same fundamental problem: they didn't abstract Go's concurrency model—they exposed it.
+                </p>
+
+                <p>
+                    Most of these frameworks were thin layers over goroutines and channels. Components were often long-running goroutines. Communication happened via channels that the user had to wire, buffer, close, and synchronize correctly. Technically, this was flexible. Practically, it pushed all the hard parts back onto the user.
+                </p>
+
+                <p>
+                    Go already gave me goroutines and channels. I didn't need a framework to remind me they existed.
+                </p>
+
+                <p>
+                    It became clear that building anything non-trivial on top of such frameworks would be a nightmare. I would constantly have to think about:
+                </p>
+
+                <ul>
+                    <li>Who owned a channel</li>
+                    <li>Who closed it, and when</li>
+                    <li>What happened if a sender blocked</li>
+                    <li>How many goroutines were running at any moment</li>
+                    <li>Whether a select statement could starve another path</li>
+                </ul>
+
+                <p>
+                    At that point, I would no longer be thinking about the system I wanted to model. I would be thinking about synchronization mechanics. That's fine for system software or infrastructure, but it completely killed the fun when I wanted to model something like an elevator, a production line, or an electronic circuit.
+                </p>
+
+                <p>
+                    Flow-Based Programming frameworks were especially interesting. I read <a href="https://jpaulm.github.io/fbp/" target="_blank" rel="noopener">J. Paul Morrison's original FBP book</a> and explored several Go implementations. Conceptually, FBP was close to what I wanted. But most Go-based implementations treated concurrency as a first-class concern for the user. I would have been expected to reason about channels, goroutines, and scheduling directly. That defeated the purpose.
+                </p>
+
+                <p>
+                    I wanted concurrency to be <em>structural</em>, not <em>procedural</em>. Something I could get by how I connected components, not by how carefully I juggled channels.
+                </p>
+
+                <p>
+                    So I stripped the model down to the bare minimum. The system has only two fundamental concepts:
+                </p>
+
+                <ul>
+                    <li><strong>Components:</strong> units of behavior</li>
+                    <li><strong>Signals:</strong> data flowing between components</li>
+                </ul>
+
+                <p>
+                    Components have named input and output ports. Ports connect components into a graph. A component activates when it has at least one input signal. Activation means the framework calls the component's activation function.
+                </p>
+
+                <p>
+                    Inside that function, user code runs synchronously. No goroutines. No channels. No select statements. Just normal code.
+                </p>
+
+                <p>
+                    A typical activation function does three things:
+                </p>
+
+                <ol>
+                    <li>Read input signals</li>
+                    <li>Execute logic</li>
+                    <li>Emit output signals</li>
+                </ol>
+
+                <p>
+                    Those outputs become inputs for other components, triggering further activations. The process continues until no component has pending inputs. At that point, the graph reaches a stable state and results can be collected.
+                </p>
+
+                <h2>Structural Concurrency</h2>
+
+                <p>
+                    This execution model gives concurrency almost as a side effect of structure.
+                </p>
+
+                <p>
+                    Every component that has input signals is eligible for activation. All eligible components are scheduled concurrently, each in its own goroutine. Because input ports belong to a single component, there is no shared state by default. As long as you don't intentionally pass shared pointers around, data races are not a problem.
+                </p>
+
+                <p>
+                    Inside a component, you write ordinary, synchronous Go code. There are no goroutines, no channels, no select statements, and no explicit synchronization. Scheduling, execution, and isolation are handled entirely by the framework.
+                </p>
+
+                <p>
+                    Synchronization emerges from how you connect components:
+                </p>
+
+                <ul>
+                    <li><strong>Pipelines</strong> naturally enforce sequential execution</li>
+                    <li><strong>Fan-out</strong> represents parallel work</li>
+                    <li><strong>Fan-in</strong> collects results from concurrent stages</li>
+                </ul>
+
+                <p>
+                    This makes concurrency <em>structural</em>. You don't describe how things run in parallel. You describe what is connected to what, and parallelism follows automatically.
+                </p>
+
+                <p>
+                    The result is a model where you can focus on the system you're building instead of the mechanics of making it safe to run. You think in terms of data flow and composition, not lifecycles and synchronization rules. That shift is the whole point.
+                </p>
+
+                <h2>What It Became</h2>
+
+                <p>
+                    Out of this model came <strong>Functional Mesh</strong>, or FMesh.
+                </p>
+
+                <p>
+                    While many parts of the design evolved over time, the concurrency model never changed. It turned out to be the most stable and valuable part of the system.
+                </p>
+
+                <p>
+                    FMesh is not a classical FBP framework. It's closer to an FBP-inspired execution model. Components are not long-running processes. They activate, do their work, emit signals, and finish. This makes the system closer in spirit to computational graphs than to traditional process networks.
+                </p>
+
+                <p>
+                    As the project evolved, my focus naturally shifted toward state machines, simulations, and game-engine-like models — systems built from many small, interacting parts that react to events rather than run forever.
+                </p>
+
+                <p>
+                    FMesh is not designed for high-performance workloads or complex, synchronization-heavy systems. That's a deliberate tradeoff. The goal is simplicity, composability, and approachability. FMesh is meant to be modular, expressive, and fun to work with.
+                </p>
+
+                <h2>Developer Experience</h2>
+
+                <p>
+                    Over time, I added some conveniences:
+                </p>
+
+                <p>
+                    <strong>Visualization:</strong> You can export a mesh as a <a href="https://graphviz.org/" target="_blank" rel="noopener">DOT graph</a> or image and explore the structure visually. Very useful for understanding what you actually built.
+                </p>
+
+                <p>
+                    <strong>Chained API:</strong> Not idiomatic Go, yes, but it allows fluent code without checking errors on every line. Errors bubble up, which is good enough.
+                </p>
+
+                <p>
+                    <strong>Component-level state:</strong> Components started as pure functions, but I quickly needed state between activations. External variables were ugly and error-prone, so I added a simple key-value store per component (optional, of course).
+                </p>
+
+                <p>
+                    <strong>Hooks:</strong> Small functions that execute before and after important events, useful for debugging and instrumentation.
+                </p>
+
+                <h2>Development Process</h2>
+
+                <p>
+                    I'm currently the only contributor and user, and that's intentional. I enjoy working on it this way.
+                </p>
+
+                <p>
+                    I split the work into two repositories:
+                </p>
+
+                <ul>
+                    <li><a href="https://github.com/hovsep/fmesh" target="_blank" rel="noopener">github.com/hovsep/fmesh</a></li>
+                    <li><a href="https://github.com/hovsep/fmesh-examples" target="_blank" rel="noopener">github.com/hovsep/fmesh-examples</a></li>
+                </ul>
+
+                <p>
+                    When I finish a feature or bugfix in the framework, I deliberately switch roles and become an FMesh user for a while. I build example programs to stress the system and see where it breaks, where it feels awkward, and where the abstractions leak.
+                </p>
+
+                <p>
+                    I started with small examples like a <a href="https://github.com/hovsep/fmesh-examples/tree/main/pipeline" target="_blank" rel="noopener">pipeline</a> and a <a href="https://github.com/hovsep/fmesh-examples/tree/main/load_balancer" target="_blank" rel="noopener">load balancer</a>, then moved on to a larger project: a realistic <a href="https://github.com/hovsep/fmesh-examples/tree/main/can_bus" target="_blank" rel="noopener">CAN bus</a> simulation. Right now, I'm working on an even bigger example, a human body simulation, which deserves its own post.
+                </p>
+
+                <p>
+                    Building examples is how I validate the design. It's the fastest way to find bugs, expose pain points, and discover patterns that should probably become first-class features. If something feels annoying or unnatural while using FMesh, that's a signal that the framework — not the example — needs to change.
+                </p>
+
+                <h2>Looking Ahead</h2>
+
+                <p>
+                    I'm honestly surprised I'm still working on this project after more than a year. It still feels like playing with Lego, and that's reason enough to keep going.
+                </p>
+
+                <p>
+                    I hope FMesh will grow beyond a personal playground. Maybe one day developers or even companies will use it to build systems bigger and more ambitious than simple simulations.
+                </p>
+
+                <p>
+                    <strong>Keep building.</strong>
+                </p>
+            </div>
+
+            <nav class="post-nav">
+                <a href="../">← Back to all posts</a>
+            </nav>
+        </article>
+    </main>
+
+    <footer>
+        <p>© 2026 Ovsep Avakian</p>
+    </footer>
+
+</body>
+</html>
+

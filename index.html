@@ -6,7 +6,7 @@
     <title>Ovsep Avakian</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #0a0a0b;
@@ -29,7 +29,7 @@
         }
 
         body {
-            font-family: 'Source Serif 4', Georgia, serif;
+            font-family: 'JetBrains Mono', monospace;
             background: var(--bg);
             color: var(--text);
             line-height: 1.7;
@@ -402,11 +402,7 @@
                         as a graph of independent, reusable components.
                     </p>
                     <p class="project-tech">
-                        <span class="tech-lang">Go</span> • 
-                        <span class="tech-stats">
-                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <span class="stars-count">—</span>
-                        </span>
+                        <span class="tech-lang">Go</span>
                     </p>
                 </a>
             </div>
@@ -417,40 +413,5 @@
         <p>© 2026 Ovsep Avakian</p>
     </footer>
 
-    <script>
-        async function fetchProjectStats() {
-            const cards = document.querySelectorAll('.project-card[data-repo]');
-            
-            for (const card of cards) {
-                const repo = card.dataset.repo;
-                try {
-                    const response = await fetch(`https://api.github.com/repos/${repo}`);
-                    if (!response.ok) continue;
-                    const data = await response.json();
-                    
-                    const starsEl = card.querySelector('.stars-count');
-                    if (starsEl) {
-                        starsEl.textContent = formatNumber(data.stargazers_count);
-                    }
-                    
-                    const langEl = card.querySelector('.tech-lang');
-                    if (langEl && data.language) {
-                        langEl.textContent = data.language;
-                    }
-                } catch (error) {
-                    console.warn(`Could not fetch stats for ${repo}:`, error);
-                }
-            }
-        }
-        
-        function formatNumber(num) {
-            if (num >= 1000) {
-                return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
-            }
-            return num.toString();
-        }
-        
-        fetchProjectStats();
-    </script>
 </body>
 </html>
