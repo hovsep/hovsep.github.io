@@ -1,0 +1,80 @@
+/* Homepage Specific Styles */
+
+main {
+    max-width: 640px;
+}
+
+footer {
+    max-width: 640px;
+}
+
+.intro {
+    margin-bottom: 3rem;
+}
+
+h1 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+h1 span {
+    color: var(--accent);
+}
+
+.tagline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+}
+
+.bio {
+    margin-bottom: 3rem;
+    font-size: 1.125rem;
+}
+
+.bio p {
+    margin-bottom: 1rem;
+}
+
+.bio a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+.bio a:hover {
+    border-bottom-color: var(--accent);
+}
+
+/* Responsive - Tablet */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.25rem;
+    }
+
+    .bio {
+        font-size: 1rem;
+    }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.125rem;
+    }
+
+    .tagline {
+        font-size: 0.8125rem;
+    }
+
+    .bio {
+        font-size: 0.9375rem;
+        margin-bottom: 2rem;
+    }
+}
+

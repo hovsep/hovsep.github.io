@@ -1,0 +1,130 @@
+/* CSS Variables */
+:root {
+    --bg: #0a0a0b;
+    --bg-secondary: #141416;
+    --text: #e8e6e3;
+    --text-muted: #8a8a8a;
+    --accent: #64cbff;
+    --accent-dim: rgba(100, 203, 255, 0.1);
+    --border: #2a2a2e;
+    --code-bg: #1a1a1d;
+}
+
+/* Reset */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    overflow-x: hidden;
+}
+
+/* Base Body */
+body {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Noise Overlay */
+.noise {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+    z-index: 1000;
+}
+
+/* Main Container */
+main {
+    max-width: 680px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    flex: 1;
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Footer */
+footer {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 2rem;
+    width: 100%;
+    text-align: center;
+}
+
+footer p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* Base Links */
+a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+/* Section Headers */
+section {
+    margin-bottom: 3rem;
+}
+
+h2.section-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+/* Responsive - Tablet */
+@media (max-width: 768px) {
+    main {
+        padding: 3rem 1.5rem;
+    }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 480px) {
+    main {
+        padding: 2rem 1rem;
+    }
+
+    section {
+        margin-bottom: 2rem;
+    }
+
+    h2.section-title {
+        font-size: 0.6875rem;
+        margin-bottom: 1rem;
+    }
+}
+
