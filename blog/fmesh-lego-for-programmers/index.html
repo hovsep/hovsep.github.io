@@ -67,13 +67,18 @@
                 <p>
                     I started by looking at existing frameworks and libraries in the same space: actor systems, Flow-Based Programming frameworks, and various concurrency helpers. On paper, many of them looked promising. In practice, they all shared the same fundamental problem: they didn't abstract Go's concurrency model—they exposed it.
                 </p>
+                <p>
+                    Flow-Based Programming frameworks were especially interesting. I read <a href="https://jpaulm.github.io/fbp/" target="_blank" rel="noopener">J. Paul Morrison's original FBP book</a> and explored several Go implementations. Conceptually, FBP was close to what I wanted. But most Go-based implementations treated concurrency as a first-class concern for the user. I would have been expected to reason about channels, goroutines, and scheduling directly. That defeated the purpose.
+                </p>
 
                 <p>
                     Most of these frameworks were thin layers over goroutines and channels. Components were often long-running goroutines. Communication happened via channels that the user had to wire, buffer, close, and synchronize correctly. Technically, this was flexible. Practically, it pushed all the hard parts back onto the user.
                 </p>
 
                 <p>
+                    <strong>
                     Go already gave me goroutines and channels. I didn't need a framework to remind me they existed.
+                    </strong>
                 </p>
 
                 <p>
@@ -89,11 +94,14 @@
                 </ul>
 
                 <p>
-                    At that point, I would no longer be thinking about the system I wanted to model. I would be thinking about synchronization mechanics. That's fine for system software or infrastructure, but it completely killed the fun when I wanted to model something like an elevator, a production line, or an electronic circuit.
+                    Here is an example of the code I wanted to avoid:
+                    <div class="gist-wrapper">
+                        <script src="https://gist.github.com/hovsep/b67018a5355e6fc701883a06a7c99108.js"></script>
+                    </div>
                 </p>
 
                 <p>
-                    Flow-Based Programming frameworks were especially interesting. I read <a href="https://jpaulm.github.io/fbp/" target="_blank" rel="noopener">J. Paul Morrison's original FBP book</a> and explored several Go implementations. Conceptually, FBP was close to what I wanted. But most Go-based implementations treated concurrency as a first-class concern for the user. I would have been expected to reason about channels, goroutines, and scheduling directly. That defeated the purpose.
+                    That's fine for system software or infrastructure, but it completely killed the fun when I wanted to model something like an elevator, a production line, or an electronic circuit.
                 </p>
 
                 <p>
@@ -110,10 +118,11 @@
                 </ul>
 
                 <p>
-                    Components have named input and output ports. Ports connect components into a graph. A component activates when it has at least one input signal. Activation means the framework calls the component's activation function.
+                    Components have named input and output ports that act as communication points and allow connecting components into a graph. A component activates when it has at least one input signal and has no idea about others.
                 </p>
 
                 <p>
+                    The core of the component is its activation function.
                     Inside that function, user code runs synchronously. No goroutines. No channels. No select statements. Just normal code.
                 </p>
 
@@ -128,7 +137,17 @@
                 </ol>
 
                 <p>
+                    Example:
+                    <div class="gist-wrapper">
+                        <script src="https://gist.github.com/hovsep/d712a163a1a117be94a1e4e553d3b5de.js"></script>
+                    </div>
+                </p>
+
+                <p>
                     Those outputs become inputs for other components, triggering further activations. The process continues until no component has pending inputs. At that point, the graph reaches a stable state and results can be collected.
+                    <div class="gist-wrapper">
+                        <script src="https://gist.github.com/hovsep/3618456fe6b37239492a99f85b646f1b.js"></script>
+                    </div>
                 </p>
 
                 <h2>Structural Concurrency</h2>
@@ -150,9 +169,16 @@
                 </p>
 
                 <ul>
-                    <li><strong>Pipelines</strong> naturally enforce sequential execution</li>
-                    <li><strong>Fan-out</strong> represents parallel work</li>
-                    <li><strong>Fan-in</strong> collects results from concurrent stages</li>
+                    <li>
+                        <strong>Pipelines</strong> naturally enforce sequential execution
+                        <img width="500px" src="image/pipeline.png" alt="Pipeline">
+                    </li>
+                    <li><strong>Fan-out</strong> represents parallel work
+                        <img width="300px" src="image/fan-out.png" alt="Fan-out">
+                    </li>
+                    <li><strong>Fan-in</strong> collects results from concurrent stages
+                        <img width="300px" src="image/fan-in.png" alt="Fan-in">
+                    </li>
                 </ul>
 
                 <p>
@@ -166,7 +192,7 @@
                 <h2>What It Became</h2>
 
                 <p>
-                    Out of this model came <strong>Functional Mesh</strong>, or FMesh.
+                    Out of this model came <strong>Functional Mesh</strong>, or <a href="https://hovsep.github.io/projects/fmesh/"  target="_blank" rel="noopener">FMesh</a>.
                 </p>
 
                 <p>
@@ -174,15 +200,15 @@
                 </p>
 
                 <p>
-                    FMesh is not a classical FBP framework. It's closer to an FBP-inspired execution model. Components are not long-running processes. They activate, do their work, emit signals, and finish. This makes the system closer in spirit to computational graphs than to traditional process networks.
+                    FMesh is not a classical FBP framework. It can be better described as an FBP-inspired system. Components are not long-running processes. They activate, do their work, emit signals, and finish. This makes the system closer in spirit to computational graphs than to traditional process networks.
                 </p>
 
                 <p>
-                    As the project evolved, my focus naturally shifted toward state machines, simulations, and game-engine-like models — systems built from many small, interacting parts that react to events rather than run forever.
+                    As the project evolved, my focus shifted toward state machines, simulations, and game-engine-like models. These are systems built from many small, interacting parts that react to events rather than run forever.
                 </p>
 
                 <p>
-                    FMesh is not designed for high-performance workloads or complex, synchronization-heavy systems. That's a deliberate tradeoff. The goal is simplicity, composability, and approachability. FMesh is meant to be modular, expressive, and fun to work with.
+                    FMesh was never intended to be a high-performance Go framework or a solution for synchronization-heavy workloads. That was a conscious choice. Its purpose is to make complex behavior easy to express. FMesh favors clarity over raw throughput and structure over clever concurrency. It is a tool for modeling state, interactions, and logic in a way that stays simple, composable, and enjoyable to work with.
                 </p>
 
                 <h2>Developer Experience</h2>
@@ -193,10 +219,17 @@
 
                 <p>
                     <strong>Visualization:</strong> You can export a mesh as a <a href="https://graphviz.org/" target="_blank" rel="noopener">DOT graph</a> or image and explore the structure visually. Very useful for understanding what you actually built.
+                    Looks a bit ugly, but I love the ability to look at my program and follow the data flow.
+                    <img src="https://raw.githubusercontent.com/hovsep/fmesh-examples/refs/heads/main/can_bus/advanced/graph.svg" alt="FMesh graph" />
+
+
                 </p>
 
                 <p>
                     <strong>Chained API:</strong> Not idiomatic Go, yes, but it allows fluent code without checking errors on every line. Errors bubble up, which is good enough.
+                    <div class="gist-wrapper">
+                        <script src="https://gist.github.com/hovsep/7f7c2da121a46556cd70485c75786643.js"></script>
+                    </div>
                 </p>
 
                 <p>
@@ -210,11 +243,11 @@
                 <h2>Development Process</h2>
 
                 <p>
-                    I'm currently the only contributor and user, and that's intentional. I enjoy working on it this way.
+                    I’m currently the only contributor and user, which is fine for a project at this stage.
                 </p>
 
                 <p>
-                    I split the work into two repositories:
+                    I maintain two repositories:
                 </p>
 
                 <ul>
@@ -241,7 +274,7 @@
                 </p>
 
                 <p>
-                    I hope FMesh will grow beyond a personal playground. Maybe one day developers or even companies will use it to build systems bigger and more ambitious than simple simulations.
+                    I hope FMesh will grow beyond a personal playground and more people will find it useful.
                 </p>
 
                 <p>
