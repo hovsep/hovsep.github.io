@@ -50,6 +50,40 @@ h1 {
     border-bottom-color: var(--accent);
 }
 
+/* Use Cases Grid */
+.use-cases {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.use-case {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.use-case:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.use-case h3 {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+}
+
+.use-case p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0;
+}
+
 /* Responsive - Tablet */
 @media (max-width: 768px) {
     h1 {
@@ -80,6 +114,10 @@ h1 {
     .content p {
         font-size: 1rem;
     }
+
+    .use-cases {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 /* Responsive - Mobile */
@@ -95,6 +133,22 @@ h1 {
 
     header {
         margin-bottom: 2rem;
+    }
+
+    .use-cases {
+        grid-template-columns: 1fr;
+    }
+
+    .use-case {
+        padding: 1rem;
+    }
+
+    .use-case h3 {
+        font-size: 0.875rem;
+    }
+
+    .use-case p {
+        font-size: 0.8125rem;
     }
 }
 

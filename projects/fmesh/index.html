@@ -25,7 +25,7 @@
 
         <header>
             <h1>F-Mesh</h1>
-            <p class="tagline">Flow-Based Programming framework for Go</p>
+            <p class="tagline">FBP inspired framework in Go</p>
             <section>
                 <h2 class="section-title">Links</h2>
                 <div class="links-grid">
@@ -57,6 +57,15 @@
                         </svg>
                         <span class="link-label">Examples</span>
                     </a>
+                    <a href="../../blog/fmesh-lego-for-programmers/" class="link-card">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+                            <path d="M2 2l7.586 7.586"/>
+                            <circle cx="11" cy="11" r="2"/>
+                        </svg>
+                        <span class="link-label">Blog Post</span>
+                    </a>
                 </div>
             </section>
         </header>
@@ -78,8 +87,37 @@
         </section>
 
         <section>
-            <h2 class="section-title">Installation</h2>
-            <pre><code>go get github.com/hovsep/fmesh</code></pre>
+            <h2 class="section-title">Use Cases</h2>
+            <div class="use-cases">
+                <div class="use-case">
+                    <h3>Workflows & Automation</h3>
+                    <p>Chain independent steps into explicit, testable execution flows.</p>
+                </div>
+                <div class="use-case">
+                    <h3>Computational Graphs</h3>
+                    <p>Represent complex data and math pipelines as connected processing nodes.</p>
+                </div>
+                <div class="use-case">
+                    <h3>Neural Networks</h3>
+                    <p>Prototype layer-based models by pushing data through graph-structured components.</p>
+                </div>
+                <div class="use-case">
+                    <h3>Simulations (DES / TSS)</h3>
+                    <p>Model state changes over time using event-driven or time-stepped nodes.</p>
+                </div>
+                <div class="use-case">
+                    <h3>Game Engines</h3>
+                    <p>Build gameplay logic as a network of decoupled systems reacting to events.</p>
+                </div>
+                <div class="use-case">
+                    <h3>Data Pipelines</h3>
+                    <p>Transform, enrich, and route data without tangled control flow.</p>
+                </div>
+                <div class="use-case">
+                    <h3>Rule Engines & DSLs</h3>
+                    <p>Encode domain logic as graphs instead of unreadable if-else soup.</p>
+                </div>
+            </div>
         </section>
 
         <section>
@@ -103,30 +141,6 @@
                 </div>
             </div>
         </section>
-
-        <section>
-            <h2 class="section-title">Quick Example</h2>
-            <pre><code>// Create a mesh that concatenates and uppercases strings
-fm := fmesh.New("hello world").
-    AddComponents(
-        component.New("concat").
-            AddInputs("i1", "i2").
-            AddOutputs("res").
-            WithActivationFunc(func(this *component.Component) error {
-                word1 := this.InputByName("i1").Signals().FirstPayloadOrDefault("").(string)
-                word2 := this.InputByName("i2").Signals().FirstPayloadOrDefault("").(string)
-                this.OutputByName("res").PutSignals(signal.New(word1 + word2))
-                return nil
-            }),
-    )
-
-// Connect, set inputs, and run
-fm.ComponentByName("concat").OutputByName("res").
-    PipeTo(fm.ComponentByName("uppercase").InputByName("i1"))
-
-_, err := fm.Run()</code></pre>
-        </section>
-
     </main>
 
     <footer>

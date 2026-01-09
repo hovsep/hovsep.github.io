@@ -184,6 +184,13 @@ body.blog {
     font-weight: 500;
 }
 
+.content ul li img,
+.content ol li img {
+    display: block;
+    margin-top: 1rem;
+    border-radius: 8px;
+}
+
 .content ol {
     counter-reset: list-counter;
 }
@@ -290,6 +297,8 @@ body.blog {
     border-radius: 12px;
     overflow: hidden;
     border: 1px solid var(--border);
+    isolation: isolate;
+    contain: content;
 }
 
 .gist-wrapper .gist {
@@ -313,6 +322,11 @@ body.blog {
 
 .gist-wrapper .gist .gist-meta a {
     color: var(--accent) !important;
+}
+
+/* Prevent Gist global style leakage */
+.gist-file, .gist-data, .gist-meta {
+    background: inherit;
 }
 
 /* Post Navigation */

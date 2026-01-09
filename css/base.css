@@ -17,6 +17,11 @@
     box-sizing: border-box;
 }
 
+html {
+    background: var(--bg) !important;
+    background-color: var(--bg) !important;
+}
+
 html, body {
     overflow-x: hidden;
 }
@@ -26,7 +31,7 @@ body {
     font-family: 'JetBrains Mono', monospace;
     background: var(--bg) !important;
     background-color: var(--bg) !important;
-    color: var(--text);
+    color: var(--text) !important;
     line-height: 1.7;
     min-height: 100vh;
     display: flex;
