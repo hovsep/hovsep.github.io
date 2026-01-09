@@ -43,11 +43,11 @@
                 </p>
 
                 <p>
-                    Programming had always felt like a form of building. I could assemble components, connect them, and get a working system. That part was great. What became less exciting over time was what I was building. After more than ten years of web development, microservices, and fintech systems, the novelty wore off. It all started to look the same.
+                    Programming always felt like building. I could snap components together, connect them, and watch a system work. The problem wasn’t the act itself—it was what I was building. After more than ten years of web apps, microservices, and fintech systems, everything had the same shape: APIs, queues, workers, and glue code. The novelty had worn off.
                 </p>
 
                 <p>
-                    I wanted something different. I didn't want another framework that pushed me into controllers, routers, models, and views. I wanted something lower-level and more flexible. Something that let me model systems closer to the real world. An elevator. An engine. A car built from that engine. Or even electronic circuits, where components exchanged signals and logic flowed through connections. Could that be programmed, tested, and debugged like software?
+                    I wanted something different. Not another framework forcing me into controllers, routers, models, and views. I wanted something lower-level and flexible—something that let me model real-world systems: an elevator, an engine, a car built from that engine, or even electronic circuits where components exchanged signals and logic flowed naturally. Could I build, test, and debug that like software?
                 </p>
 
                 <p>
@@ -94,7 +94,7 @@
                 </ul>
 
                 <p>
-                    Here is an example of the code I wanted to avoid:
+                    This is what “simple” looks like in a typical Go FBP library:
                     <div class="gist-wrapper">
                         <script src="https://gist.github.com/hovsep/b67018a5355e6fc701883a06a7c99108.js"></script>
                     </div>
@@ -118,7 +118,7 @@
                 </ul>
 
                 <p>
-                    Components have named input and output ports that act as communication points and allow connecting components into a graph. A component activates when it has at least one input signal and has no idea about others.
+                    Components have named input and output ports that act as communication points and allow connecting components into a graph. A component activates when it has at least one input signal and is completely unaware of the rest of the graph.
                 </p>
 
                 <p>
@@ -157,7 +157,7 @@
                 </p>
 
                 <p>
-                    Every component that has input signals is eligible for activation. All eligible components are scheduled concurrently, each in its own goroutine. Because input ports belong to a single component, there is no shared state by default. As long as you don't intentionally pass shared pointers around, data races are not a problem.
+                    Every component that has input signals is eligible for activation. All eligible components are scheduled concurrently, each in its own goroutine. Because input ports belong to a single component, there is no shared state by default. As long as components don’t share a mutable state, data races are avoided by design.
                 </p>
 
                 <p>
