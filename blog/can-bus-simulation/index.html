@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAN Bus Simulation with FMesh | Ovsep Avakian</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/blog.css">
+</head>
+<body class="blog blog-post">
+    <div class="noise"></div>
+    
+    <main>
+        <nav class="breadcrumb">
+            <a href="../../">~</a>
+            <span>/</span>
+            <a href="../">blog</a>
+            <span>/</span>
+            <span class="current">can-bus-simulation</span>
+        </nav>
+
+        <article>
+            <header>
+                <p class="post-date">January 9, 2026</p>
+                <h1>CAN Bus Simulation</h1>
+            </header>
+
+            <div class="content">
+                <p>
+                    As you might know from my <a href="../fmesh-lego-for-programmers/">previous posts</a>, I like to tinker with FMesh to explore how to make the framework better and to squash bugs. Today I want to share one of the first "big" examples I've built: a CAN bus simulation.
+                </p>
+
+                <h2>What Bus?</h2>
+
+                <p>
+                    If you already know what the CAN bus is, skip ahead. Otherwise, here's a quick intro:
+                </p>
+
+                <p>
+                    CAN stands for <strong>Controller Area Network</strong>. It's a protocol that lets microcontrollers talk to each other. It runs in almost every modern car, aircraft, and many industrial devices.
+                </p>
+
+                <p>
+                    What makes CAN interesting is its simplicity and arbitration: some messages are more important than others. For example, if an airbag decides it needs to explode, all less critical microcontrollers will wait.
+                </p>
+
+                <p>
+                    CAN uses a <em>bus topology</em>: one writer, many readers. Messages are broadcast to all controllers, including the sender itself. Each controller decides whether to accept the message or ignore it. That's why CAN has no security built in—it's just a reliable wire protocol.
+                </p>
+
+                <p>
+                    Physically, a CAN bus is just two wires carrying differential voltage signals (high and low). The bus encodes binary data: zeroes and ones. Controllers can encode arbitrary digital messages and send them to peers. For instance, the engine talks to the gearbox, or the entertainment system talks to the main computer.
+                </p>
+
+                <h2>Simplifications</h2>
+
+                <p>
+                    The CAN protocol has evolved over time. The latest version is CAN FD (Flexible Data-rate), which supports longer payloads and faster bit rates. Implementing all features would take years, so in my toy simulation I focus on the essentials:
+                </p>
+
+                <p><strong>3-layer CAN nodes:</strong></p>
+
+                <ul>
+                    <li><strong>Transceiver:</strong> converts bits ↔ voltage</li>
+                    <li><strong>CAN-controller:</strong> converts frames ↔ bits</li>
+                    <li><strong>Microcontroller (MCU):</strong> runs the ECU logic</li>
+                </ul>
+
+                <img src="image/can_node.png">
+
+                <p><strong>Other features:</strong></p>
+
+                <ul>
+                    <li>Bit stuffing</li>
+                    <li>Arbitration: lower ID = higher priority</li>
+                    <li>ISO-TP messages on top of CAN frames</li>
+                </ul>
+
+                <p><strong>And to keep things simple:</strong></p>
+
+                <ul>
+                    <li>One ISO-TP message = one CAN frame (no multi-frame messages)</li>
+                    <li>Simplified CAN frame structure: only 3 fields
+                       <div class="gist-wrapper">
+                           <script src="https://gist.github.com/hovsep/68ef34c7811b2ed9d7eb8a57fd5b67c0.js"></script>
+                       </div>
+                    </li>
+                    <li>"Watchdog" component simulates terminal resistors and halts the bus when all nodes are idle (doesn't exist in reality)</li>
+                    <li>OBD socket is treated as a CAN node (in reality it's not)</li>
+                </ul>
+
+                <h2>The Data Flow</h2>
+
+                <p><strong>The demo setup:</strong></p>
+
+                <ul>
+                    <li>CAN bus with 3 nodes: Engine Control Module (ECM), Transmission Control Module (TCM), On-Board Diagnostics (OBD)</li>
+                    <li>Laptop connected to OBD</li>
+                </ul>
+
+                <img src="https://raw.githubusercontent.com/hovsep/fmesh-examples/refs/heads/main/can_bus/advanced/graph.svg" alt="CAN bus with nodes" />
+
+                <p>
+                    The OBD node acts as a dummy proxy: it transmits everything it receives to the bus.
+                </p>
+
+                <p><strong>Let's follow a FrameGetRPM message:</strong></p>
+
+                <ol>
+                    <li>Laptop sends it via USB</li>
+                    <li>The OBD node receives it at its <code>obd_in</code> port</li>
+                    <li>Frame enters the MCU layer of the OBD node. MCU logic is simple: all input frames are forwarded to <code>cat_tx</code>, which connects to <code>controller.can_tx</code></li>
+                    <li>The CAN controller converts the frame to bits, applies bit stuffing, and adds service bits like IFS (inter-frame space)</li>
+                    <li>The transceiver converts bits to voltage and drives the bus. It also reads the bus simultaneously</li>
+                </ol>
+
+                <p>
+                    Here's the key: the write (TX) path of OBD is the read (RX) path for all other nodes. Each bit written by OBD is read by all other transceivers, sent up the chain to reconstruct the original frame. That's the essence of CAN: data is transmitted bit by bit and read bit by bit.
+                </p>
+
+                <p>
+                    The laptop runs diagnostic software that sends multiple messages to OBD:
+                </p>
+
+                <!-- TODO: gist -->
+
+                <p>
+                    Logs capture the entire flow—from sending frames to receiving responses.
+                </p>
+
+                <h2>ECUs</h2>
+
+                <p>
+                    In real cars, there can be tens to hundreds of CAN nodes across multiple buses.
+                </p>
+
+                <p>
+                    In our simulation, each ECU is simple: it has some state and responds to requests.
+                </p>
+
+                <p>
+                    The frames sent in <code>main()</code> are actually ISO-15765 / ISO-TP messages (transport protocol over CAN frames).
+                </p>
+
+                <!-- TODO: gist -->
+
+                <h2>Why This Matters</h2>
+
+                <p>
+                    Of course, this example is far from a real CAN system (like <code>vcan</code> in Linux). It's more of an educational project—a playground to experiment with CAN, learn the basics of the protocol, and simulate errors or misbehaviors.
+                </p>
+
+                <p>
+                    For instance, you could add a component called "Magnet" that interferes with the bus, making voltages go crazy and simulating communication noise. Or you could build more ECUs and explore how they interact.
+                </p>
+
+                <p>
+                    With FMesh, the abstractions feel natural, the signal flow is clear, and you can focus entirely on the domain you care about. <strong>That's exactly why I love FMesh.</strong>
+                </p>
+
+            </div>
+
+            <nav class="post-nav">
+                <a href="../">← Back to all posts</a>
+            </nav>
+        </article>
+    </main>
+
+    <footer>
+        <p>© 2026 Ovsep Avakian</p>
+    </footer>
+
+</body>
+</html>
