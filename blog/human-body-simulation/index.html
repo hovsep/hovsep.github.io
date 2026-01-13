@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Body Simulation powered by FMesh | Ovsep Avakian</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/blog.css">
+</head>
+<body class="blog blog-post">
+    <div class="noise"></div>
+    
+    <main>
+        <nav class="breadcrumb">
+            <a href="../../">~</a>
+            <span>/</span>
+            <a href="../">blog</a>
+            <span>/</span>
+            <span class="current">human-body-simulation</span>
+        </nav>
+
+        <article>
+            <header>
+                <p class="post-date">January 12, 2026</p>
+                <h1>Human Body Simulation powered by FMesh</h1>
+            </header>
+
+            <div class="content">
+                <p>
+                    When building <a href="../../projects/fmesh/">FMesh</a>, I try to think not only as a framework author but also as a user. I built FMesh for myself in the first place, so experimenting with it is half the fun. By the way, I keep all my experiments public here: <a href="https://github.com/hovsep/fmesh-examples" target="_blank" rel="noopener">github.com/hovsep/fmesh-examples</a>
+                </p>
+
+                <p>
+                    The latest big example I built was a <a href="../can-bus-simulation/">CAN bus simulation</a>. While working on it, I learned a lot about microelectronics, which was a great experience. That project was not a pure simulation, but more of a simple implementation of the CAN bus protocol.
+                </p>
+
+                <p>
+                    For my next project, I wanted something closer to a real simulation. Something more stochastic and less deterministic. So I decided to shoot for the moon and build a human body simulation.
+                </p>
+
+                <p>
+                    I know that sounds crazy, and I know it's not possible to simulate the full complexity of the human body in software. Even simple life forms are only partially simulated, for example <a href="https://openworm.org" target="_blank" rel="noopener">OpenWorm</a>. But realism was never the goal.
+                </p>
+
+                <p><strong>My goals are:</strong></p>
+
+                <ul>
+                    <li>Push the framework and see if it actually makes life easier when building a complex dynamic system. By "dynamic" I don't just mean "not static." I mean systems with resources and flows.</li>
+                    <li>Learn human physiology. I've always been into biology, and this project is my chance to mess around with it in code (something I can't really do at work, but can as a hobby).</li>
+                    <li>Show how many simple components wired together can produce complex behavior. For example, if you lower the oxygen level in the air, you should see indirect reactions across the system: faster breathing, higher heart rate, rising adrenaline, and so on. The idea is that each component stays simple, but when you connect enough of them, you get a system where unexpected side effects and feedback loops start to appear.</li>
+                </ul>
+
+                <h2>Requirements</h2>
+
+                <p>I imagine the final result like this:</p>
+
+                <ul>
+                    <li>A REPL in the terminal that lets you inspect the simulation and, more importantly, change it by sending inputs.</li>
+                    <li>A time-step simulation with two main parts: the environment (habitat) and the organism (human body).</li>
+                    <li>A visual UI showing the main parameters like heartbeat, body temperature, mood, and so on.</li>
+                    <li>A time resolution of about 10 ms, which is good enough to model most physiological processes.</li>
+                    <li>A toy-like feel where you can feed the simulated human, change the ambient temperature, and watch how the body reacts.</li>
+                </ul>
+
+                <h2>Simplifications</h2>
+
+                <p>To keep the project manageable, I made some big simplifications:</p>
+
+                <ul>
+                    <li>The environment affects the human, but the human does not affect the environment. For example, we ignore CO₂ output.</li>
+                    <li>Ignore minor physiological factors such as gravity, acceleration, or ambient noise.</li>
+                    <li>Organs are the lowest level. No simulated tissues, cells, or molecules.</li>
+                    <li>We do not care about data accuracy. The heartbeat curve doesn't have to be realistic like in the <a href="https://pubmed.ncbi.nlm.nih.gov/12669985/" target="_blank" rel="noopener">McSharry ECG model with 17 parameters</a>.</li>
+                    <li>Distributed anatomy is grouped. We don’t simulate every muscle or nerve; instead, similar tissues are combined into single components, like a unified muscular system.</li>
+                </ul>
+
+                <h2>Architecture</h2>
+
+                <p>
+                    FMesh is just a graph of components. I could try to model everything as one huge graph from environment to human, but that quickly becomes messy - for example, you couldn’t have separate clocks for the environment and the human.
+                </p>
+
+                <p>
+                    Instead, I split the simulation into two meshes: one for the habitat and one for the human. The human mesh is wrapped as a regular component and added to the habitat mesh.
+                </p>
+
+                <p>Here's what that looks like in code:</p>
+
+                <div class="gist-wrapper">
+                    <script src="https://gist.github.com/hovsep/820fd14522e2a6859849ee4eb04d0805.js"></script>
+                </div>
+
+                <p>
+                    This simulation mesh is then wrapped into <code>step_sim</code>, a small library that runs any mesh as a step-based simulation:
+                </p>
+
+                <div class="gist-wrapper">
+                    <script src="https://gist.github.com/hovsep/27d1460172a2220de85da3653cdd032b.js"></script>
+                </div>
+
+                <p>
+                    <code>step_sim</code> is basically a driver loop plus a REPL. You can pause and resume the simulation and control what happens at each step.
+                </p>
+
+                <a href="image/repl_cmd.png" target="_blank" rel="noopener"><img src="image/repl_cmd.png" alt="Standard REPL commands"></a>
+                <p>
+                    You can also add custom commands to send into your simulation mesh. Here are the ones I’m using so far:
+                </p>
+                <div class="gist-wrapper">
+                    <script src="https://gist.github.com/hovsep/4035de8e27c4498c7880f1d7c1274c2b.js"></script>
+                </div>
+
+                <h2>Human Body Mesh</h2>
+
+                <a href="image/sim_architecture.png" target="_blank" rel="noopener"><img src="image/sim_architecture.png" alt="Simulation architecture diagram"></a>
+
+                <p>
+                    The more interesting part is the structure of the human body mesh.
+                </p>
+
+                <p>
+                    At first, I tried a flat model where the human body was just a group of organs. That didn't work. We need different kinds of components, so I ended up with these layers:
+                </p>
+
+                <ul>
+                    <li><strong>Boundary:</strong> interfaces between the environment and the body. For example, air doesn't flow directly into the lungs – it flows through the nose and air canals. We'll call it the Respiratory boundary.</li>
+                    <li><strong>Controller:</strong> components that connect the body to REPL commands, so we can send intentions like eating, drinking, mental stress, or exercise to the human.</li>
+                    <li><strong>Distributed anatomy:</strong> systems like skin, blood, muscles, etc.</li>
+                    <li><strong>Organ:</strong> heart, brain, lungs, and so on.</li>
+                    <li><strong>Physiology:</strong> endocrine system, autonomic nervous system, and similar things.</li>
+                    <li><strong>Regulation:</strong> homeostasis and other mechanisms that keep important values within safe ranges (e.g., thermal regulation).</li>
+                </ul>
+
+                <h2>Sense-Regulate-Act</h2>
+
+                <p>
+                    Splitting things into layers may sound unnecessary, but it maps well to a common robotics model called <strong>SPA: Sense-Plan-Act</strong>.
+                </p>
+
+                <p>
+                    In physiology, SPA becomes <strong>SRA: Sense-Regulate-Act</strong>.
+                </p>
+
+                <p>
+                    Every simulation step starts in the environment. A time tick arrives, the environmental factors update, and by the end of the habitat mesh run we know the state of the world for the next 10 ms. These signals flow into the human mesh, and the <strong>Sense</strong> phase begins. Boundary components read the environment, and controllers read user input. This phase updates the internal body state from the outside world.
+                </p>
+
+                <p>
+                    Next comes the <strong>Regulation</strong> phase. Physiology and regulation run here. Hormones are released, chemical reactions advance, and control loops update.
+                </p>
+
+                <p>
+                    Finally, we <strong>Act</strong>. Organs and distributed anatomy do their work. Blood, which acts as an information bus, has already been updated, so organs can just execute their logic. Oscillating organs like the heart and lungs advance their phase and update their internal state.
+                </p>
+
+                <p>
+                    We may add one more phase to collect an aggregated body state so the UI can read everything from a single place. This part is still under discussion.
+                </p>
+
+                <h2>Performance</h2>
+
+                <p>
+                    Right now, the simulation only has the general architecture in place, with 24 dummy components:
+                </p>
+
+                <ul>
+                    <li><strong>Habitat:</strong> 3 components</li>
+                    <li><strong>Human:</strong> 4 boundaries, 4 controllers, 5 physiology components, 1 regulation, 5 distributed anatomy components, and 2 organs (this will eventually grow to 10-15 organs) for a total of 21 components</li>
+                </ul>
+
+                <p>
+                    Each simulation step runs both meshes and advances time by 10 ms. On my MacBook Pro 2023, the simulation currently runs at roughly <strong>9.5 hours of simulated time per 1 minute of real time</strong>. This gives us a baseline to benchmark performance once the components are filled with actual behavior.
+                </p>
+
+                <a href="image/sim_time_speed.png" target="_blank" rel="noopener"><img src="image/sim_time_speed.png" alt="Simulation time speed benchmark"></a>
+
+                <h2>What's Next</h2>
+
+                <p>
+                    This is where the human body simulation stands today. The architecture is in place and looks solid. Next up is filling in the actual physiology – time for me to finally learn a bit of anatomy while coding!
+                </p>
+
+                <p>
+                    <strong>Source code:</strong> <a href="https://github.com/hovsep/fmesh-examples/tree/human_body_sim/life" target="_blank" rel="noopener">github.com/hovsep/fmesh-examples/tree/human_body_sim/life</a>
+                </p>
+
+                <p>
+                    Stay tuned for updates, and thanks for following <a href="https://github.com/hovsep/fmesh" target="_blank" rel="noopener">FMesh</a>!
+                </p>
+            </div>
+
+            <nav class="post-nav">
+                <a href="../">← Back to all posts</a>
+            </nav>
+        </article>
+    </main>
+
+    <footer>
+        <p>© 2026 Ovsep Avakian</p>
+    </footer>
+
+</body>
+</html>
