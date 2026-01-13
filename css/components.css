@@ -1,8 +1,8 @@
 /* Breadcrumb Navigation */
 .breadcrumb {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8125rem;
-    margin-bottom: 2rem;
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
 }
 
 .breadcrumb a {
@@ -331,7 +331,7 @@ pre code {
 /* Responsive - Mobile */
 @media (max-width: 480px) {
     .breadcrumb {
-        font-size: 0.75rem;
+        font-size: 0.875rem;
         margin-bottom: 1.5rem;
     }
 

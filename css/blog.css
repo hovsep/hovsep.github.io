@@ -4,22 +4,52 @@ body.blog {
     line-height: 1.8;
 }
 
-/* Blog Page Header */
-.blog header {
+/* Compact intro header for blog pages */
+.blog .intro {
+    margin-bottom: 1.5rem;
+}
+
+.blog .intro h1 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.blog .intro h1 span {
+    color: var(--accent);
+}
+
+.blog .intro .tagline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+}
+
+.blog .intro h1 a:hover {
+    color: var(--accent);
+    transition: color 0.2s ease;
+}
+
+/* Page Header */
+.blog .page-header {
     margin-bottom: 3rem;
     padding-bottom: 2rem;
     border-bottom: 1px solid var(--border);
 }
 
-.blog h1 {
+.blog .page-header h1 {
     font-family: 'Inter', sans-serif;
     font-size: 2.5rem;
     font-weight: 800;
     color: var(--text);
     letter-spacing: -0.03em;
+    margin: 0;
 }
 
-.blog .subtitle {
+.blog .page-header .subtitle {
     margin-top: 0.75rem;
     color: var(--text-muted);
     font-size: 1.1rem;
@@ -392,11 +422,11 @@ body.blog {
 
 /* Responsive - Mobile */
 @media (max-width: 480px) {
-    .blog h1 {
+    .blog .page-header h1 {
         font-size: 1.75rem;
     }
 
-    .blog .subtitle {
+    .blog .page-header .subtitle {
         font-size: 1rem;
     }
 
