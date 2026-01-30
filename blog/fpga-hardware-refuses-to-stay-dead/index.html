@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPGA: Hardware That Refuses to Stay Dead | Ovsep Avakian</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/blog.css">
+</head>
+<body class="blog blog-post">
+    <div class="noise"></div>
+    
+    <main>
+        <header class="intro">
+            <h1><a href="../../" style="text-decoration: none; color: inherit;"><span>&gt;</span> Ovsep Avakian</a></h1>
+            <p class="tagline">Software Engineer at <a href="https://sumup.com" target="_blank" rel="noopener">Sumup</a></p>
+        </header>
+
+        <nav class="breadcrumb">
+            <a href="../../">← Home</a>
+            <span>/</span>
+            <a href="../">blog</a>
+            <span>/</span>
+            <span class="current">fpga-hardware-refuses-to-stay-dead</span>
+        </nav>
+
+        <article>
+            <header>
+                <p class="post-date">January 30, 2026</p>
+                <h1>FPGA: Hardware That Refuses to Stay Dead</h1>
+            </header>
+
+            <div class="content">
+                <p>
+                    I just discovered FPGAs. Yeah, I know, a bit late to the party (this tech has been around for decades), but I couldn't resist geeking out. I wanted to share some basics, since I'm still exploring it myself.
+                </p>
+
+                <p>
+                    What do we actually know about normal microchips? Well, they’re made of a bunch of components, and they can do specific things: a GPU can calculate graphics, RAM can hold values, CPUs execute instructions, and that’s basically it.
+                </p>
+                <p>But FPGAs? They play by different rules.</p>
+
+
+                <h2>Reconfigurable Hardware</h2>
+
+                <p>
+                    At a high level, FPGAs are a grid of tiny logic blocks and wiring paths that you can literally rewire after the chip is made. Not figuratively. Literally. You don't just run software. You reshape the hardware itself.
+                </p>
+
+                <p>
+                    Instead of saying "this chip does X," you say "this chip <em>becomes</em> X." AND gates, OR gates, flip-flops, entire pipelines: you can configure all of it. Change the configuration, and the same silicon behaves like a completely different circuit. It's like giving your hardware a second life every time you reprogram it.
+                </p>
+
+                <h2>Where FPGAs Shine Today</h2>
+
+                <p>
+                    FPGAs are surprisingly versatile. You'll find them as AI accelerators, running custom neural network pipelines with crazy low latency. They're the secret sauce in high-speed networking, routing packets and encrypting data at hardware speed. And they're a lifesaver for embedded systems and rapid prototyping, letting engineers iterate on hardware designs without waiting months for new silicon.
+                </p>
+
+                <figure>
+                    <a href="image/fpga_board.webp" target="_blank" rel="noopener"><img src="image/fpga_board.webp" alt="Development board for learning, prototyping, and experimentation"></a>
+                    <figcaption>FPGA Development board for learning, prototyping, and experimentation</figcaption>
+                </figure>
+
+                <figure>
+                    <a href="image/fpga_ai_accelerator.jpg" target="_blank" rel="noopener"><img src="image/fpga_ai_accelerator.jpg" alt="AI accelerator plugs into a PCIe slot like a GPU"></a>
+                    <figcaption>Production grade AI accelerator plugs into a PCIe slot like a GPU</figcaption>
+                </figure>
+
+                <h2>Surviving the Unexpected</h2>
+
+                <p>Here’s where FPGAs start to feel a little alive. Imagine space, where radiation is everywhere, with high-energy particles constantly bombarding electronics, causing memory errors and making circuits behave unpredictably. On a normal chip, a single strike can crash the whole system. And here’s the kicker: how do you fix damaged hardware when it’s hundreds of kilometers away, orbiting Earth at thousands of kilometers per hour? You can’t just open it up and swap a chip.</p>
+<p>
+    On an FPGA, a fault in one part doesn’t have to take everything down. You can reroute or reconfigure the affected logic while the rest keeps running. It’s not magic, it doesn’t repair the broken hardware, but it lets you work around problems in real time, almost like rerouting signals in a brain to avoid a damaged path.
+</p>
+                <h2>The Trade-Offs</h2>
+
+                <p>
+                    Of course, FPGAs aren't magic. They're usually slower than ASICs for the same task, burn more power, and programming them well takes more effort than writing software. They also cost more at scale.
+                </p>
+
+                <p>
+                    Still, if you need flexibility, rapid prototyping, or hardware that can adapt while running, FPGAs are often the only practical option. And that's what makes them worth exploring, even decades after they first appeared.
+                </p>
+
+
+                <h2>What’s Next</h2>
+
+                <p> FPGAs are essentially a grid of tiny components, which fits perfectly with the philosophy behind <a  href="../../projects/fmesh/"  target="_blank" rel="noopener">FMesh</a>. Inspired by that, I’m planning a simple FPGA simulation project to explore these ideas in action. The <a href="https://github.com/hovsep/fmesh-examples/issues/39"  target="_blank" rel="noopener">GitHub issue</a> is open and waiting for its hero—maybe someone from the community will pick it up and have some fun with it too.</p>
+            </div>
+
+            <nav class="post-nav">
+                <a href="../">← Back to all posts</a>
+            </nav>
+        </article>
+    </main>
+
+    <footer>
+        <p>© 2026 Ovsep Avakian</p>
+    </footer>
+
+</body>
+</html>
