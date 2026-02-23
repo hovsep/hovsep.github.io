@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to test a simulation? | Ovsep Avakian</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/blog.css">
+</head>
+<body class="blog blog-post">
+    <div class="noise"></div>
+
+    <main>
+        <header class="intro">
+            <h1><a href="../../" style="text-decoration: none; color: inherit;"><span>&gt;</span> Ovsep Avakian</a></h1>
+            <p class="tagline">Software Engineer at <a href="https://sumup.com" target="_blank" rel="noopener">Sumup</a></p>
+        </header>
+
+        <nav class="breadcrumb">
+            <a href="../../">← Home</a>
+            <span>/</span>
+            <a href="../">blog</a>
+            <span>/</span>
+            <span class="current">how-to-test-a-simulation</span>
+        </nav>
+
+        <article>
+            <header>
+                <p class="post-date">February 7, 2026</p>
+                <h1>How to test a simulation?</h1>
+            </header>
+
+            <div class="content">
+                <p>
+                    Hi everyone. Today I want to share some progress on the <a href="../human-body-simulation/">human body simulation</a> I'm working on.
+                </p>
+
+                <p>
+                    The work is going much slower than I initially expected (yes, the classic programmer excuse), mostly because I have to do research on biology and physiology for almost every single component before I can even start coding it. Still, progress is progress. In this post, I want to focus on one specific topic: how I test the simulation.
+                </p>
+
+                <h2>Why testing suddenly matters</h2>
+
+                <p>
+                    In my previous simulation projects (for example, a <a href="../can-bus-simulation/">CAN bus simulation</a>), things were simple enough that unit tests didn't feel necessary. If something was broken, it was obvious just by running the simulation and looking at the output.
+                </p>
+
+                <p>With the human body simulation, this approach stopped working very quickly.</p>
+
+                <p>Now I have:</p>
+
+                <ul>
+                    <li>a layered architecture,</li>
+                    <li>many interacting components,</li>
+                    <li>complex signal exchange patterns (including oscillatory signals with different frequencies),</li>
+                    <li>and eventually a UI on top of all that.</li>
+                </ul>
+
+                <p>
+                    Another important point: the simulation is not only a human body. It's a whole environment with its own time, air, sun, and physical context. So before testing organs or physiology, I first needed to be sure that the most fundamental thing works correctly.
+                </p>
+
+                <h2>Testing time progression</h2>
+
+                <p>The first thing I wrote tests for was time advancement inside the simulation.</p>
+
+                <p>Here is a simplified example of such a test:</p>
+
+                <div class="gist-wrapper">
+                <script src="https://gist.github.com/hovsep/c7eae07398591ac7eae26cc253730d87.js"></script>
+                </div>
+
+                <p>And here is the helper function used to run the simulation:</p>
+
+                <div class="gist-wrapper">
+                    <script src="https://gist.github.com/hovsep/1cdcecf18ae10851ac019533407e2cc9.js"></script>
+                </div>
+
+                <h2>How this testing approach works</h2>
+
+                <p>The testing pattern is very simple:</p>
+
+                <ol>
+                    <li><strong>Run the simulation.</strong> No REPL, no UI. Just the step-based simulation engine with FMesh inside it.</li>
+                    <li><strong>Observe signals we care about.</strong> In this case, we observe the tick signal produced by the global time component.</li>
+                    <li><strong>Make assertions on observed values.</strong> Here, we assert that simulation wall time is monotonically increasing.</li>
+                </ol>
+
+                <p>
+                    To collect observed signals, I use FMesh hooks. Hooks allow injecting code at specific lifecycle points of a component. In this test, I attach a hook that runs after activation of the time component and inspects its output signals.
+                </p>
+
+                <h2>About sleeping in tests (yes, really)</h2>
+
+                <p>
+                    Normally, sleeping or waiting in tests is considered an antipattern. It makes tests slower and does not guarantee a strict cause–effect relationship. You are essentially hoping that the system reaches the desired state within a given time window.
+                </p>
+
+                <p>In this case, however, sleeping is not a workaround. It is the actual behavior being tested.</p>
+
+                <blockquote>
+                    <p>Let the simulation run for a while, then observe how it evolved.</p>
+                </blockquote>
+
+                <p>
+                    That is exactly what a simulation is supposed to do. So something that would be questionable in regular application testing makes perfect sense here.
+                </p>
+
+                <h2>What kind of tests this enables</h2>
+
+                <p>With this approach, it becomes very easy to write tests like:</p>
+
+                <ul>
+                    <li>"After 100 ms of simulation time, the human must be alive"</li>
+                    <li>"The human cannot survive 15 minutes without oxygen"</li>
+                    <li>"At night, the air temperature decreases"</li>
+                    <li>"After 30 minutes of running, the heart rate increases by X"</li>
+                </ul>
+
+                <p>
+                    For most tests, the simulation only needs to run for a very short time (around 100 ms of real time).
+                </p>
+
+                <p>
+                    For long-running processes, such as disease dynamics over months or years, the simulation will need to run longer. According to the latest benchmarks, the current simulation speed is roughly <strong>10 hours of simulated time per 1 minute of real time</strong> on an average laptop, which is good enough to make this kind of testing feasible.
+                </p>
+
+                <p>
+                    That's it for now. In the next post, I'll dive deeper into the autonomic coordination system, which sits between the brain and the organs and is responsible for regulating almost everything in the body.
+                </p>
+            </div>
+
+            <nav class="post-nav">
+                <a href="../">← Back to all posts</a>
+            </nav>
+        </article>
+    </main>
+
+    <footer>
+        <p>© 2026 Ovsep Avakian</p>
+    </footer>
+
+</body>
+</html>
