@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="901pt" height="2292pt" viewBox="0.00 0.00 901.00 2292.13">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 2288.1328)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-2288.1328 897,-2288.1328 897,4 -4,4"/>
+<g id="clust1" class="cluster">
+<title>cluster_s88</title>
+<path fill="none" stroke="#000000" stroke-width="5" d="M522,-1870.9375C522,-1870.9375 760,-1870.9375 760,-1870.9375 766,-1870.9375 772,-1876.9375 772,-1882.9375 772,-1882.9375 772,-2264.1328 772,-2264.1328 772,-2270.1328 766,-2276.1328 760,-2276.1328 760,-2276.1328 522,-2276.1328 522,-2276.1328 516,-2276.1328 510,-2270.1328 510,-2264.1328 510,-2264.1328 510,-1882.9375 510,-1882.9375 510,-1876.9375 516,-1870.9375 522,-1870.9375"/>
+<text text-anchor="middle" x="641" y="-2259.5328" font-family="Times,serif" font-size="14.00" fill="#000000">organ:brain</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_s49</title>
+<path fill="none" stroke="#000000" stroke-width="5" d="M343,-742.2956C343,-742.2956 627,-742.2956 627,-742.2956 633,-742.2956 639,-748.2956 639,-754.2956 639,-754.2956 639,-1259.4547 639,-1259.4547 639,-1265.4547 633,-1271.4547 627,-1271.4547 627,-1271.4547 343,-1271.4547 343,-1271.4547 337,-1271.4547 331,-1265.4547 331,-1259.4547 331,-1259.4547 331,-754.2956 331,-754.2956 331,-748.2956 337,-742.2956 343,-742.2956"/>
+<text text-anchor="middle" x="485" y="-1254.8547" font-family="Times,serif" font-size="14.00" fill="#000000">organ:heart</text>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_s3</title>
+<path fill="none" stroke="#000000" stroke-width="5" d="M409,-1333.4547C409,-1333.4547 685,-1333.4547 685,-1333.4547 691,-1333.4547 697,-1339.4547 697,-1345.4547 697,-1345.4547 697,-1796.9375 697,-1796.9375 697,-1802.9375 691,-1808.9375 685,-1808.9375 685,-1808.9375 409,-1808.9375 409,-1808.9375 403,-1808.9375 397,-1802.9375 397,-1796.9375 397,-1796.9375 397,-1345.4547 397,-1345.4547 397,-1339.4547 403,-1333.4547 409,-1333.4547"/>
+<text text-anchor="middle" x="547" y="-1792.3375" font-family="Times,serif" font-size="14.00" fill="#000000">physiology:autonomic_coordination</text>
+</g>
+<g id="clust4" class="cluster">
+<title>cluster_s11</title>
+<path fill="none" stroke="#000000" stroke-width="5" d="M20,-8C20,-8 873,-8 873,-8 879,-8 885,-14 885,-20 885,-20 885,-668.2956 885,-668.2956 885,-674.2956 879,-680.2956 873,-680.2956 873,-680.2956 20,-680.2956 20,-680.2956 14,-680.2956 8,-674.2956 8,-668.2956 8,-668.2956 8,-20 8,-20 8,-14 14,-8 20,-8"/>
+<text text-anchor="middle" x="446.5" y="-663.6956" font-family="Times,serif" font-size="14.00" fill="#000000">physiology:observable_state</text>
+</g>
+<!-- n90 -->
+<g id="node1" class="node">
+<title>n90</title>
+<ellipse fill="#d3d3d3" stroke="#000000" stroke-width="2.5" cx="633" cy="-2195.3328" rx="36" ry="36"/>
+<text text-anchor="middle" x="633" y="-2191.1328" font-family="Courier New" font-size="14.00" fill="#000000">time</text>
+</g>
+<!-- n89 -->
+<g id="node4" class="node">
+<title>n89</title>
+<polygon fill="#9dddea" stroke="#9dddea" stroke-width="2.5" points="678.5883,-2123.3328 587.4117,-2123.3328 587.4117,-2051.3328 678.5883,-2051.3328 678.5883,-2123.3328"/>
+<text text-anchor="middle" x="633" y="-2083.1328" font-family="Courier New" font-size="14.00" fill="#000000">The Brain</text>
+</g>
+<!-- n90&#45;&gt;n89 -->
+<g id="edge1" class="edge">
+<title>n90-&gt;n89</title>
+<path fill="none" stroke="#000000" d="M633,-2159.0699C633,-2159.0699 633,-2133.6838 633,-2133.6838"/>
+<polygon fill="#000000" stroke="#000000" points="636.5001,-2133.6838 633,-2123.6838 629.5001,-2133.6839 636.5001,-2133.6838"/>
+</g>
+<!-- n92 -->
+<g id="node2" class="node">
+<title>n92</title>
+<ellipse fill="#d3d3d3" stroke="#000000" stroke-width="2.5" cx="570" cy="-1953.1351" rx="39.6659" ry="39.6659"/>
+<text text-anchor="middle" x="570" y="-1948.9351" font-family="Courier New" font-size="14.00" fill="#000000">failure</text>
+</g>
+<!-- n91 -->
+<g id="node3" class="node">
+<title>n91</title>
+<ellipse fill="#d3d3d3" stroke="#000000" stroke-width="2.5" cx="690" cy="-1953.1351" rx="62.396" ry="62.396"/>
+<text text-anchor="middle" x="690" y="-1948.9351" font-family="Courier New" font-size="14.00" fill="#000000">neural_drive</text>
+</g>
+<!-- n5 -->
+<g id="node10" class="node">
+<title>n5</title>
+<ellipse fill="#d3d3d3" stroke="#000000" stroke-width="2.5" cx="615" cy="-1701.9398" rx="62.396" ry="62.396"/>
+<text text-anchor="middle" x="615" y="-1697.7398" font-family="Courier New" font-size="14.00" fill="#000000">neural_drive</text>
+</g>
+<!-- n91&#45;&gt;n5 -->
+<g id="edge20" class="edge">
+<title>n91-&gt;n5</title>
+<path fill="none" stroke="#e437ea" stroke-width="2" d="M652.5,-1903.507C652.5,-1903.507 652.5,-1761.8941 652.5,-1761.8941"/>
+<polygon fill="#e437ea" stroke="#e437ea" stroke-width="2" points="656.0001,-1761.894 652.5,-1751.8941 649.0001,-1761.8941 656.0001,-1761.894"/>
+</g>
+<!-- n14 -->
+<g id="node14" class="node">
+<title>n14</title>
+<ellipse fill="#d3d3d3" stroke="#000000" stroke-width="2.5" cx="727" cy="-519.6217" rx="71.2877" ry="71.2877"/>
+<text text-anchor="middle" x="727" y="-515.4217" font-family="Courier New" font-size="14.00" fill="#000000">brain_activity</text>
+</g>
+<!-- n91&#45;&gt;n14 -->
+<g id="edge21" class="edge">
+<title>n91-&gt;n14</title>
+<path fill="none" stroke="#e437ea" stroke-width="2" d="M714.6977,-1895.6104C714.6977,-1895.6104 714.6977,-599.9142 714.6977,-599.9142"/>
+<polygon fill="#e437ea" stroke="#e437ea" stroke-width="2" points="718.1978,-599.9141 714.6977,-589.9142 711.1978,-599.9142 718.1978,-599.9141"/>
+</g>
+<!-- n89&#45;&gt;n92 -->
+<g id="edge3" class="edge">
+<title>n89-&gt;n92</title>
+<path fill="none" stroke="#000000" d="M598.5194,-2051.017C598.5194,-2051.017 598.5194,-1990.9639 598.5194,-1990.9639"/>
+<polygon fill="#000000" stroke="#000000" points="602.0195,-1990.9639 598.5194,-1980.9639 595.0195,-1990.9639 602.0195,-1990.9639"/>
+</g>
+<!-- n89&#45;&gt;n91 -->
+<g id="edge2" class="edge">
+<title>n89-&gt;n91</title>
+<path fill="none" stroke="#000000" d="M653.298,-2051.017C653.298,-2051.017 653.298,-2013.5857 653.298,-2013.5857"/>
+<polygon fill="#000000" stroke="#000000" points="656.7981,-2013.5857 653.298,-2003.5857 649.7981,-2013.5858 656.7981,-2013.5857"/>
+</g>
+<!-- n52 -->
+<g id="node5" class="node">
+<title>n52</title>
+<ellipse fill="#d3d3d3" stroke="#000000" stroke-width="2.5" cx="547" cy="-1155.5109" rx="71.2877" ry="71.2877"/>
+<text text-anchor="middle" x="547" y="-1151.3109" font-family="Courier New" font-size="14.00" fill="#000000">autonomic_tone</text>
+</g>
+<!-- n50 -->
+<g id="node9" class="node">
+<title>n50</title>
+<polygon fill="#9dddea" stroke="#9dddea" stroke-width="2.5" points="529,-1048.3672 457,-1048.3672 457,-976.3672 529,-976.3672 529,-1048.3672"/>
+<text text-anchor="middle" x="493" y="-1008.1672" font-family="Courier New" font-size="14.00" fill="#000000">Heart</text>
+</g>
+<!-- n52&#45;&gt;n50 -->
+<g id="edge4" class="edge">
+<title>n52-&gt;n50</title>
+<path fill="none" stroke="#000000" d="M502.4281,-1099.758C502.4281,-1099.758 502.4281,-1058.7922 502.4281,-1058.7922"/>
+<polygon fill="#000000" stroke="#000000" points="505.9282,-1058.7921 502.4281,-1048.7922 498.9282,-1058.7922 505.9282,-1058.7921"/>
+</g>
+<!-- n51 -->
+<g id="node6" class="node">
+<title>n51</title>
+<ellipse fill="#d3d3d3" stroke="#000000" stroke-width="2.5" cx="422" cy="-1155.5109" rx="36" ry="36"/>
+<text text-anchor="middle" x="422" y="-1151.3109" font-family="Courier New" font-size="14.00" fill="#000000">time</text>
+</g>
+<!-- n51&#45;&gt;n50 -->
+<g id="edge5" class="edge">
+<title>n51-&gt;n50</title>
+<path fill="none" stroke="#000000" d="M458.2655,-1155C463.3743,-1155 466.9281,-1155 466.9281,-1155 466.9281,-1155 466.9281,-1058.7285 466.9281,-1058.7285"/>
+<polygon fill="#000000" stroke="#000000" points="470.4282,-1058.7285 466.9281,-1048.7285 463.4282,-1058.7286 470.4282,-1058.7285"/>
+</g>
+<!-- n53 -->
+<g id="node7" class="node">
+<title>n53</title>
+<ellipse fill="#d3d3d3" stroke="#000000" stroke-width="2.5" cx="440" cy="-851.3314" rx="89.0716" ry="89.0716"/>
+<text text-anchor="middle" x="440" y="-847.1314" font-family="Courier New" font-size="14.00" fill="#000000">cardiac_activation</text>
+</g>
+<!-- n15 -->
+<g id="node15" class="node">
+<title>n15</title>
+<ellipse fill="#d3d3d3" stroke="#000000" stroke-width="2.5" cx="398" cy="-519.6217" rx="115.7479" ry="115.7479"/>
+<text text-anchor="middle" x="398" y="-515.4217" font-family="Courier New" font-size="14.00" fill="#000000">heart_cardiac_activation</text>
+</g>
+<!-- n53&#45;&gt;n15 -->
+<g id="edge22" class="edge">
+<title>n53-&gt;n15</title>
+<path fill="none" stroke="#e437ea" stroke-width="2" d="M432.4191,-762.4393C432.4191,-762.4393 432.4191,-640.4239 432.4191,-640.4239"/>
+<polygon fill="#e437ea" stroke="#e437ea" stroke-width="2" points="435.9192,-640.4239 432.4191,-630.4239 428.9192,-640.4239 435.9192,-640.4239"/>
+</g>
+<!-- n54 -->
+<g id="node8" class="node">
+<title>n54</title>
+<ellipse fill="#d3d3d3" stroke="#000000" stroke-width="2.5" cx="583" cy="-851.3314" rx="36" ry="36"/>
+<text text-anchor="middle" x="583" y="-847.1314" font-family="Courier New" font-size="14.00" fill="#000000">rate</text>
+</g>
+<!-- n16 -->
+<g id="node16" class="node">
+<title>n16</title>
+<ellipse fill="#d3d3d3" stroke="#000000" stroke-width="2.5" cx="585" cy="-519.6217" rx="53.0044" ry="53.0044"/>
+<text text-anchor="middle" x="585" y="-515.4217" font-family="Courier New" font-size="14.00" fill="#000000">heart_rate</text>
+</g>
+<!-- n54&#45;&gt;n16 -->
+<g id="edge23" class="edge">
+<title>n54-&gt;n16</title>
+<path fill="none" stroke="#e437ea" stroke-width="2" d="M583,-815.2012C583,-815.2012 583,-582.8943 583,-582.8943"/>
+<polygon fill="#e437ea" stroke="#e437ea" stroke-width="2" points="586.5001,-582.8943 583,-572.8943 579.5001,-582.8944 586.5001,-582.8943"/>
+</g>
+<!-- n50&#45;&gt;n53 -->
+<g id="edge6" class="edge">
+<title>n50-&gt;n53</title>
+<path fill="none" stroke="#000000" d="M493,-976.2276C493,-976.2276 493,-932.9624 493,-932.9624"/>
+<polygon fill="#000000" stroke="#000000" points="496.5001,-932.9623 493,-922.9624 489.5001,-932.9624 496.5001,-932.9623"/>
+</g>
+<!-- n50&#45;&gt;n54 -->
+<g id="edge7" class="edge">
+<title>n50-&gt;n54</title>
+<path fill="none" stroke="#000000" d="M529.1741,-1012C554.0336,-1012 582.5719,-1012 582.5719,-1012 582.5719,-1012 582.5719,-897.3886 582.5719,-897.3886"/>
+<polygon fill="#000000" stroke="#000000" points="586.072,-897.3886 582.5719,-887.3886 579.072,-897.3886 586.072,-897.3886"/>
+</g>
+<!-- n4 -->
+<g id="node13" class="node">
+<title>n4</title>
+<polygon fill="#9dddea" stroke="#9dddea" stroke-width="2.5" points="676.5598,-1603.7421 417.4402,-1603.7421 417.4402,-1531.7421 676.5598,-1531.7421 676.5598,-1603.7421"/>
+<text text-anchor="middle" x="547" y="-1563.5421" font-family="Courier New" font-size="14.00" fill="#000000">Autonomic coordination system</text>
+</g>
+<!-- n5&#45;&gt;n4 -->
+<g id="edge8" class="edge">
+<title>n5-&gt;n4</title>
+<path fill="none" stroke="#000000" d="M614.791,-1639.5554C614.791,-1639.5554 614.791,-1613.9971 614.791,-1613.9971"/>
+<polygon fill="#000000" stroke="#000000" points="618.2911,-1613.9971 614.791,-1603.9971 611.2911,-1613.9972 618.2911,-1613.9971"/>
+</g>
+<!-- n6 -->
+<g id="node11" class="node">
+<title>n6</title>
+<ellipse fill="#d3d3d3" stroke="#000000" stroke-width="2.5" cx="499" cy="-1701.9398" rx="36" ry="36"/>
+<text text-anchor="middle" x="499" y="-1697.7398" font-family="Courier New" font-size="14.00" fill="#000000">time</text>
+</g>
+<!-- n6&#45;&gt;n4 -->
+<g id="edge9" class="edge">
+<title>n6-&gt;n4</title>
+<path fill="none" stroke="#000000" d="M499,-1665.6239C499,-1665.6239 499,-1614.0869 499,-1614.0869"/>
+<polygon fill="#000000" stroke="#000000" points="502.5001,-1614.0869 499,-1604.0869 495.5001,-1614.087 502.5001,-1614.0869"/>
+</g>
+<!-- n7 -->
+<g id="node12" class="node">
+<title>n7</title>
+<ellipse fill="#d3d3d3" stroke="#000000" stroke-width="2.5" cx="547" cy="-1424.5984" rx="71.2877" ry="71.2877"/>
+<text text-anchor="middle" x="547" y="-1420.3984" font-family="Courier New" font-size="14.00" fill="#000000">autonomic_tone</text>
+</g>
+<!-- n7&#45;&gt;n52 -->
+<g id="edge24" class="edge">
+<title>n7-&gt;n52</title>
+<path fill="none" stroke="#e437ea" stroke-width="2" d="M547,-1353.1943C547,-1353.1943 547,-1236.7813 547,-1236.7813"/>
+<polygon fill="#e437ea" stroke="#e437ea" stroke-width="2" points="550.5001,-1236.7813 547,-1226.7813 543.5001,-1236.7814 550.5001,-1236.7813"/>
+</g>
+<!-- n4&#45;&gt;n7 -->
+<g id="edge10" class="edge">
+<title>n4-&gt;n7</title>
+<path fill="none" stroke="#000000" d="M547,-1531.6209C547,-1531.6209 547,-1505.8819 547,-1505.8819"/>
+<polygon fill="#000000" stroke="#000000" points="550.5001,-1505.8819 547,-1495.8819 543.5001,-1505.882 550.5001,-1505.8819"/>
+</g>
+<!-- n12 -->
+<g id="node23" class="node">
+<title>n12</title>
+<polygon fill="#9dddea" stroke="#9dddea" stroke-width="2.5" points="840.895,-367.7478 195.105,-367.7478 195.105,-295.7478 840.895,-295.7478 840.895,-367.7478"/>
+<text text-anchor="middle" x="518" y="-327.5478" font-family="Courier New" font-size="14.00" fill="#000000">Observable state of the human being (e.g., temperature, blood pressure etc)</text>
+</g>
+<!-- n14&#45;&gt;n12 -->
+<g id="edge11" class="edge">
+<title>n14-&gt;n12</title>
+<path fill="none" stroke="#000000" d="M727,-448.3268C727,-448.3268 727,-377.7586 727,-377.7586"/>
+<polygon fill="#000000" stroke="#000000" points="730.5001,-377.7586 727,-367.7586 723.5001,-377.7586 730.5001,-377.7586"/>
+</g>
+<!-- n15&#45;&gt;n12 -->
+<g id="edge12" class="edge">
+<title>n15-&gt;n12</title>
+<path fill="none" stroke="#000000" d="M398,-403.5791C398,-403.5791 398,-377.9483 398,-377.9483"/>
+<polygon fill="#000000" stroke="#000000" points="401.5001,-377.9483 398,-367.9483 394.5001,-377.9484 401.5001,-377.9483"/>
+</g>
+<!-- n16&#45;&gt;n12 -->
+<g id="edge13" class="edge">
+<title>n16-&gt;n12</title>
+<path fill="none" stroke="#000000" d="M585,-466.2871C585,-466.2871 585,-377.9509 585,-377.9509"/>
+<polygon fill="#000000" stroke="#000000" points="588.5001,-377.9509 585,-367.9509 581.5001,-377.951 588.5001,-377.9509"/>
+</g>
+<!-- n13 -->
+<g id="node17" class="node">
+<title>n13</title>
+<ellipse fill="#d3d3d3" stroke="#000000" stroke-width="2.5" cx="228" cy="-519.6217" rx="36" ry="36"/>
+<text text-anchor="middle" x="228" y="-515.4217" font-family="Courier New" font-size="14.00" fill="#000000">time</text>
+</g>
+<!-- n13&#45;&gt;n12 -->
+<g id="edge14" class="edge">
+<title>n13-&gt;n12</title>
+<path fill="none" stroke="#000000" d="M229.5263,-483.3977C229.5263,-483.3977 229.5263,-377.8606 229.5263,-377.8606"/>
+<polygon fill="#000000" stroke="#000000" points="233.0263,-377.8606 229.5263,-367.8606 226.0263,-377.8606 233.0263,-377.8606"/>
+</g>
+<!-- n20 -->
+<g id="node18" class="node">
+<title>n20</title>
+<ellipse fill="#d3d3d3" stroke="#000000" stroke-width="2.5" cx="99" cy="-143.8739" rx="71.2877" ry="71.2877"/>
+<text text-anchor="middle" x="99" y="-139.6739" font-family="Courier New" font-size="14.00" fill="#000000">brain_activity</text>
+</g>
+<!-- n21 -->
+<g id="node19" class="node">
+<title>n21</title>
+<ellipse fill="#d3d3d3" stroke="#000000" stroke-width="2.5" cx="286" cy="-143.8739" rx="97.9637" ry="97.9637"/>
+<text text-anchor="middle" x="286" y="-139.6739" font-family="Courier New" font-size="14.00" fill="#000000">brain_activity_trend</text>
+</g>
+<!-- n18 -->
+<g id="node20" class="node">
+<title>n18</title>
+<ellipse fill="#d3d3d3" stroke="#000000" stroke-width="2.5" cx="518" cy="-143.8739" rx="115.7479" ry="115.7479"/>
+<text text-anchor="middle" x="518" y="-139.6739" font-family="Courier New" font-size="14.00" fill="#000000">heart_cardiac_activation</text>
+</g>
+<!-- n19 -->
+<g id="node21" class="node">
+<title>n19</title>
+<ellipse fill="#d3d3d3" stroke="#000000" stroke-width="2.5" cx="705" cy="-143.8739" rx="53.0044" ry="53.0044"/>
+<text text-anchor="middle" x="705" y="-139.6739" font-family="Courier New" font-size="14.00" fill="#000000">heart_rate</text>
+</g>
+<!-- n17 -->
+<g id="node22" class="node">
+<title>n17</title>
+<ellipse fill="#d3d3d3" stroke="#000000" stroke-width="2.5" cx="821" cy="-143.8739" rx="44.1121" ry="44.1121"/>
+<text text-anchor="middle" x="821" y="-139.6739" font-family="Courier New" font-size="14.00" fill="#000000">is_alive</text>
+</g>
+<!-- n12&#45;&gt;n20 -->
+<g id="edge18" class="edge">
+<title>n12-&gt;n20</title>
+<path fill="none" stroke="#000000" d="M194.8644,-331C139.2811,-331 99,-331 99,-331 99,-331 99,-225.1521 99,-225.1521"/>
+<polygon fill="#000000" stroke="#000000" points="102.5001,-225.152 99,-215.1521 95.5001,-225.1521 102.5001,-225.152"/>
+</g>
+<!-- n12&#45;&gt;n21 -->
+<g id="edge19" class="edge">
+<title>n12-&gt;n21</title>
+<path fill="none" stroke="#000000" d="M289.5172,-295.5238C289.5172,-295.5238 289.5172,-252.0924 289.5172,-252.0924"/>
+<polygon fill="#000000" stroke="#000000" points="293.0173,-252.0924 289.5172,-242.0924 286.0173,-252.0925 293.0173,-252.0924"/>
+</g>
+<!-- n12&#45;&gt;n18 -->
+<g id="edge16" class="edge">
+<title>n12-&gt;n18</title>
+<path fill="none" stroke="#000000" d="M518,-295.5238C518,-295.5238 518,-270.101 518,-270.101"/>
+<polygon fill="#000000" stroke="#000000" points="521.5001,-270.101 518,-260.101 514.5001,-270.101 521.5001,-270.101"/>
+</g>
+<!-- n12&#45;&gt;n19 -->
+<g id="edge17" class="edge">
+<title>n12-&gt;n19</title>
+<path fill="none" stroke="#000000" d="M705,-295.5238C705,-295.5238 705,-207.4125 705,-207.4125"/>
+<polygon fill="#000000" stroke="#000000" points="708.5001,-207.4125 705,-197.4125 701.5001,-207.4125 708.5001,-207.4125"/>
+</g>
+<!-- n12&#45;&gt;n17 -->
+<g id="edge15" class="edge">
+<title>n12-&gt;n17</title>
+<path fill="none" stroke="#000000" d="M808.8209,-295.5238C808.8209,-295.5238 808.8209,-196.5641 808.8209,-196.5641"/>
+<polygon fill="#000000" stroke="#000000" points="812.321,-196.5641 808.8209,-186.5641 805.321,-196.5642 812.321,-196.5641"/>
+</g>
+</g>
+</svg>

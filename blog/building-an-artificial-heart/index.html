@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building an Artificial Heart | Ovsep Avakian</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/blog.css">
+</head>
+<body class="blog blog-post">
+    <div class="noise"></div>
+    
+    <main>
+        <header class="intro">
+            <h1><a href="../../" style="text-decoration: none; color: inherit;"><span>&gt;</span> Ovsep Avakian</a></h1>
+            <p class="tagline">Software Engineer at <a href="https://sumup.com" target="_blank" rel="noopener">Sumup</a></p>
+        </header>
+
+        <nav class="breadcrumb">
+            <a href="../../">← Home</a>
+            <span>/</span>
+            <a href="../">blog</a>
+            <span>/</span>
+            <span class="current">building-an-artificial-heart</span>
+        </nav>
+
+        <article>
+            <header>
+                <p class="post-date">March 18, 2026</p>
+                <h1>Building an Artificial Heart</h1>
+            </header>
+
+            <div class="content">
+                <p>
+                    Welcome to another episode of Human Body Simulation ! <br>
+                    In this episode, I want to share some mind-blowing facts about the human body and how surprisingly fun (and challenging) it is to simulate it.
+
+                </p>
+
+                <p>
+                    Today, we’ll focus on fundamental aspects of the human body: the brain, the heart, and the autonomic coordination system.
+                </p>
+
+                <h2>What makes something alive?</h2>
+
+                <p>
+                    Turns out, if you want to simulate life, you first need to understand death.
+                </p>
+
+                <p>
+                    Medically speaking, a human is considered alive as long as the brain is alive. The heart can stop, breathing can disappear, but if the brain is still producing signals, you're technically still in the game.
+                </p>
+
+                <p>
+                    Why does this matter? Because my simulation is graph-based. I need a starting node. Something has to kick things off and coordinate everything else.
+                </p>
+
+                <p>That "something" is the brain.</p>
+
+                <h2>Brain as the main driver</h2>
+
+                <p>The activation flow looks like this:</p>
+
+                <a href="image/activation_flow.png" target="_blank" rel="noopener"><img src="image/activation_flow.png" alt="Basic nerve system activation flow"></a>
+
+                <p>
+                    The brain emits a single continuous signal: the <em>neural drive</em>.
+                    As long as that signal exists, the simulated human is considered alive.
+                </p>
+
+                <video width="100%"  muted autoplay loop src="video/brain_activity.mov"></video>
+
+                <p>
+                    I model it as a number between <code>0.0</code> and <code>1.0</code>, with a default around <code>0.3</code> plus some jitter. Higher values mean higher arousal, basically representing global sympathetic activity.
+                </p>
+
+                <p>Simple? Suspiciously simple.</p>
+
+                <p>
+                    Of course I added a few extra knobs. For example, a damage level that slowly increases over ~90 years of simulation time, or faster if things go wrong. Once it crosses a threshold… well, the simulation ends. Just like in real life.
+                </p>
+
+                <h2>Autonomic Coordination</h2>
+
+                <p>
+                    Now we have a brain emitting a nice noisy signal. But that alone would make the system boring and unrealistic.
+                </p>
+                <p>
+                    The neural drive mostly reflects sympathetic activity. But what about the parasympathetic side?
+                </p>
+
+                <p>Here comes the autonomic coordination system (ACS).</p>
+
+                <p>
+                    This isn't a single organ. It's a set of independent pieces of neural structures like spinal cord, adrenal medulla, ganglia, the sinoatrial node, and many others.
+                </p>
+
+                <p>
+                    One of the most surprising things here: <strong>the heart doesn't actually need the brain to beat.</strong>
+                </p>
+
+                <p>
+                    I used to think every muscle required a direct brain command. Turns out, the heart has its own pacemaker, the sinoatrial (SA) node. It happily generates its own rhythm. The brain mostly modulates it, and even filters signals so you don't feel every single heartbeat. (When that filtering fails,<a href="https://www.nhs.uk/symptoms/heart-palpitations/" rel="nofollow" target="_blank"> it's… not pleasant.</a>)
+                </p>
+
+                <p>The ACS takes the neural drive and turns it into a richer signal:</p>
+
+                <div class="gist">
+                    <script src="https://gist.github.com/hovsep/94190cc7e9736e7819109a99a08bda63.js"></script>
+                </div>
+
+                <p>
+                    As you can see an autonomic tone signal is just a group of levels and biases.
+                    Levels are general for the whole organism, and biases are regional. Biases allow the brain to talk to other organs without direct commands.
+                    For example, instead of micromanaging like:
+                </p>
+
+                <blockquote>
+                    <p>"Hey heart, we're running from a jaguar, increase BPM please."</p>
+                </blockquote>
+
+                <p>
+                    the brain just increases sympathetic level and cardiac bias. More realistic, more chaotic, and honestly more fun to simulate.
+                </p>
+
+                <h2>The Heart</h2>
+
+                <p>With the nervous system in place, I finally get to the star of the show.</p>
+
+                <p>
+                    Quick note: I build everything using TDD. Not because I enjoy writing tests (I don't), but because without them this project would collapse into a pile of "it kinda works, I think."
+                </p>
+
+                <p>So instead of randomly picking the next organ to implement, I asked:</p>
+
+                <blockquote>
+                    <p>What should I observe in a living human?</p>
+                </blockquote>
+
+                <p>Answer: heart contractions.</p>
+
+                <p>That's how the heart made it into the simulation. So I started with a test:</p>
+
+                <div class="gist">
+                    <script src="https://gist.github.com/hovsep/df068b69bc707e109be7e96cf5caeb56.js"></script>
+                </div>
+
+                <h2>How the heart model works</h2>
+
+                <p>The heart has no direct connection to the brain. It only listens to two inputs: time (from environment) and autonomic tone (from ACS)</p>
+
+                <ul>
+                    <li>Time drives the pacemaker (baseline rhythm)</li>
+                    <li>Autonomic tone adjusts the heart rate (BPM)</li>
+                </ul>
+
+                <p>See this partial graph showing the brain has no connections to the heart. Click it, it is SVG, so you can zoom in and explore without losing the quality.</p>
+                <a href="image/brain_to_heart_partial_graph.svg" target="_blank" rel="noopener">
+                    <img src="image/brain_to_heart_partial_graph.svg" alt="Brain to heart signal flow" />
+
+                </a>
+                <p>
+                    Important detail: contraction depends only on <code>time</code>, not on autonomic input.
+                    So even if the brain goes offline, the heart keeps beating for a while (such a state is called denervation).
+                </p>
+
+                <h2>Making it visible</h2>
+
+                <p>
+                    Now for the coolest part: I wanted an ECG-style diagram - the most intuitive way to visualize the “vitality” of a simulated human.
+
+                    To achieve this, the heart tracks its contraction phase and emits a corresponding waveform.
+                    For now, I’m using a basic phase-based curve.
+                    But this can be made highly realistic—for example, by using the <a href="https://pubmed.ncbi.nlm.nih.gov/12669985/" target="_blank" rel="nofollow">McSharry dynamic model</a>, which generates ECG signals from a parameterized system (typically 15–17 parameters).
+                </p>
+
+                <video width="100%" muted autoplay loop src="video/ecg.mov"></video>
+
+                <p>And yes, the UI will be entirely in the terminal (even the diagrams). Because somehow TUIs are sexy again, at least among vibecoders.</p>
+
+                <h2>What's next</h2>
+
+                <p>The next logical step is breathing.</p>
+
+                <p>Same guiding question:</p>
+
+                <blockquote>
+                    <p>What else should I observe in a living human?</p>
+                </blockquote>
+
+                <p>Answer: lungs doing their thing.</p>
+
+                <p>So next up, I'll try to bring some basic breathing mechanics into the picture.</p>
+
+                <p>
+                    That's it for now.<br>
+                    The source code of this and many other <a href="https://github.com/hovsep/fmesh">FMesh</a> is available on <a href="https://github.com/hovsep/fmesh-examples/tree/main/life" target="_blank" rel="noopener">GitHub</a>.<br>
+                    <br>
+                    Make simulations, not war!
+                </p>
+            </div>
+
+            <nav class="post-nav">
+                <a href="../">← Back to all posts</a>
+            </nav>
+        </article>
+    </main>
+
+    <footer>
+        <p>© 2026 Ovsep Avakian</p>
+    </footer>
+
+</body>
+</html>
