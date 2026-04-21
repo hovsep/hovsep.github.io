@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Behind the Breathing Mechanics | Ovsep Avakian</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/blog.css">
+</head>
+<body class="blog blog-post">
+    <div class="noise"></div>
+
+    <main>
+        <header class="intro">
+            <h1><a href="../../" style="text-decoration: none; color: inherit;"><span>&gt;</span> Ovsep Avakian</a></h1>
+            <p class="tagline">Software Engineer at <a href="https://sumup.com" target="_blank" rel="noopener">Sumup</a></p>
+        </header>
+
+        <nav class="breadcrumb">
+            <a href="../../">← Home</a>
+            <span>/</span>
+            <a href="../">blog</a>
+            <span>/</span>
+            <span class="current">behind-the-breathing-mechanics</span>
+        </nav>
+
+        <article>
+            <header>
+                <p class="post-date">April 21, 2026</p>
+                <h1>Behind the Breathing Mechanics</h1>
+            </header>
+
+            <div class="content">
+                <p>
+                    Welcome to another episode of human body simulation.<br>
+                    In the <a href="../building-an-artificial-heart/">previous post</a> we talked about the brain and the heart. At that point, our artificial human had a heartbeat.
+                </p>
+
+                <p>
+                    Now it's time to implement breathing. Hard to think of a stronger liveness signal.
+                </p>
+
+                <h2>From oscillation to physiology</h2>
+
+                <p>
+                    Initially, I just wanted a simple oscillating signal going from <code>-1</code> to <code>1</code> to represent inhale and exhale phases.
+                </p>
+
+                <p>
+                    Then I looked into actual breathing physiology and, unsurprisingly, it is not that simple. So I moved toward a more mechanical and realistic approach.
+                </p>
+
+                <h2>Architecture first</h2>
+
+                <p>The breathing system is represented by three components.</p>
+
+                <a href="image/respiratory_architecture.png" target="_blank" rel="noopener">
+                    <img src="image/respiratory_architecture.png" alt="Respiratory system architecture sketch">
+                </a>
+
+                <h3>Respiratory boundary</h3>
+
+                <p>
+                    This component receives gas signals from the environment such as chemical composition, humidity, pressure, and temperature, and converts them into inspired gas.
+                </p>
+
+                <p>It mimics the nose and airways up to the trachea. Here we will simulate:</p>
+
+                <ul>
+                    <li>warming and humidifying air</li>
+                    <li>basic mechanical filtering</li>
+                    <li>possibly smell sensing (still undecided)</li>
+                </ul>
+
+                <h3>The diaphragm</h3>
+
+                <p>The diaphragm is the primary driver of lung function.</p>
+
+                <p>
+                    I used to think the lungs were muscular bags that expand on their own. That's not how it works. The lungs are passive and rely on thoracic muscles, mainly the diaphragm, with support from the intercostal muscles.
+                </p>
+
+                <p>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/49zCq1U_nog?si=7zKAqSBBhi38-H_q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                     </p>
+
+                <h3>The lung</h3>
+
+                <blockquote>
+                    <p>Do you really understand how you breathe? I didn't.</p>
+                </blockquote>
+
+                <p>
+                    The lung is a passive organ. Mechanically, it is a chamber inside another chamber. It expands only when the pressure outside it decreases.
+                </p>
+
+                <p>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/OKG9pE877jQ?si=WGST0LuqoOy27k3o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </p>
+
+                <p>Once you understand this, a few things become obvious:</p>
+
+                <ul>
+                    <li>why breathing at depth underwater is difficult, and why there is a practical limit of about 10 meters when breathing through a tube</li>
+                    <li>what happens during a pneumothorax, when air enters the pleural space and the lung collapses</li>
+                </ul>
+
+                <h2>The diaphragm model</h2>
+
+                <p>
+                    The diaphragm model is simple but captures some realism. Mathematically, it is a phase-locked nonlinear oscillator.
+                </p>
+
+                <p>What that means in practice:</p>
+
+                <ul>
+                    <li>it tracks a phase from <code>0</code> to <code>1</code></li>
+                    <li>it is locked to the time signal (the phase advances on each time tick)</li>
+                </ul>
+
+                <h3>Nonlinear behavior</h3>
+
+                <p>The breathing cycle is not symmetric:</p>
+
+                <ul>
+                    <li>inhale is modeled as a sinusoidal curve</li>
+                    <li>exhale is modeled as an exponential decay</li>
+                </ul>
+
+                <p>
+                    This produces slower inhalation and faster exhalation, which is closer to real quiet breathing.
+                </p>
+
+                <h3>Oscillation</h3>
+
+                <p>
+                    The system produces a repeating pattern, which is exactly what tidal breathing is.
+                </p>
+
+                <h2>Control and pacemaking</h2>
+
+                <p>
+                    Under normal conditions, the rate stabilizes around 12 breaths per minute, but it can change dynamically.
+                </p>
+
+                <p>
+                    The diaphragm is driven by respiratory bias from the autonomic system. It does not receive a direct command like <em>"breathe 12 times per minute."</em> Instead, the rate emerges from neural input.
+                </p>
+
+                <p>
+                    For now, the oscillation is still too uniform. Each cycle looks identical. Later, I will introduce variability and noise to make it more realistic.
+                </p>
+
+                <h2>Outputs</h2>
+
+                <p>The diaphragm produces:</p>
+
+                <ul>
+                    <li><strong>pleural pressure</strong>, which drives the lungs</li>
+                    <li><strong>respiratory rate</strong>, mainly for observability</li>
+                </ul>
+
+                <p>
+                    A subtle but important point: the respiratory rate is not dictated externally. The diaphragm determines it based on neural signals.
+                </p>
+
+                <h2>Current limitation</h2>
+
+                <p>
+                    The system creates negative pleural pressure, typically between <code>-5</code> and <code>-8</code> cmH₂O, which forces the lungs to expand.
+                </p>
+
+                <p>
+                    One major limitation is that exhalation is always passive. This works at rest, but not during exercise, where exhalation becomes active. The current exponential decay is too slow in those conditions.
+                </p>
+
+                <p>
+                    This will be addressed later by modifying the waveform dynamically within a breathing cycle.
+                </p>
+
+                <h2>The lung model</h2>
+
+                <p>Here we handle two main things:</p>
+
+                <ul>
+                    <li>air mechanics (flow, volume, pressure)</li>
+                    <li>gas exchange (not implemented yet)</li>
+                </ul>
+
+                <p>
+                    Airflow is driven by differences between pleural, alveolar, and atmospheric pressure.
+                </p>
+
+                <p>
+                    I reused an existing physiological model with some simplifications: the <a href="https://journals.physiology.org/doi/abs/10.1152/jappl.1950.2.11.592" target="_blank" rel="nofollow">Single-Compartment Linear Resistance-Compliance (RC) Model (Otis, Fenn, and Rahn, 1950)</a>.
+                </p>
+
+                <p>
+                    Despite the intimidating name, it is straightforward and uses three parameters:
+                </p>
+
+                <ul>
+                    <li><strong>Volume</strong>, the amount of air in the lung</li>
+                    <li><strong>Compliance</strong>, how easily the lung expands</li>
+                    <li><strong>Resistance</strong>, how difficult it is for air to flow through the airways</li>
+                </ul>
+
+                <p>
+                    The system is described by a first-order differential equation and solved numerically using Euler integration.
+                </p>
+
+                <p>
+                    The resulting curves are composite shapes, combining sinusoidal and exponential behavior. Here they are, annotated with inhale/exhale phases and the shape of each segment — the pleural pressure on top, the alveolar pressure on the bottom.
+                </p>
+
+                <a href="image/pleural_vs_alveolar.png" target="_blank" rel="noopener">
+                    <img src="image/pleural_vs_alveolar.png" alt="Pleural and alveolar pressures">
+                </a>
+
+                <p>
+                    Pleural pressure vs volume:
+                </p>
+                <a href="image/pleural_vs_volume.png" target="_blank" rel="noopener">
+                    <img src="image/pleural_vs_volume.png" alt="Pleural pressure vs volume">
+                </a>
+
+                <h2>Some nice details</h2>
+
+                <ul>
+                    <li>The model includes asymmetry between left and right lungs. The left lung is slightly smaller because of the heart.</li>
+                    <li>It supports functional residual capacity (FRC), so the lungs never fully empty.</li>
+                </ul>
+
+                <p>
+                    In real physiology, FRC is important because it keeps gas exchange continuous between breaths.
+                </p>
+
+                <h2>Visualization</h2>
+
+                <p>
+                    Below is a near real-time simulation showing diaphragm activity and the left lung. You can actually follow the volume curve and try to breathe along with it. That is roughly how our artificial human breathes at rest.
+                </p>
+
+                <video width="100%" muted autoplay loop src="video/breathing.mp4"></video>
+
+                <h2>What still needs work</h2>
+
+                <ul>
+                    <li>The breathing cycles are too uniform.</li>
+                    <li>Atmospheric pressure is treated as zero, so our simulated human is breathing with a permanently open mouth. Not ideal, but acceptable for now.</li>
+                </ul>
+
+                <h2>What's next</h2>
+
+                <p>
+                    As always, the code is available in the <a href="https://github.com/hovsep/fmesh-examples/tree/main/life" target="_blank" rel="noopener">fmesh-examples</a> repo on GitHub.
+                </p>
+
+                <p>
+                    In the next post, I will move on to gas exchange. That is where things start to get more interesting.
+                </p>
+
+                <p>
+                    Make simulations, not war!
+                </p>
+            </div>
+
+            <nav class="post-nav">
+                <a href="../">← Back to all posts</a>
+            </nav>
+        </article>
+    </main>
+
+    <footer>
+        <p>© 2026 Ovsep Avakian</p>
+    </footer>
+
+</body>
+</html>
