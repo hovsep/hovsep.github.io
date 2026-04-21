@@ -136,6 +136,32 @@ h1 {
     margin: 0;
 }
 
+/* Photo Gallery - Masonry */
+.gallery {
+    column-width: 200px;
+    column-gap: 0.75rem;
+}
+
+.gallery a {
+    display: block;
+    margin: 0 0 0.75rem;
+    break-inside: avoid;
+    border-radius: 8px;
+    overflow: hidden;
+    border: none;
+}
+
+.gallery img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: opacity 0.2s ease;
+}
+
+.gallery a:hover img {
+    opacity: 0.85;
+}
+
 /* Members Grid */
 .members {
     display: grid;
