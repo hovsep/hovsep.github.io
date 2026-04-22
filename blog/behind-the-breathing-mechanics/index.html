@@ -141,7 +141,7 @@
                     The system produces a repeating pattern, which is exactly what tidal breathing is.
                 </p>
 
-                <h2>Control and pacemaking</h2>
+                <h3>Control and pacemaking</h3>
 
                 <p>
                     Under normal conditions, the rate stabilizes around 12 breaths per minute, but it can change dynamically.
@@ -155,7 +155,7 @@
                     For now, the oscillation is still too uniform. Each cycle looks identical. Later, I will introduce variability and noise to make it more realistic.
                 </p>
 
-                <h2>Outputs</h2>
+                <h3>Outputs</h3>
 
                 <p>The diaphragm produces:</p>
 
@@ -168,7 +168,7 @@
                     A subtle but important point: the respiratory rate is not dictated externally. The diaphragm determines it based on neural signals.
                 </p>
 
-                <h2>Current limitation</h2>
+                <h3>Current limitation</h3>
 
                 <p>
                     The system creates negative pleural pressure, typically between <code>-5</code> and <code>-8</code> cmH₂O, which forces the lungs to expand.
@@ -181,6 +181,13 @@
                 <p>
                     This will be addressed later by modifying the waveform dynamically within a breathing cycle.
                 </p>
+
+                <p>
+                    The component implementation is trivial, but here are constants that give some idea on how the model works:
+                </p>
+                <div class="gist">
+                    <script src="https://gist.github.com/hovsep/4d77a070d1f802b2a9ab373a9524f4b9.js"></script>
+                </div>
 
                 <h2>The lung model</h2>
 
@@ -228,7 +235,7 @@
                     <img src="image/pleural_vs_volume.png" alt="Pleural pressure vs volume">
                 </a>
 
-                <h2>Some nice details</h2>
+                <h3>Some nice details</h3>
 
                 <ul>
                     <li>The model includes asymmetry between left and right lungs. The left lung is slightly smaller because of the heart.</li>
@@ -238,6 +245,13 @@
                 <p>
                     In real physiology, FRC is important because it keeps gas exchange continuous between breaths.
                 </p>
+
+                <p>
+                    Here are important constants and vars:
+                </p>
+                <div class="gist">
+                    <script src="https://gist.github.com/hovsep/3b9b8f88d35b676869eff6adb11722ac.js"></script>
+                </div>
 
                 <h2>Visualization</h2>
 
