@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Behind the Breathing Mechanics | Ovsep Avakian</title>
+    <title>Breathing Mechanics | Ovsep Avakian</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -25,13 +25,13 @@
             <span>/</span>
             <a href="../">blog</a>
             <span>/</span>
-            <span class="current">behind-the-breathing-mechanics</span>
+            <span class="current">breathing-mechanics</span>
         </nav>
 
         <article>
             <header>
                 <p class="post-date">April 21, 2026</p>
-                <h1>Behind the Breathing Mechanics</h1>
+                <h1>Breathing Mechanics</h1>
             </header>
 
             <div class="content">
@@ -56,7 +56,7 @@
 
                 <h2>Architecture first</h2>
 
-                <p>The breathing system is represented by three components.</p>
+                <p>The breathing system is represented by three components: respiratory boundary, diaphragm and lungs.</p>
 
                 <a href="image/respiratory_architecture.png" target="_blank" rel="noopener">
                     <img src="image/respiratory_architecture.png" alt="Respiratory system architecture sketch">
@@ -68,7 +68,7 @@
                     This component receives gas signals from the environment such as chemical composition, humidity, pressure, and temperature, and converts them into inspired gas.
                 </p>
 
-                <p>It mimics the nose and airways up to the trachea. Here we will simulate:</p>
+                <p>It mimics the nose and airways up to the trachea. Here we will simulate (not implemented at the moment):</p>
 
                 <ul>
                     <li>warming and humidifying air</li>
@@ -76,26 +76,21 @@
                     <li>possibly smell sensing (still undecided)</li>
                 </ul>
 
-                <h3>The diaphragm</h3>
-
-                <p>The diaphragm is the primary driver of lung function.</p>
+                <h2>Some anatomy</h2>
 
                 <p>
                     I used to think the lungs were muscular bags that expand on their own. That's not how it works. The lungs are passive and rely on thoracic muscles, mainly the diaphragm, with support from the intercostal muscles.
+                </p>
+                <p>
+                    So this large flat muscle is the main driver of lung function:
                 </p>
 
                 <p>
                     <iframe width="560" height="315" src="https://www.youtube.com/embed/49zCq1U_nog?si=7zKAqSBBhi38-H_q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </p>
 
-                <h3>The lung</h3>
-
-                <blockquote>
-                    <p>Do you really understand how you breathe? I didn't.</p>
-                </blockquote>
-
                 <p>
-                    The lung is a passive organ. Mechanically, it is a chamber inside another chamber. It expands only when the pressure outside it decreases.
+                    The lung is a chamber inside another chamber. It expands only when the pressure outside it goes negative (pleural pressure).
                 </p>
 
                 <p>
@@ -109,7 +104,7 @@
                     <li>what happens during a pneumothorax, when air enters the pleural space and the lung collapses</li>
                 </ul>
 
-                <h2>The diaphragm model</h2>
+                <h2>Some math</h2>
 
                 <p>
                     The diaphragm model is simple but captures some realism. Mathematically, it is a phase-locked nonlinear oscillator.
