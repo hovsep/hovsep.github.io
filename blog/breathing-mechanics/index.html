@@ -198,11 +198,11 @@
                 </p>
 
                 <p>
-                    I reused an existing physiological model with some simplifications: the <a href="https://journals.physiology.org/doi/abs/10.1152/jappl.1950.2.11.592" target="_blank" rel="nofollow">Single-Compartment Linear Resistance-Compliance (RC) Model (Otis, Fenn, and Rahn, 1950)</a>.
-                </p>
+                    Instead of reinventing the wheel I just googled an existing lung model from this publication:
+                    <a href="https://journals.physiology.org/doi/abs/10.1152/jappl.1950.2.11.592" target="_blank" rel="nofollow"> "Mechanics of Breathing in Man" (Otis, Fenn, and Rahn, 1950)</a>
 
-                <p>
-                    Despite the intimidating name, it is straightforward and uses three parameters:
+                    After huge simplification, I end up with a resistance-compliance (RC) Model.
+                    In essence, it means that we model a lung as an elastic system with just three parameters:
                 </p>
 
                 <ul>
@@ -226,9 +226,12 @@
                 <p>
                     Pleural pressure vs volume:
                 </p>
+                <figure>
                 <a href="image/pleural_vs_volume.png" target="_blank" rel="noopener">
                     <img src="image/pleural_vs_volume.png" alt="Pleural pressure vs volume">
                 </a>
+                    <figcaption>When the chest expands, pleural pressure decreases, causing lung volume to increase.</figcaption>
+                </figure>
 
                 <h3>Some nice details</h3>
 
