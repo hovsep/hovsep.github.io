@@ -321,6 +321,32 @@ body.blog {
     margin-top: 1rem;
 }
 
+/* Code blocks */
+.content pre {
+    margin: 1.5rem 0 2.5rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--text);
+}
+
+.content pre code {
+    font-size: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+}
+
+.content pre .c {
+    color: var(--text-muted);
+}
+
 /* GitHub Gist Embeds */
 .gist-wrapper {
     margin: 2.5rem 0;
@@ -464,6 +490,11 @@ body.blog {
     .content blockquote {
         padding: 1rem;
         font-size: 0.95rem;
+    }
+
+    .content pre {
+        padding: 1rem;
+        font-size: 0.75rem;
     }
 
     .post-nav a {

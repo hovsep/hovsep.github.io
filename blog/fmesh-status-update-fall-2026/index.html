@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FMesh Status Update: October 2026 | Ovsep Avakian</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/blog.css">
+</head>
+<body class="blog blog-post">
+    <div class="noise"></div>
+    
+    <main>
+        <header class="intro">
+            <h1><a href="../../" style="text-decoration: none; color: inherit;"><span>&gt;</span> Ovsep Avakian</a></h1>
+            <p class="tagline">Software Engineer at <a href="https://sumup.com" target="_blank" rel="noopener">Sumup</a></p>
+        </header>
+
+        <nav class="breadcrumb">
+            <a href="../../">← Home</a>
+            <span>/</span>
+            <a href="../">blog</a>
+            <span>/</span>
+            <span class="current">fmesh-status-update-fall-2026</span>
+        </nav>
+
+        <article>
+            <header>
+                <p class="post-date">October 19, 2026</p>
+                <h1>FMesh Status Update: October 2026</h1>
+            </header>
+
+            <div class="content">
+                <p>
+                    It has been a busy couple of months, and most of it didn't fit into a single topic post. So here is a status update instead: what's new in the little FMesh ecosystem from August to October.
+                </p>
+
+                <ul>
+                    <li><a href="#body">Human Body Simulation: done</a></li>
+                    <li><a href="#fmesh">FMesh: new features, API changes, performance</a></li>
+                    <li><a href="#export">fmesh-export</a></li>
+                    <li><a href="#hub">fmesh-hub</a></li>
+                    <li><a href="#conference">First conference</a></li>
+                    <li><a href="#next">What's next</a></li>
+                </ul>
+
+                <h2 id="body">Human Body Simulation: done</h2>
+
+                <p>
+                    The human body simulation is done. Not finished, because you can never finish a human body. I just stopped developing it.
+                </p>
+
+                <p>
+                    The final state: the body is a mesh of 26 components (organs, distributed tissues, controllers and physiology hubs), wrapped as one component inside a habitat mesh with time, air and sun. All communication is signals, and no component shares state with another.
+                </p>
+
+                <figure class="diagram">
+                    <a href="image/human_mesh.svg" target="_blank" rel="noopener"><img src="image/human_mesh.svg" alt="The human body mesh exported as a graph: every organ, tissue and controller is a box with its ports, pipes connect them"></a>
+                    <figcaption>The body mesh exported with fmesh-export. Click to open the SVG and zoom in.</figcaption>
+                </figure>
+
+                <p>
+                    There is a terminal dashboard with a command prompt. You can feed the human, make him run, open a wound, change the air he breathes, and schedule such commands as scenarios. A test suite checks the model against textbook numbers.
+                </p>
+
+                <figure>
+                    <a href="image/tui_ecg.png" target="_blank" rel="noopener"><img src="image/tui_ecg.png" alt="The terminal dashboard, Cardiovascular tab: an ECG trace at 128 BPM during a workout, with SpO2 and PaCO2 bars"></a>
+                    <figcaption>Cardiovascular tab. The ECG during a workout, heart rate 128 BPM.</figcaption>
+                </figure>
+
+                <figure>
+                    <a href="image/tui_overview.png" target="_blank" rel="noopener"><img src="image/tui_overview.png" alt="The terminal dashboard, Overview tab: cardiovascular, respiratory, nervous and gas exchange panels"></a>
+                    <figcaption>Overview tab.</figcaption>
+                </figure>
+
+                <figure>
+                    <a href="image/tui_respiratory.png" target="_blank" rel="noopener"><img src="image/tui_respiratory.png" alt="The terminal dashboard, Respiratory tab: pleural pressure, left and right lung volume and airflow charts"></a>
+                    <figcaption>Respiratory tab with the lungs split into left and right. The console at the bottom shows a workout and a bleed being applied.</figcaption>
+                </figure>
+
+                <p>
+                    This is the biggest simulation built on FMesh so far, and working on it was the main source of framework improvements in the next section. For example, livelock detection was added because the organs were waiting for each other, and deterministic runs were added because the same body produced different numbers on different runs.
+                </p>
+
+                <p>
+                    The simulation is in the <a href="https://github.com/hovsep/fmesh-examples/tree/main/simulation/life" target="_blank" rel="noopener">examples repo</a>. Clone it, run <code>go run .</code> in <code>simulation/life</code> and play with it.
+                </p>
+
+                <h2 id="fmesh">FMesh: new features, API changes, performance</h2>
+
+                <p>
+                    Since the last post, FMesh went from v1.12 to <a href="https://github.com/hovsep/fmesh/releases" target="_blank" rel="noopener">v1.18</a>, six releases in two months. Most of them contain breaking changes. FMesh is still pre-production, and I prefer to fix the API now instead of keeping bad decisions forever. The <a href="https://github.com/hovsep/fmesh/blob/main/CHANGELOG.md" target="_blank" rel="noopener">changelog</a> has before/after code for every change, so here is only the important part.
+                </p>
+
+                <p><strong>Context everywhere</strong> (<a href="https://github.com/hovsep/fmesh/pull/238" target="_blank" rel="noopener">#238</a>). <code>Run</code>, activation functions and hooks take a context. The time limit becomes a deadline on it.</p>
+<pre><code><span class="c">// before</span>
+ri, err := fm.Run()
+component.WithActivationFunc(
+    func(this *component.Component) error { ... })
+
+<span class="c">// after</span>
+ri, err := fm.Run(ctx)
+component.WithActivationFunc(
+    func(ctx context.Context, this *component.Component) error { ... })</code></pre>
+
+                <p><strong>Deterministic runs</strong> (<a href="https://github.com/hovsep/fmesh/pull/238" target="_blank" rel="noopener">#238</a>, <a href="https://github.com/hovsep/fmesh/pull/250" target="_blank" rel="noopener">#250</a>). Ports are traversed in port-name order, components in component-name order, signals in arrival order. Same input, same output.</p>
+<pre><code>component.WithInputs(&quot;i1&quot;, &quot;i2&quot;, &quot;i3&quot;)
+<span class="c">// this.Inputs().Signals() reads i1, then i2, then i3. Every run.</span>
+<span class="c">// Before: map order, so 200 identical runs could give 4 different results.</span></code></pre>
+
+                <p><strong>Livelock detection</strong> (<a href="https://github.com/hovsep/fmesh/pull/238" target="_blank" rel="noopener">#238</a>, <a href="https://github.com/hovsep/fmesh/pull/288" target="_blank" rel="noopener">#288</a>). A mesh where every active component waits for inputs stops after two cycles, and the error names what is stuck.</p>
+<pre><code>_, err := fm.Run(ctx)
+errors.Is(err, fmesh.ErrLivelockDetected) <span class="c">// true</span>
+<span class="c">// livelock detected: no progress for 2 consecutive cycles, stopped at cycle #2</span>
+<span class="c">//   &quot;joiner&quot; is waiting: empty input ports [b]</span>
+
+fmesh.New(&quot;mesh&quot;, fmesh.WithLivelockThreshold(5))
+fmesh.New(&quot;mesh&quot;, fmesh.WithoutLivelockDetection())</code></pre>
+
+                <p><strong>Labels and scalars became metadata</strong> (<a href="https://github.com/hovsep/fmesh/pull/253" target="_blank" rel="noopener">#253</a>, <a href="https://github.com/hovsep/fmesh/pull/294" target="_blank" rel="noopener">#294</a>). One <code>Meta()</code> store instead of <code>Labels()</code> and <code>Scalars()</code>. A value can be a string, any number, a bool or a named type. Needs Go 1.27.</p>
+<pre><code><span class="c">// before</span>
+fm.Labels().Set(&quot;env&quot;, &quot;prod&quot;)
+fm.Scalars().Set(&quot;version&quot;, 2)
+v, err := c.Labels().Value(&quot;env&quot;)
+
+<span class="c">// after</span>
+fm.Meta().Set(&quot;env&quot;, &quot;prod&quot;).Set(&quot;version&quot;, 2)
+v, err := c.Meta().Value[string](&quot;env&quot;)</code></pre>
+
+                <p><strong>Typed payloads are methods</strong> (<a href="https://github.com/hovsep/fmesh/pull/252" target="_blank" rel="noopener">#252</a>). Generic methods in Go 1.27 let the typed accessors move from package functions to methods.</p>
+<pre><code><span class="c">// before</span>
+n, err := signal.As[int](sig)
+n, err := signal.As[int](this.InputByName(&quot;in&quot;).Signals().First())
+
+<span class="c">// after</span>
+n, err := sig.As[int]()
+n, err := this.InputByName(&quot;in&quot;).Signals().FirstAs[int]()</code></pre>
+
+                <p><strong>Fewer hooks</strong> (<a href="https://github.com/hovsep/fmesh/pull/255" target="_blank" rel="noopener">#255</a>). Component activation hooks are only <code>BeforeActivation</code> and <code>AfterActivation</code>. The outcome hooks are removed, branch on the result instead. A panic in a hook is recovered.</p>
+<pre><code><span class="c">// before</span>
+h.OnError(func(ctx context.Context, ac *component.ActivationContext) error {
+    return ac.Component.ClearInputs(ctx)
+})
+
+<span class="c">// after</span>
+h.AfterActivation(func(ctx context.Context, ac *component.ActivationContext) error {
+    if !ac.Result.IsError() {
+        return nil
+    }
+    return ac.Component.ClearInputs(ctx)
+})</code></pre>
+
+                <p><strong>Retries</strong> (<a href="https://github.com/hovsep/fmesh/pull/262" target="_blank" rel="noopener">#262</a>, <a href="https://github.com/hovsep/fmesh/pull/265" target="_blank" rel="noopener">#265</a>). An activation that returns an error can be retried. A panic is never retried.</p>
+<pre><code>component.New(&quot;fetch&quot;,
+    component.WithRetry(3), <span class="c">// up to 3 attempts</span>
+    component.WithRetryIf(func(ctx context.Context, attempt int, err error) bool {
+        time.Sleep(time.Duration(attempt) * time.Second) <span class="c">// backoff</span>
+        return errors.Is(err, ErrTemporary)              <span class="c">// retry only temporary errors</span>
+    }),
+    ...
+)</code></pre>
+
+                <p><strong>Config through options only</strong> (<a href="https://github.com/hovsep/fmesh/pull/256" target="_blank" rel="noopener">#256</a>). <code>WithConfig</code> replaced the whole configuration, and every field you did not set became "no limit". It is removed.</p>
+<pre><code><span class="c">// before</span>
+fmesh.New(&quot;m&quot;, fmesh.WithConfig(fmesh.Config{CyclesLimit: 100})) <span class="c">// silently removed the time limit</span>
+
+<span class="c">// after</span>
+fmesh.New(&quot;m&quot;, fmesh.WithCyclesLimit(100)) <span class="c">// every other setting keeps its default</span></code></pre>
+
+                <p><strong>One iterator</strong> (<a href="https://github.com/hovsep/fmesh/pull/296" target="_blank" rel="noopener">#296</a>). Every container has one <code>All()</code> that returns <code>iter.Seq</code>. <code>ForEach</code>, <code>Each</code>, <code>AllOrdered</code> and the slice and map variants are gone.</p>
+<pre><code><span class="c">// before</span>
+err := p.Signals().ForEach(func(s *signal.Signal) error { use(s); return nil })
+for _, s := range p.Signals().All() { use(s) }
+
+<span class="c">// after</span>
+for s := range p.Signals().All() { use(s) }   <span class="c">// break and return work as usual</span>
+signals := slices.Collect(p.Signals().All()) <span class="c">// when you need a slice</span></code></pre>
+
+                <p><strong>Performance</strong> (<a href="https://github.com/hovsep/fmesh/pull/289" target="_blank" rel="noopener">#289</a>, <a href="https://github.com/hovsep/fmesh/pull/290" target="_blank" rel="noopener">#290</a>, <a href="https://github.com/hovsep/fmesh/pull/295" target="_blank" rel="noopener">#295</a>). Activations run on a worker pool instead of one goroutine per component, a run allocates about half as much memory and finishes roughly 30% faster.</p>
+<pre><code>fmesh.New(&quot;m&quot;, fmesh.WithMaxConcurrency(4))      <span class="c">// default is GOMAXPROCS</span>
+fmesh.New(&quot;m&quot;, fmesh.WithUnlimitedConcurrency()) <span class="c">// the old behavior</span></code></pre>
+
+                <p><strong>Smaller API</strong> (<a href="https://github.com/hovsep/fmesh/pull/250" target="_blank" rel="noopener">#250</a>, <a href="https://github.com/hovsep/fmesh/pull/292" target="_blank" rel="noopener">#292</a>, <a href="https://github.com/hovsep/fmesh/pull/296" target="_blank" rel="noopener">#296</a>). Methods with no callers were removed, and collections share one vocabulary. The compiler finds every call site, and the changelog says what replaced it.</p>
+<pre><code><span class="c">// before</span>
+first := fm.Components().Any()
+if result.ActivationError() != nil { ... }
+
+<span class="c">// after</span>
+first := fm.Components().First()
+if result.Err() != nil { ... }</code></pre>
+
+                <p><strong>Release tags are plain semver</strong> (<a href="https://github.com/hovsep/fmesh/blob/main/.github/workflows/release-guard.yml" target="_blank" rel="noopener">release guard</a>). A suffix in the tag makes Go treat the release as a pre-release, and <code>go get</code> skips pre-releases. 36 tags were never served because of this. The codename is in the release title now.</p>
+<pre><code>v1.11.1-Shirak <span class="c">// pre-release for Go, go get skips it</span>
+v1.12.0        <span class="c">// served; the codename &quot;Kotayk&quot; is in the release title</span></code></pre>
+
+                <p>
+                    If you are on an older version, upgrade one release at a time and follow the compiler. Every breaking entry in the changelog ends with a migration checklist.
+                </p>
+
+                <h2 id="export">fmesh-export</h2>
+
+                <p>
+                    Exporters used to live in two places: a DOT exporter in a separate <code>fmesh-graphviz</code> repo and a JSON plugin inside FMesh. Both were wrong. An exporter only reads a mesh, so it should not be a plugin, and one repo per format does not scale. All of them moved to one new module, <a href="https://github.com/hovsep/fmesh-export" target="_blank" rel="noopener">fmesh-export</a>, one package per format:
+                </p>
+
+                <ul>
+                    <li><strong>JSON</strong> and <strong>YAML</strong>, for tools and for unmarshalling into a <code>Mesh</code> struct</li>
+                    <li><strong>Graphviz DOT</strong>, the format used in all previous posts</li>
+                    <li><strong>Mermaid</strong>, which GitHub renders directly in markdown</li>
+                    <li><strong>D2</strong></li>
+                    <li><strong>PlantUML</strong></li>
+                </ul>
+
+                <p>
+                    Here is one mesh, an order processing pipeline with fan-out, fan-in, an error and a wait, exported in each diagram format:
+                </p>
+
+                <figure class="diagram">
+                    <a href="image/export_dot.png" target="_blank" rel="noopener"><img src="image/export_dot.png" alt="The order processing mesh rendered from Graphviz DOT"></a>
+                    <figcaption>Graphviz DOT</figcaption>
+                </figure>
+
+                <figure class="diagram">
+                    <a href="image/export_mermaid.png" target="_blank" rel="noopener"><img src="image/export_mermaid.png" alt="The same mesh rendered from Mermaid"></a>
+                    <figcaption>Mermaid</figcaption>
+                </figure>
+
+                <figure class="diagram">
+                    <a href="image/export_d2.png" target="_blank" rel="noopener"><img src="image/export_d2.png" alt="The same mesh rendered from D2"></a>
+                    <figcaption>D2</figcaption>
+                </figure>
+
+                <figure class="diagram">
+                    <a href="image/export_plantuml.png" target="_blank" rel="noopener"><img src="image/export_plantuml.png" alt="The same mesh rendered from PlantUML"></a>
+                    <figcaption>PlantUML</figcaption>
+                </figure>
+
+                <p>
+                    Every exporter has the same shape. <code>Export(fm)</code> returns the structure. <code>ExportCycle(fm, c)</code> returns the structure colored by the results of one cycle, so a run can be replayed as an animation. All of them implement one <code>export.Exporter</code> interface, so code that does not care about the format can accept any of them. An exporter never changes the mesh, and equal meshes give byte-identical output. CI renders a showcase mesh in every diagram format on each merge, so you can see the result without installing anything. FMesh itself got a <code>Walk(visitor)</code> method for this. If you want to add a format, the D2 package is the template to copy.
+                </p>
+
+                <figure class="diagram">
+                    <a href="image/export_mermaid_cycles.gif" target="_blank" rel="noopener"><img src="image/export_mermaid_cycles.gif" alt="Animation of the same mesh, one frame per cycle, components colored by their activation result"></a>
+                    <figcaption>The same mesh replayed cycle by cycle with ExportCycle, Mermaid format.</figcaption>
+                </figure>
+
+                <h2 id="hub">fmesh-hub</h2>
+
+                <p>
+                    This one is an idea more than a repo. As the ecosystem grows, I want one place to find everything built <em>for</em> FMesh (plugins, exporters, tools) and everything built <em>with</em> FMesh (libraries and applications that are a mesh inside, like a finite state machine or a rule engine). A registry organized by category, not a list of links on a wiki page.
+                </p>
+
+                <p>
+                    Some of this already exists as examples. The <a href="https://github.com/hovsep/fmesh-examples/tree/main/patterns/state_machine" target="_blank" rel="noopener">state machine</a> and the <a href="https://github.com/hovsep/fmesh-examples/tree/main/patterns/rule_engine" target="_blank" rel="noopener">rule engine</a> are a few hundred lines each, and the <code>sim</code> library the body simulation is built on lives in the same repo. The hub is where these will move when they stop being examples. Right now <a href="https://github.com/hovsep/fmesh-hub" target="_blank" rel="noopener">fmesh-hub</a> is only a README. If you built something with FMesh and want it listed, open an issue.
+                </p>
+
+                <h2 id="conference">First conference</h2>
+
+                <p>
+                    On October 21 I will present FMesh at <a href="https://www.eurosis.org/conf/esm/2026/" target="_blank" rel="noopener">ESM 2026</a>, the 40th European Simulation and Modelling Conference, in Metz, France. It is an academic conference, not an IT one, and it is my first. The audience is researchers and engineers who build simulation models, and most of them have never heard about Flow-Based Programming or about a Go library that implements it.
+                </p>
+
+                <figure>
+                    <a href="image/esm_2026_cover.png" target="_blank" rel="noopener"><img src="image/esm_2026_cover.png" alt="Cover slide: Simulation Modeling with FMesh, ESM 2026, Metz, France"></a>
+                    <figcaption>The cover slide. The diagram on the right is a two-component mesh exported in Mermaid format.</figcaption>
+                </figure>
+
+                <p>
+                    The tutorial is called "Building Simulation Models with Flow-Based Programming using FMesh". I will give it online. After the conference I will share the slides and what I learned from the questions in a follow-up post.
+                </p>
+
+                <h2 id="next">What's next</h2>
+
+                <p>
+                    Three things. Polish FMesh to get it into the <a href="https://github.com/avelino/awesome-go" target="_blank" rel="noopener">awesome-go</a> list. Work on fmesh-hub. And build simulation-related tooling, because that is where FMesh is most useful today.
+                </p>
+
+                <p>
+                    Make simulations, not war!
+                </p>
+            </div>
+
+            <nav class="post-nav">
+                <a href="../">← Back to all posts</a>
+            </nav>
+        </article>
+    </main>
+
+    <footer>
+        <p>© 2026 Ovsep Avakian</p>
+    </footer>
+
+</body>
+</html>
