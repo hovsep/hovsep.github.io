@@ -13,7 +13,8 @@ Every page is a hand-written `index.html`. "Deploying" means committing and push
 ## Layout
 
 ```
-index.html                 Home page (bio, Connect links, Projects list)
+index.html                 Home page (bio, links list, Projects list)
+about/index.html           About page (bio, Talks list)
 blog/index.html            Blog index (list of posts, newest first)
 blog/<slug>/index.html     One blog post
 blog/<slug>/image/         Images for that post
@@ -22,9 +23,10 @@ projects/<slug>/index.html One project page
 projects/<slug>/image/     Images for that project
 css/base.css               CSS variables, reset, body, main/footer, section titles
 css/components.css         Shared components: breadcrumb, link-item, link-card, btn, badge, feature, project-card
-css/home.css               Home page only
+css/home.css               Home page only (intro, bio, social icon row)
 css/blog.css               Blog index + single post (loads Inter font, .content typography, figures, gists, post-nav)
 css/project.css            Project pages only (page-header, use-cases, gallery, members)
+css/about.css              About page only (page-header, bio, talks list)
 ```
 
 `.idea/` is IDE noise and is gitignored. Do not add it to commits.
