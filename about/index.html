@@ -6,34 +6,36 @@
     <title>About | Ovsep Avakian</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/about.css">
 </head>
 <body>
-    <div class="noise"></div>
-
     <main>
-        <header class="intro">
-            <h1><a href="../" style="text-decoration: none; color: inherit;"><span>&gt;</span> Ovsep Avakian</a></h1>
-            <p class="tagline">Software Engineer at <a href="https://sumup.com" target="_blank" rel="noopener">Sumup</a></p>
+        <header class="site-header">
+            <a href="../" class="site-name"><span>&gt;</span> Ovsep Avakian</a>
+            <nav class="site-nav">
+                <a href="../about/" class="active">about</a>
+                <a href="../blog/">blog</a>
+                <a href="../#projects">projects</a>
+            </nav>
         </header>
-
-        <nav class="breadcrumb">
-            <a href="../">← Home</a>
-            <span>/</span>
-            <span class="current">about</span>
-        </nav>
 
         <header class="page-header">
             <h1>About</h1>
         </header>
 
         <section class="about-bio">
-            <!-- TODO: replace with the real bio -->
             <p>
-                Hey, I'm Ovsep, a software engineer at <a href="https://sumup.com" target="_blank" rel="noopener">Sumup</a> and the creator of <a href="../projects/fmesh/">FMesh</a>.
+                Hi, I'm Ovsep. I live in Sofia and work as a software engineer.
+            </p>
+            <p>
+                I love <a href="../projects/fmesh/">Flow-Based Programming</a>, simulations, graphs and other elegant concepts.
+            </p>
+            <p>
+                I <a href="../projects/the-horrvas/">play guitar</a>, speak four languages and hope to pick up Spanish soon.
+                In my free time I like to read about philosophy, history and linguistics. Free time is hard to come by when you are a father of two, though.
             </p>
         </section>
 
@@ -46,25 +48,68 @@
                     <span class="talk-year">YYYY</span>
                     <div class="talk-body">
                         <p class="talk-title">Talk title</p>
-                        <p class="talk-event">Event name · City, Country</p>
+                        <p class="talk-event">Mon D · Event name · City, Country</p>
                         <p class="talk-links">
-                            <a href="..." target="_blank" rel="noopener">slides</a>
+                            <a href="../assets/talks/<file>.pdf" target="_blank" rel="noopener">slides</a>
                             <a href="..." target="_blank" rel="noopener">video</a>
                         </p>
                     </div>
                 </li>
 
+                Show the year only on the first talk of that year; leave
+                <span class="talk-year"></span> empty on the rest.
                 .talk-links is optional; drop it if there is nothing to link.
             -->
             <ul class="talks">
                 <li class="talk">
                     <span class="talk-year">2026</span>
                     <div class="talk-body">
-                        <p class="talk-title">Building Simulation Models with Flow-Based Programming using FMesh</p>
-                        <p class="talk-event">ESM 2026, 40th European Simulation and Modelling Conference · Metz, France (online)</p>
+                        <p class="talk-title">What is PostgreSQL?</p>
+                        <p class="talk-event">Oct 30 · SumUp Tech Discussion · Sofia, Bulgaria</p>
                         <p class="talk-links">
+                            <a href="../assets/talks/what-is-postgresql.pdf" target="_blank" rel="noopener">slides</a>
+                        </p>
+                    </div>
+                </li>
+                <li class="talk">
+                    <span class="talk-year"></span>
+                    <div class="talk-body">
+                        <p class="talk-title">Applying Flow-Based Programming concepts to build a simulation</p>
+                        <p class="talk-event">Oct 21 · ESM 2026, European Simulation and Modelling Conference · Metz, France</p>
+                        <p class="talk-links">
+                            <a href="../assets/talks/esm-2026-applying-fbp-concepts-to-build-a-simulation.pdf" target="_blank" rel="noopener">slides</a>
                             <a href="https://www.eurosis.org/conf/esm/2026/" target="_blank" rel="noopener">conference</a>
-                            <a href="../blog/fmesh-status-update-fall-2026/#conference">post</a>
+                            <a href="https://www.eurosis.org/conf/esm/2026/tutorials.html" target="_blank" rel="noopener">announcement</a>
+                        </p>
+                    </div>
+                </li>
+                <li class="talk">
+                    <span class="talk-year">2025</span>
+                    <div class="talk-body">
+                        <p class="talk-title">FBP, DES and SD: Flow-Based Programming, Discrete Event Simulation and System Dynamics</p>
+                        <p class="talk-event">Oct 16 · Golang Meetup · Sofia, Bulgaria</p>
+                        <p class="talk-links">
+                            <a href="../assets/talks/fbp-des-sd.pdf" target="_blank" rel="noopener">slides</a>
+                        </p>
+                    </div>
+                </li>
+                <li class="talk">
+                    <span class="talk-year"></span>
+                    <div class="talk-body">
+                        <p class="talk-title">Introduction to Temporal Programming</p>
+                        <p class="talk-event">Sep 24 · SumUp Tech Discussion · Sofia, Bulgaria</p>
+                        <p class="talk-links">
+                            <a href="../assets/talks/introduction-to-temporal-programming.pdf" target="_blank" rel="noopener">slides</a>
+                        </p>
+                    </div>
+                </li>
+                <li class="talk">
+                    <span class="talk-year">2017</span>
+                    <div class="talk-body">
+                        <p class="talk-title">Using ML to predict prices</p>
+                        <p class="talk-event">Mar 4 · Data Science Meetup · Rostov-on-Don, Russia</p>
+                        <p class="talk-links">
+                            <a href="https://youtu.be/sg1rP1B5mHI?t=2420" target="_blank" rel="noopener">video</a>
                         </p>
                     </div>
                 </li>

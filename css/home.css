@@ -1,39 +1,9 @@
 /* Homepage Specific Styles */
 
-main {
-    max-width: 640px;
-}
-
-footer {
-    max-width: 640px;
-}
-
-.intro {
-    margin-bottom: 3rem;
-}
-
-h1 {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--text);
-}
-
-h1 span {
-    color: var(--accent);
-}
-
-.tagline {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.875rem;
-    color: var(--text-muted);
-    letter-spacing: 0.02em;
-}
-
 .bio {
-    margin-bottom: 3rem;
-    font-size: 1.125rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.1875rem;
+    line-height: 1.65;
 }
 
 .bio p {
@@ -42,9 +12,7 @@ h1 span {
 
 .bio a {
     color: var(--accent);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.2s ease;
+    border-bottom: 1px solid var(--accent-line);
 }
 
 .bio a:hover {
@@ -56,7 +24,7 @@ h1 span {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
-    margin-top: 0.75rem;
+    margin-bottom: 3.5rem;
 }
 
 .social-link {
@@ -67,15 +35,14 @@ h1 span {
     height: 3rem;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: 8px;
     color: var(--text-muted);
-    transition: all 0.2s ease;
 }
 
 .social-link:hover {
     border-color: var(--accent);
-    background: var(--accent-dim);
     color: var(--accent);
+    box-shadow: var(--shadow);
     transform: translateY(-2px);
 }
 
@@ -86,28 +53,18 @@ h1 span {
 
 /* Responsive - Tablet */
 @media (max-width: 768px) {
-    h1 {
-        font-size: 1.25rem;
-    }
-
     .bio {
-        font-size: 1rem;
+        font-size: 1.0625rem;
     }
 }
 
 /* Responsive - Mobile */
 @media (max-width: 480px) {
-    h1 {
-        font-size: 1.125rem;
-    }
-
-    .tagline {
-        font-size: 0.8125rem;
-    }
-
     .bio {
-        font-size: 0.9375rem;
-        margin-bottom: 2rem;
+        font-size: 1rem;
+    }
+
+    .social {
+        margin-bottom: 2.5rem;
     }
 }
-

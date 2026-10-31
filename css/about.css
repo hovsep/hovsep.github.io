@@ -1,58 +1,5 @@
 /* About Page Specific Styles */
 
-main {
-    max-width: 720px;
-}
-
-footer {
-    max-width: 720px;
-}
-
-/* Compact intro header */
-.intro {
-    margin-bottom: 1.5rem;
-}
-
-.intro h1 {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.125rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--text);
-}
-
-.intro h1 span {
-    color: var(--accent);
-}
-
-.intro .tagline {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8125rem;
-    color: var(--text-muted);
-    letter-spacing: 0.02em;
-}
-
-.intro h1 a:hover {
-    color: var(--accent);
-    transition: color 0.2s ease;
-}
-
-/* Page Header */
-.page-header {
-    margin-bottom: 3rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid var(--border);
-}
-
-.page-header h1 {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--text);
-    letter-spacing: -0.02em;
-    margin: 0;
-}
-
 /* Bio */
 .about-bio p {
     margin-bottom: 1rem;
@@ -63,9 +10,11 @@ footer {
 .about-bio a,
 .talk-links a {
     color: var(--accent);
-    text-decoration: none;
     border-bottom: 1px solid transparent;
-    transition: border-color 0.2s ease;
+}
+
+.about-bio a {
+    border-bottom-color: var(--accent-line);
 }
 
 .about-bio a:hover,
@@ -95,9 +44,10 @@ footer {
 }
 
 .talk-year {
+    font-family: var(--font-mono);
     font-size: 0.8125rem;
     color: var(--text-muted);
-    line-height: 1.7;
+    line-height: 1.85;
 }
 
 .talk-body {
@@ -106,7 +56,7 @@ footer {
 }
 
 .talk-title {
-    font-size: 0.9375rem;
+    font-size: 1rem;
     font-weight: 600;
     color: var(--text);
     line-height: 1.5;
@@ -114,7 +64,7 @@ footer {
 
 .talk-event {
     margin-top: 0.25rem;
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     color: var(--text-muted);
     line-height: 1.5;
 }
@@ -124,6 +74,7 @@ footer {
     flex-wrap: wrap;
     gap: 0.75rem;
     margin-top: 0.5rem;
+    font-family: var(--font-mono);
     font-size: 0.8125rem;
 }
 
@@ -139,10 +90,6 @@ footer {
 
 /* Responsive - Tablet */
 @media (max-width: 768px) {
-    .page-header h1 {
-        font-size: 2rem;
-    }
-
     .about-bio p {
         font-size: 1rem;
     }
@@ -150,14 +97,6 @@ footer {
 
 /* Responsive - Mobile */
 @media (max-width: 480px) {
-    .page-header {
-        margin-bottom: 2rem;
-    }
-
-    .page-header h1 {
-        font-size: 1.75rem;
-    }
-
     .about-bio p {
         font-size: 0.9375rem;
     }
@@ -167,7 +106,11 @@ footer {
         gap: 0.25rem;
     }
 
+    .talk-year:empty {
+        display: none;
+    }
+
     .talk-title {
-        font-size: 0.875rem;
+        font-size: 0.9375rem;
     }
 }

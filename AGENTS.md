@@ -13,7 +13,7 @@ Every page is a hand-written `index.html`. "Deploying" means committing and push
 ## Layout
 
 ```
-index.html                 Home page (bio, links list, Projects list)
+index.html                 Home page (bio, social icon row, Projects list)
 about/index.html           About page (bio, Talks list)
 blog/index.html            Blog index (list of posts, newest first)
 blog/<slug>/index.html     One blog post
@@ -21,12 +21,13 @@ blog/<slug>/image/         Images for that post
 blog/<slug>/video/         Videos for that post (.mp4 / .mov)
 projects/<slug>/index.html One project page
 projects/<slug>/image/     Images for that project
-css/base.css               CSS variables, reset, body, main/footer, section titles
-css/components.css         Shared components: breadcrumb, link-item, link-card, btn, badge, feature, project-card
-css/home.css               Home page only (intro, bio, social icon row)
-css/blog.css               Blog index + single post (loads Inter font, .content typography, figures, gists, post-nav)
-css/project.css            Project pages only (page-header, use-cases, gallery, members)
-css/about.css              About page only (page-header, bio, talks list)
+assets/talks/              Slide PDFs linked from the About page (kebab-case file names)
+css/base.css               CSS variables (colours, fonts), reset, body, main/footer, section titles
+css/components.css         Shared: site-header + nav, breadcrumb, page-header, link-card, btn, badge, feature, project-card
+css/home.css               Home page only (bio, social icon row)
+css/blog.css               Blog index + single post (.content typography, figures, gists, post-nav)
+css/project.css            Project pages only (.content, video embeds, use-cases, gallery, members)
+css/about.css              About page only (bio, talks list)
 ```
 
 `.idea/` is IDE noise and is gitignored. Do not add it to commits.
@@ -36,22 +37,25 @@ css/about.css              About page only (page-header, bio, talks list)
 - **All paths are relative.** From `blog/<slug>/` and `projects/<slug>/` CSS is `../../css/...`,
   home is `../../`, blog index is `../`. From `blog/index.html` CSS is `../css/...`. Never use
   absolute `/css/...` paths; the site must also work when opened from the filesystem.
-- **Fonts differ per page type.** Home and project pages load only JetBrains Mono. Blog pages
-  load JetBrains Mono **and** Inter (Inter is the body font on `body.blog`). Copy the exact
-  `<link>` from an existing page of the same type.
+- **Two fonts, one `<link>`.** Every page loads the same Google Fonts link (JetBrains Mono +
+  Inter); copy it from any page. Inter (`--font-sans`) is the body font everywhere: prose,
+  headings, titles. JetBrains Mono (`--font-mono`) is for site chrome and metadata: the site
+  name, nav, breadcrumb, section titles, dates, labels, project names, inline code.
 - **Body classes drive styling.** Blog index uses `<body class="blog">`, a post uses
-  `<body class="blog blog-post">`, home and project pages use a bare `<body>`.
+  `<body class="blog blog-post">`, home, about and project pages use a bare `<body>`.
 - **Dates are written as `Month D, YYYY`** (e.g. `January 30, 2026`) inside `<p class="post-date">`.
   The same string appears in both the post page and the blog index; keep them identical.
 - **Blog index is newest first.** When adding a post, insert its card at the top of `.posts`.
-- **Every page shares the same chrome:** `<div class="noise">`, the compact `.intro` header
-  (name linking home + "Software Engineer at Sumup" tagline), a `.breadcrumb` nav, and a
-  footer with `© 2026 Ovsep Avakian`. Copy these verbatim from a sibling page.
-- **Dark theme only.** Colours come from CSS variables in `css/base.css` (`--bg`, `--text`,
-  `--text-muted`, `--accent`, `--border`, `--code-bg`, ...). Use variables, never hard-coded hex,
-  except the deliberate white background on `figure.diagram`.
-- **No inline `<style>` blocks and no JavaScript.** The only `style=""` attribute in use is the
-  one on the intro `<h1><a>` link; reuse it as-is rather than adding more.
+- **Every page shares the same chrome:** a `<header class="site-header">` (name linking home
+  and a `.site-nav` with about / blog / projects) and a
+  footer with `© 2026 Ovsep Avakian`. Copy them from a sibling page of the same depth. The nav
+  link for the section the page belongs to gets `class="active"` (none on the home page).
+- **Breadcrumbs only on posts and project pages**, without a Home link:
+  `blog / <slug>` or `projects / <slug>`. The blog index and about page have none.
+- **Light theme only.** Colours come from CSS variables in `css/base.css` (`--bg`,
+  `--bg-secondary`, `--text`, `--text-muted`, `--accent`, `--accent-dim`, `--accent-line`,
+  `--border`, `--code-bg`, `--shadow`). Use variables, never hard-coded hex or rgba.
+- **No inline `<style>` blocks, no `style=""` attributes and no JavaScript.**
 - **External links** get `target="_blank" rel="noopener"`. Internal links do not.
 
 ## Adding a blog post
@@ -73,7 +77,7 @@ css/about.css              About page only (page-header, bio, talks list)
          <figcaption>Caption</figcaption>
      </figure>
      ```
-   - Diagram on white background (for SVGs / transparent PNGs): `<figure class="diagram">...</figure>`.
+   - Diagram on a padded white card (for SVGs / transparent PNGs): `<figure class="diagram">...</figure>`.
    - Video: `<video width="100%" muted autoplay loop src="video/x.mp4"></video>` (add `controls`
      for longer clips).
    - Code samples are **GitHub Gists**, not `<pre>` blocks:
@@ -90,16 +94,19 @@ css/about.css              About page only (page-header, bio, talks list)
 1. Create `projects/<slug>/index.html` by copying `projects/fmesh/index.html` (software project)
    or `projects/php-elephant/index.html` (photo gallery) or `projects/the-horrvas/index.html`
    (people grid).
-2. Breadcrumb middle link points to `../../#projects`.
+2. Breadcrumb is `<a href="../../#projects">projects</a> / <span class="current"><slug></span>`;
+   the nav's `projects` link gets `class="active"`.
 3. Add a `.project-card` to the Projects section of the root `index.html`.
 4. Sections use `<h2 class="section-title">` and the components in `css/components.css`
    (`.links-grid` + `.link-card`, `.features` + `.feature`, `.badges`, `.btn`) and
-   `css/project.css` (`.use-cases`, `.gallery`, `.members`).
+   `css/project.css` (`.use-cases`, `.gallery`, `.members`). YouTube `<iframe>`s inside
+   `.content` scale to the column width automatically.
 
 ## Editing CSS
 
 - Put a rule in the most specific file that needs it: shared components in `components.css`,
-  page-type rules in `blog.css` / `project.css` / `home.css`, tokens and layout in `base.css`.
+  page-type rules in `blog.css` / `project.css` / `home.css` / `about.css`, tokens and layout
+  in `base.css`.
 - Every file ends with `@media (max-width: 768px)` and `@media (max-width: 480px)` blocks.
   Add responsive overrides there rather than scattering media queries.
 - The site must stay readable on a phone: `main` has a `max-width` and `html, body` hide
