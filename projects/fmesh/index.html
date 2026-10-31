@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>F-Mesh | Ovsep Avakian</title>
+    <title>FMesh: Flow-Based Programming for Go | Ovsep Avakian</title>
+    <meta name="description" content="FMesh is an open-source Flow-Based Programming framework for Go. Build programs as graphs of small components; FMesh runs everything that is ready concurrently.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/base.css">
     <link rel="stylesheet" href="../../css/components.css">
-    <link rel="stylesheet" href="../../css/project.css">
+    <link rel="stylesheet" href="../../css/product.css">
 </head>
-<body>
+<body class="product">
     <main>
         <header class="site-header">
             <a href="../../" class="site-name"><span>&gt;</span> Ovsep Avakian</a>
@@ -22,130 +23,308 @@
             </nav>
         </header>
 
-        <nav class="breadcrumb">
-            <a href="../../#projects">projects</a>
-            <span>/</span>
-            <span class="current">fmesh</span>
-        </nav>
-
-        <header class="page-header">
-            <h1>F-Mesh</h1>
-            <p class="subtitle">FBP inspired framework in Go</p>
-        </header>
-
-        <section>
-            <h2 class="section-title">Links</h2>
-            <div class="links-grid">
-                    <a href="https://github.com/hovsep/fmesh" class="link-card" target="_blank" rel="noopener">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                        </svg>
-                        <span class="link-label">Source Code</span>
-                    </a>
-                    <a href="https://pkg.go.dev/github.com/hovsep/fmesh" class="link-card" target="_blank" rel="noopener">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-                        </svg>
-                        <span class="link-label">API Docs</span>
-                    </a>
-                    <a href="https://github.com/hovsep/fmesh/wiki" class="link-card" target="_blank" rel="noopener">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-                            <path d="M12 17h.01"/>
-                        </svg>
-                        <span class="link-label">Wiki</span>
-                    </a>
-                    <a href="https://github.com/hovsep/fmesh-examples" class="link-card" target="_blank" rel="noopener">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="16 18 22 12 16 6"/>
-                            <polyline points="8 6 2 12 8 18"/>
-                        </svg>
-                        <span class="link-label">Examples</span>
-                    </a>
-                    <a href="../../blog/fmesh-lego-for-programmers/" class="link-card">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 19l7-7 3 3-7 7-3-3z"/>
-                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
-                            <path d="M2 2l7.586 7.586"/>
-                            <circle cx="11" cy="11" r="2"/>
-                        </svg>
-                        <span class="link-label">Blog Post</span>
-                    </a>
-                </div>
+        <!-- Hero -->
+        <section class="p-hero">
+            <img class="p-logo" src="image/logo.png" alt="FMesh logo" width="72" height="72">
+            <a class="p-pill" href="https://github.com/hovsep/fmesh/releases" target="_blank" rel="noopener">
+                <span class="p-pill-dot"></span>
+                Open source · MIT
+                <span class="p-pill-link">Releases →</span>
+            </a>
+            <h1 class="p-title">Flow-Based Programming <span class="p-grad">for Go</span></h1>
+            <p class="p-lead">
+                Build programs as graphs of small, reusable components. Pipes connect them, signals flow through,
+                and FMesh runs every component that is ready at the same time. No goroutines, channels or locks to manage.
+            </p>
+            <div class="p-actions">
+                <a class="p-btn p-btn-primary" href="https://github.com/hovsep/fmesh/wiki" target="_blank" rel="noopener">
+                    Get started
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
+                <a class="p-btn p-btn-ghost" href="https://github.com/hovsep/fmesh" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    View on GitHub
+                </a>
+            </div>
+            <p class="p-install"><span class="p-prompt">$</span> <code>go get github.com/hovsep/fmesh</code></p>
         </section>
 
-        <section>
-            <h2 class="section-title">About</h2>
-            <div class="content">
-                <p>
-                    F-Mesh is a <strong>Flow-Based Programming (FBP)</strong> framework that lets you 
-                    build applications as a graph of independent, reusable components. Think of it as 
-                    connecting building blocks with pipes — data flows through your program like water 
-                    through a network of connected components.
-                </p>
-                <p>
-                    Inspired by <a href="https://jpaulmorrison.com/fbp/" target="_blank" rel="noopener">J. Paul Morrison's FBP</a>,
-                    F-Mesh lets you quickly build complex systems by connecting simple, reusable components.
-                </p>
+        <!-- Key facts -->
+        <ul class="p-stats">
+            <li><strong>Stdlib only</strong><span>No third-party runtime dependencies</span></li>
+            <li><strong>Concurrent</strong><span>Ready components run in parallel</span></li>
+            <li><strong>Deterministic</strong><span>Same input, same output</span></li>
+            <li><strong>20+ examples</strong><span>From pipelines to a ray tracer</span></li>
+        </ul>
+
+        <!-- Quick start -->
+        <section class="p-section">
+            <div class="p-section-head">
+                <p class="p-eyebrow">Quick start</p>
+                <h2>Define components. Connect ports. Run.</h2>
+                <p>A component is a set of named ports plus an activation function. Pipes connect outputs to inputs. The mesh runs in cycles until no component has work left.</p>
+            </div>
+
+            <div class="p-showcase">
+                <div class="p-window">
+                    <div class="p-window-bar">
+                        <span class="p-dots"><i></i><i></i><i></i></span>
+                        <span class="p-window-name">main.go</span>
+                    </div>
+<pre class="p-code"><code><span class="c">// Error handling omitted for brevity</span>
+concat, _ := component.<span class="f">New</span>(<span class="s">"concat"</span>,
+  component.<span class="f">WithInputs</span>(<span class="s">"i1"</span>, <span class="s">"i2"</span>),
+  component.<span class="f">WithOutputs</span>(<span class="s">"res"</span>),
+  component.<span class="f">WithActivationFunc</span>(<span class="k">func</span>(_ <span class="t">context.Context</span>, this <span class="t">*component.Component</span>) <span class="t">error</span> {
+    word1 := this.<span class="f">InputByName</span>(<span class="s">"i1"</span>).<span class="f">Signals</span>().<span class="f">FirstPayloadOrDefault</span>(<span class="s">""</span>)
+    word2 := this.<span class="f">InputByName</span>(<span class="s">"i2"</span>).<span class="f">Signals</span>().<span class="f">FirstPayloadOrDefault</span>(<span class="s">""</span>)
+    <span class="k">return</span> this.<span class="f">OutputByName</span>(<span class="s">"res"</span>).<span class="f">PutSignals</span>(signal.<span class="f">New</span>(word1 + word2))
+  }))
+
+uppercase, _ := component.<span class="f">New</span>(<span class="s">"uppercase"</span>,
+  component.<span class="f">WithInputs</span>(<span class="s">"i1"</span>),
+  component.<span class="f">WithOutputs</span>(<span class="s">"res"</span>),
+  component.<span class="f">WithActivationFunc</span>(<span class="k">func</span>(_ <span class="t">context.Context</span>, this <span class="t">*component.Component</span>) <span class="t">error</span> {
+    str := this.<span class="f">InputByName</span>(<span class="s">"i1"</span>).<span class="f">Signals</span>().<span class="f">FirstPayloadOrDefault</span>(<span class="s">""</span>)
+    <span class="k">return</span> this.<span class="f">OutputByName</span>(<span class="s">"res"</span>).<span class="f">PutSignals</span>(signal.<span class="f">New</span>(strings.<span class="f">ToUpper</span>(str)))
+  }))
+
+<span class="c">// The mesh holds the components, a pipe connects them</span>
+fm, _ := fmesh.<span class="f">New</span>(<span class="s">"hello world"</span>)
+fm.<span class="f">AddComponents</span>(concat, uppercase)
+concat.<span class="f">OutputByName</span>(<span class="s">"res"</span>).<span class="f">PipeTo</span>(uppercase.<span class="f">InputByName</span>(<span class="s">"i1"</span>))
+
+<span class="c">// Seed the inputs, then run</span>
+concat.<span class="f">InputByName</span>(<span class="s">"i1"</span>).<span class="f">PutSignals</span>(signal.<span class="f">New</span>(<span class="s">"hello "</span>))
+concat.<span class="f">InputByName</span>(<span class="s">"i2"</span>).<span class="f">PutSignals</span>(signal.<span class="f">New</span>(<span class="s">"world!"</span>))
+fm.<span class="f">Run</span>(context.<span class="f">Background</span>())</code></pre>
+                </div>
+
+                <div class="p-graph">
+                    <div class="p-window-bar p-window-bar-light">
+                        <span class="p-window-name">mesh: hello world</span>
+                    </div>
+                    <svg class="p-graph-svg" viewBox="0 0 320 300" role="img" aria-label="Diagram: the strings hello and world flow into the concat component, a pipe carries the result to the uppercase component, which outputs HELLO WORLD!">
+                        <rect class="g-signal" x="30" y="8" width="110" height="28" rx="14"/>
+                        <text class="g-signal-text" x="85" y="27">"hello "</text>
+                        <rect class="g-signal" x="180" y="8" width="110" height="28" rx="14"/>
+                        <text class="g-signal-text" x="235" y="27">"world!"</text>
+
+                        <path class="g-pipe g-flow" d="M85 36 V72"/>
+                        <path class="g-pipe g-flow" d="M235 36 V72"/>
+
+                        <rect class="g-comp" x="30" y="72" width="260" height="62" rx="12"/>
+                        <text class="g-port-label" x="85" y="94">i1</text>
+                        <text class="g-port-label" x="235" y="94">i2</text>
+                        <text class="g-comp-name" x="160" y="107">concat</text>
+                        <text class="g-port-label" x="160" y="122">res</text>
+                        <circle class="g-port" cx="85" cy="72" r="6"/>
+                        <circle class="g-port" cx="235" cy="72" r="6"/>
+                        <circle class="g-port" cx="160" cy="134" r="6"/>
+
+                        <path class="g-pipe g-flow" d="M160 140 V178"/>
+
+                        <rect class="g-comp" x="30" y="184" width="260" height="62" rx="12"/>
+                        <text class="g-port-label" x="160" y="203">i1</text>
+                        <text class="g-comp-name" x="160" y="219">uppercase</text>
+                        <text class="g-port-label" x="160" y="234">res</text>
+                        <circle class="g-port" cx="160" cy="184" r="6"/>
+                        <circle class="g-port" cx="160" cy="246" r="6"/>
+
+                        <path class="g-pipe g-flow" d="M160 252 V264"/>
+                        <rect class="g-result" x="85" y="264" width="150" height="30" rx="15"/>
+                        <text class="g-result-text" x="160" y="284">HELLO WORLD!</text>
+                    </svg>
+                    <p class="p-output"><span class="p-prompt">$</span> go run .<br>Result: HELLO WORLD!</p>
+                </div>
             </div>
         </section>
 
-        <section>
-            <h2 class="section-title">Use Cases</h2>
-            <div class="use-cases">
-                <div class="use-case">
-                    <h3>Workflows & Automation</h3>
-                    <p>Chain independent steps into explicit, testable execution flows.</p>
+        <!-- Features -->
+        <section class="p-section">
+            <div class="p-section-head">
+                <p class="p-eyebrow">Why FMesh</p>
+                <h2>Model the flow. FMesh runs it.</h2>
+                <p>You describe what is connected to what. Scheduling, concurrency and ordering are handled for you.</p>
+            </div>
+            <div class="p-features">
+                <div class="p-feature">
+                    <span class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg></span>
+                    <h3>Components</h3>
+                    <p>Small, independent blocks with named ports. Easy to test on their own.</p>
                 </div>
-                <div class="use-case">
-                    <h3>Computational Graphs</h3>
-                    <p>Represent complex data and math pipelines as connected processing nodes.</p>
+                <div class="p-feature">
+                    <span class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
+                    <h3>Concurrency for free</h3>
+                    <p>Every component that is ready in a cycle runs at the same time, on a worker pool.</p>
                 </div>
-                <div class="use-case">
-                    <h3>Neural Networks</h3>
-                    <p>Prototype layer-based models by pushing data through graph-structured components.</p>
+                <div class="p-feature">
+                    <span class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+                    <h3>Discrete time</h3>
+                    <p>Execution runs in cycles, like ticks of a clock, so a run is easy to reason about.</p>
                 </div>
-                <div class="use-case">
-                    <h3>Simulations (DES / TSS)</h3>
-                    <p>Model state changes over time using event-driven or time-stepped nodes.</p>
+                <div class="p-feature">
+                    <span class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg></span>
+                    <h3>Deterministic runs</h3>
+                    <p>Same input gives the same output, as long as your activation functions are deterministic.</p>
                 </div>
-                <div class="use-case">
-                    <h3>Game Engines</h3>
-                    <p>Build gameplay logic as a network of decoupled systems reacting to events.</p>
+                <div class="p-feature">
+                    <span class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span>
+                    <h3>Cancellation and deadlines</h3>
+                    <p><code>Run(ctx)</code> passes the context to every activation function and hook.</p>
                 </div>
-                <div class="use-case">
-                    <h3>Data Pipelines</h3>
-                    <p>Transform, enrich, and route data without tangled control flow.</p>
+                <div class="p-feature">
+                    <span class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/></svg></span>
+                    <h3>Hooks and plugins</h3>
+                    <p>Add behavior at mesh, cycle, component and port level.</p>
                 </div>
-                <div class="use-case">
-                    <h3>Rule Engines & DSLs</h3>
-                    <p>Encode domain logic as graphs instead of unreadable if-else soup.</p>
+                <div class="p-feature">
+                    <span class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10l9.29 9.29a1 1 0 0 0 1.41 0l8.59-8.59a1 1 0 0 0 0-1.41Z"/><circle cx="7" cy="7" r="1.5"/></svg></span>
+                    <h3>Metadata</h3>
+                    <p>Tag signals, components and ports with values, then filter and route by them.</p>
+                </div>
+                <div class="p-feature">
+                    <span class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 16v-4"/><path d="M12 16V8"/><path d="M17 16v-7"/></svg></span>
+                    <h3>Run report</h3>
+                    <p><code>Run(ctx)</code> returns the result of every cycle, ready to inspect or test.</p>
                 </div>
             </div>
         </section>
 
-        <section>
-            <h2 class="section-title">Key Features</h2>
-            <div class="features">
-                <div class="feature">
-                    <h3>Component-Based Architecture</h3>
-                    <p>Build complex workflows from simple, reusable components. Each component is independent and testable.</p>
+        <!-- Core concepts -->
+        <section class="p-section">
+            <div class="p-section-head">
+                <p class="p-eyebrow">Core concepts</p>
+                <h2>Five ideas, one small API</h2>
+                <p>The whole model fits on one screen. Each concept links to its page in the wiki.</p>
+            </div>
+            <div class="p-concepts">
+                <a class="p-concept" href="https://github.com/hovsep/fmesh/wiki/301.-Component" target="_blank" rel="noopener">
+                    <span class="p-concept-name">Component</span>
+                    <span class="p-concept-desc">The main building block. Inputs, outputs and an activation function.</span>
+                </a>
+                <a class="p-concept" href="https://github.com/hovsep/fmesh/wiki/302.-Ports" target="_blank" rel="noopener">
+                    <span class="p-concept-name">Port</span>
+                    <span class="p-concept-desc">An input or output of a component. Any number per component.</span>
+                </a>
+                <a class="p-concept" href="https://github.com/hovsep/fmesh/wiki/303.-Pipes" target="_blank" rel="noopener">
+                    <span class="p-concept-name">Pipe</span>
+                    <span class="p-concept-desc">Connects an output port to an input port.</span>
+                </a>
+                <a class="p-concept" href="https://github.com/hovsep/fmesh/wiki/201.-Signals" target="_blank" rel="noopener">
+                    <span class="p-concept-name">Signal</span>
+                    <span class="p-concept-desc">A data packet. Carries any payload plus optional metadata.</span>
+                </a>
+                <a class="p-concept" href="https://github.com/hovsep/fmesh/wiki/401.-Scheduling-rules" target="_blank" rel="noopener">
+                    <span class="p-concept-name">Cycle</span>
+                    <span class="p-concept-desc">One tick of execution. Every ready component activates.</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- See it run -->
+        <section class="p-section">
+            <div class="p-section-head">
+                <p class="p-eyebrow">Visualize</p>
+                <h2>See every cycle of a run</h2>
+                <p>Export a mesh with <a href="https://github.com/hovsep/fmesh-export" target="_blank" rel="noopener">fmesh-export</a> and replay a run cycle by cycle. Below: an order-processing mesh with fan-out, fan-in, an error and a wait.</p>
+            </div>
+            <figure class="p-demo">
+                <div class="p-demo-scroll">
+                    <a href="image/mesh-cycles.gif" target="_blank" rel="noopener"><img src="image/mesh-cycles.gif" alt="Animation of an order-processing mesh, one frame per cycle, components colored by their activation result" loading="lazy"></a>
                 </div>
-                <div class="feature">
-                    <h3>Hooks System</h3>
-                    <p>Extend behavior at any execution point — mesh lifecycle, cycles, component activations, and port operations.</p>
+                <figcaption>Exported as Mermaid. Also available: JSON, YAML, Graphviz DOT, D2 and PlantUML.</figcaption>
+            </figure>
+        </section>
+
+        <!-- Use cases -->
+        <section class="p-section">
+            <div class="p-section-head">
+                <p class="p-eyebrow">Use cases</p>
+                <h2>Made for bounded dataflow</h2>
+                <p>A mesh runs to completion over the data it was given. That fits a lot of problems.</p>
+            </div>
+            <div class="p-cases">
+                <div class="p-case"><h3>Data pipelines</h3><p>ETL, data processing, format conversion.</p></div>
+                <div class="p-case"><h3>Workflow automation</h3><p>Multi-step business processes with explicit, testable steps.</p></div>
+                <div class="p-case"><h3>Simulations</h3><p>Model physical, biological or engineered systems as parts that exchange signals, step by step.</p></div>
+                <div class="p-case"><h3>Game logic</h3><p>Entity systems and behavior trees.</p></div>
+                <div class="p-case"><h3>Batch event processing</h3><p>A bounded set of events, processed to the end.</p></div>
+                <div class="p-case"><h3>Prototyping</h3><p>Sketch a dataflow design and run it the same day.</p></div>
+            </div>
+        </section>
+
+        <!-- Ecosystem -->
+        <section class="p-section">
+            <div class="p-section-head">
+                <p class="p-eyebrow">Ecosystem</p>
+                <h2>More than a library</h2>
+            </div>
+            <div class="p-eco">
+                <a class="p-eco-card" href="https://github.com/hovsep/fmesh-examples" target="_blank" rel="noopener">
+                    <span class="p-eco-name">fmesh-examples</span>
+                    <p>A collection of experiments: ideas tried out with FMesh, from small sketches to bigger models. Clone one and play with it.</p>
+                    <span class="p-eco-link">Browse examples →</span>
+                </a>
+                <a class="p-eco-card" href="https://github.com/hovsep/fmesh-export" target="_blank" rel="noopener">
+                    <span class="p-eco-name">fmesh-export</span>
+                    <p>Export a mesh as JSON, YAML, Graphviz DOT, Mermaid, D2 or PlantUML. Replay a run cycle by cycle.</p>
+                    <span class="p-eco-link">See exporters →</span>
+                </a>
+                <a class="p-eco-card" href="https://github.com/hovsep/fmesh-hub" target="_blank" rel="noopener">
+                    <span class="p-eco-name">fmesh-hub <em class="p-tag">new</em></span>
+                    <p>One place for everything built for FMesh (plugins, exporters, tools) and with it.</p>
+                    <span class="p-eco-link">Follow the hub →</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Trade-offs -->
+        <section class="p-section">
+            <div class="p-section-head">
+                <p class="p-eyebrow">Good to know</p>
+                <h2>Honest trade-offs</h2>
+                <p>FMesh is not a classical FBP system and not a streaming engine. Pick it for the right job.</p>
+            </div>
+            <div class="p-fit">
+                <div class="p-fit-col p-fit-yes">
+                    <h3>Great for</h3>
+                    <ul>
+                        <li>Workloads with a clear start and end</li>
+                        <li>Logic you want to see as a graph</li>
+                        <li>Concurrency without writing goroutines</li>
+                        <li>Reproducible runs you can test cycle by cycle</li>
+                    </ul>
                 </div>
-                <div class="feature">
-                    <h3>Concurrency Out of the Box</h3>
-                    <p>All components in a single activation cycle run concurrently — no need to manage goroutines yourself.</p>
-                </div>
-                <div class="feature">
-                    <h3>Chainable API</h3>
-                    <p>Fluent interface for building meshes with readable, declarative code.</p>
+                <div class="p-fit-col p-fit-no">
+                    <h3>Not built for</h3>
+                    <ul>
+                        <li>Long-running components or real-time streaming</li>
+                        <li>Wall-clock events like timers and tickers</li>
+                        <li>Backpressure: a mesh keeps its signals in memory for the whole run</li>
+                        <li>A frozen API: FMesh is pre-production, so pin an exact version</li>
+                    </ul>
                 </div>
             </div>
+        </section>
+
+        <!-- Closing call to action -->
+        <section class="p-cta">
+            <h2>Start building with FMesh</h2>
+            <p>Install it, read the wiki, run an example. It takes a few minutes.</p>
+            <div class="p-actions">
+                <a class="p-btn p-btn-light" href="https://github.com/hovsep/fmesh/wiki" target="_blank" rel="noopener">
+                    Read the wiki
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
+                <a class="p-btn p-btn-outline" href="https://github.com/hovsep/fmesh" target="_blank" rel="noopener">View on GitHub</a>
+            </div>
+            <nav class="p-cta-links">
+                <a href="https://pkg.go.dev/github.com/hovsep/fmesh" target="_blank" rel="noopener">API reference</a>
+                <a href="https://github.com/hovsep/fmesh-examples" target="_blank" rel="noopener">Examples</a>
+                <a href="https://github.com/hovsep/fmesh/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Changelog</a>
+                <a href="https://github.com/hovsep/fmesh/releases" target="_blank" rel="noopener">Releases</a>
+            </nav>
         </section>
     </main>
 

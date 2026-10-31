@@ -17,6 +17,23 @@
     box-shadow: var(--shadow);
 }
 
+/* SoundCloud track players */
+.tracks {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.tracks iframe {
+    display: block;
+    width: 100%;
+    height: 166px;
+    border: 2px solid var(--text);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    background: var(--bg-secondary);
+}
+
 /* Use Cases Grid (static) */
 .use-cases {
     display: grid;

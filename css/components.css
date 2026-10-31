@@ -114,7 +114,6 @@
 }
 
 /* Inline links in running text: a soft highlighter stroke, full accent on hover */
-.bio a,
 .about-bio a,
 .content :is(p, li, blockquote, figcaption) a {
     color: var(--text);
@@ -126,7 +125,6 @@
     margin: 0 -0.08em;
 }
 
-.bio a:hover,
 .about-bio a:hover,
 .content :is(p, li, blockquote, figcaption) a:hover {
     background-image: none;

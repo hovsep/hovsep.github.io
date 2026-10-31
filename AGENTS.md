@@ -13,7 +13,7 @@ Every page is a hand-written `index.html`. "Deploying" means committing and push
 ## Layout
 
 ```
-index.html                 Home page (bio, social icon row, Projects list)
+index.html                 Home page (social icon row, Projects list)
 about/index.html           About page (bio, Talks list)
 blog/index.html            Blog index (list of posts, newest first)
 blog/<slug>/index.html     One blog post
@@ -24,10 +24,11 @@ projects/<slug>/image/     Images for that project
 assets/talks/              Slide PDFs linked from the About page (kebab-case file names)
 css/base.css               CSS variables (colours, fonts), reset, body, main/footer, section titles
 css/components.css         Shared: site-header + nav, breadcrumb, page-header, link-card, btn, badge, feature, project-card
-css/home.css               Home page only (bio, social icon row)
+css/home.css               Home page only (social icon row)
 css/blog.css               Blog index + single post (.content typography, figures, gists, post-nav)
 css/project.css            Project pages only (.content, video embeds, use-cases, gallery, members)
 css/about.css              About page only (bio, talks list)
+css/product.css            FMesh product page only (body.product, p-* components, own tokens)
 ```
 
 `.idea/` is IDE noise and is gitignored. Do not add it to commits.
@@ -97,16 +98,33 @@ css/about.css              About page only (bio, talks list)
 
 ## Adding a project page
 
-1. Create `projects/<slug>/index.html` by copying `projects/fmesh/index.html` (software project)
-   or `projects/php-elephant/index.html` (photo gallery) or `projects/the-horrvas/index.html`
-   (people grid).
+1. Create `projects/<slug>/index.html` by copying `projects/php-elephant/index.html` (photo
+   gallery) or `projects/the-horrvas/index.html` (people grid). `projects/fmesh/` is a product
+   landing page, not a template for ordinary projects (see below).
 2. Breadcrumb is `<a href="../../#projects">projects</a> / <span class="current"><slug></span>`;
    the nav's `projects` link gets `class="active"`.
 3. Add a `.project-card` to the Projects section of the root `index.html`.
 4. Sections use `<h2 class="section-title">` and the components in `css/components.css`
    (`.links-grid` + `.link-card`, `.features` + `.feature`, `.badges`, `.btn`) and
-   `css/project.css` (`.use-cases`, `.gallery`, `.members`). YouTube `<iframe>`s inside
+   `css/project.css` (`.use-cases`, `.gallery`, `.members`, `.tracks` for SoundCloud players). YouTube `<iframe>`s inside
    `.content` scale to the column width automatically.
+
+## The FMesh product page
+
+`projects/fmesh/index.html` is deliberately **not** in the personal-site style. It is a landing
+page that sends visitors to the FMesh repo, so it looks like a tech product site: white
+background, teal-to-blue brand gradient, soft shadows, dark code window.
+
+- `<body class="product">`, styles in `css/product.css`. All its classes start with `p-`
+  (`.p-hero`, `.p-section`, `.p-btn`, ...). Its colours are `--p-*` tokens defined on
+  `body.product` in that file; do not use them elsewhere, and do not use the personal-site
+  hard-shadow components on this page.
+- The site header and footer stay as on every other page. There is no breadcrumb.
+- Facts on the page (features, limits, ecosystem, examples count) come from the FMesh README
+  and repos. Re-check them against `github.com/hovsep/fmesh` before changing copy; do not add
+  claims the README does not make. Avoid hard-coding version numbers.
+- The code sample is hand-highlighted with spans: `.c` comment, `.s` string, `.k` keyword,
+  `.f` function, `.t` type. Keep lines under ~90 characters so they fit the desktop window.
 
 ## Editing CSS
 

@@ -1,17 +1,5 @@
 /* Homepage Specific Styles */
 
-.bio {
-    margin-bottom: 1.75rem;
-    font-size: clamp(1.1875rem, 3.2vw, 1.5rem);
-    font-weight: 500;
-    line-height: 1.5;
-    letter-spacing: -0.015em;
-}
-
-.bio p {
-    margin-bottom: 1rem;
-}
-
 /* Social icon row */
 .social {
     display: flex;
