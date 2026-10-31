@@ -6,26 +6,18 @@
     overflow-wrap: break-word;
 }
 
-.content a {
-    color: var(--accent);
-    border-bottom: 1px solid var(--accent-line);
-}
-
-.content a:hover {
-    border-bottom-color: var(--accent);
-}
-
 /* Embedded videos scale with the column instead of their fixed 560px */
 .content iframe {
     display: block;
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9;
-    border: 0;
-    border-radius: 8px;
+    border: 2px solid var(--text);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
 }
 
-/* Use Cases Grid */
+/* Use Cases Grid (static) */
 .use-cases {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -34,23 +26,17 @@
 
 .use-case {
     background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1.25rem;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.use-case:hover {
-    border-color: var(--accent);
-    box-shadow: var(--shadow);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.125rem 1.25rem;
 }
 
 .use-case h3 {
     font-size: 0.9375rem;
-    font-weight: 600;
-    color: var(--text);
+    font-weight: 700;
+    letter-spacing: -0.01em;
     margin-bottom: 0.375rem;
-    line-height: 1.4;
+    line-height: 1.35;
 }
 
 .use-case p {
@@ -59,33 +45,34 @@
     line-height: 1.5;
 }
 
-/* Photo Gallery - Masonry */
+/* Photo Gallery - Masonry (clickable) */
 .gallery {
     column-width: 200px;
-    column-gap: 0.75rem;
+    column-gap: 1rem;
 }
 
 .gallery a {
     display: block;
-    margin: 0 0 0.75rem;
+    margin: 0 0 1rem;
     break-inside: avoid;
-    border-radius: 8px;
+    border: 2px solid var(--text);
+    border-radius: var(--radius);
     overflow: hidden;
-    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
+.gallery a:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-hover);
 }
 
 .gallery img {
     display: block;
     width: 100%;
     height: auto;
-    transition: opacity 0.2s ease;
 }
 
-.gallery a:hover img {
-    opacity: 0.85;
-}
-
-/* Members Grid */
+/* Members Grid (static) */
 .members {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -94,16 +81,10 @@
 
 .members .member {
     background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 8px;
+    border: 2px solid var(--text);
+    border-radius: var(--radius);
     overflow: hidden;
     margin: 0;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.members .member:hover {
-    border-color: var(--accent);
-    box-shadow: var(--shadow);
 }
 
 .members .member img {
@@ -112,6 +93,7 @@
     height: auto;
     aspect-ratio: 1 / 1;
     object-fit: cover;
+    border-bottom: 2px solid var(--text);
 }
 
 .members .member figcaption {
@@ -124,7 +106,7 @@
 .members .member .member-name {
     display: block;
     color: var(--text);
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 0.125rem;
 }
 
@@ -150,10 +132,25 @@
     }
 
     .members {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+
+    .members .member figcaption {
+        padding: 0.625rem 0.75rem 0.75rem;
+        font-size: 0.8125rem;
     }
 
     .use-case {
         padding: 1rem;
+    }
+
+    .gallery {
+        column-width: 140px;
+        column-gap: 0.75rem;
+    }
+
+    .gallery a {
+        margin-bottom: 0.75rem;
     }
 }

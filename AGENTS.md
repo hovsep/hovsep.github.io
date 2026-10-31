@@ -53,8 +53,14 @@ css/about.css              About page only (bio, talks list)
 - **Breadcrumbs only on posts and project pages**, without a Home link:
   `blog / <slug>` or `projects / <slug>`. The blog index and about page have none.
 - **Light theme only.** Colours come from CSS variables in `css/base.css` (`--bg`,
-  `--bg-secondary`, `--text`, `--text-muted`, `--accent`, `--accent-dim`, `--accent-line`,
-  `--border`, `--code-bg`, `--shadow`). Use variables, never hard-coded hex or rgba.
+  `--bg-secondary`, `--text`, `--text-muted`, `--accent`, `--accent-soft`, `--border`,
+  `--code-bg`, `--dot`) plus `--radius`, `--shadow`, `--shadow-hover`. Use variables, never
+  hard-coded hex or rgba. `--accent` (violet) is a **fill** behind black text (labels, active
+  nav, hover states), never a text colour; `--accent-soft` is the highlighter under text links.
+- **Clickable vs static surfaces.** Anything clickable (cards, icon buttons, talk links,
+  gallery images) has a 2px `--text` border and the hard `--shadow`, and turns `--accent` on
+  hover; the shared rule lives in `components.css`. Static boxes (features, use-cases, lists,
+  figures, code) get a soft 1.5px `--border` and no shadow. Keep that split.
 - **No inline `<style>` blocks, no `style=""` attributes and no JavaScript.**
 - **External links** get `target="_blank" rel="noopener"`. Internal links do not.
 
