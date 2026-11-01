@@ -77,24 +77,13 @@ body.product footer p {
     line-height: 1.6;
 }
 
-.p-section-head a,
-.p-demo figcaption a {
+.p-section-head a {
     color: var(--p-brand-ink);
     font-weight: 600;
 }
 
 .p-section-head a:hover {
     text-decoration: underline;
-}
-
-/* Inline code in card text */
-.p-feature code {
-    font-family: var(--font-mono);
-    font-size: 0.875em;
-    background: var(--p-surface);
-    border: 1px solid var(--p-line);
-    border-radius: 6px;
-    padding: 0.05em 0.35em;
 }
 
 /* Hero */
@@ -106,7 +95,7 @@ body.product footer p {
     margin-bottom: 1rem;
 }
 
-/* Full-bleed grid with a soft brand glow, faded out at the edges */
+/* Full-bleed soft brand glow behind the hero */
 .p-hero::before {
     content: '';
     position: absolute;
@@ -119,13 +108,7 @@ body.product footer p {
     transform: translateX(-50%);
     background-image:
         radial-gradient(ellipse 50% 45% at 50% 35%, rgba(15, 181, 166, 0.14), transparent 70%),
-        radial-gradient(ellipse 35% 35% at 70% 55%, rgba(47, 107, 255, 0.1), transparent 70%),
-        linear-gradient(var(--p-line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--p-line) 1px, transparent 1px);
-    background-size: auto, auto, 44px 44px, 44px 44px;
-    background-position: center, center, center top, center top;
-    -webkit-mask-image: radial-gradient(ellipse 70% 75% at 50% 40%, #000 35%, transparent 100%);
-    mask-image: radial-gradient(ellipse 70% 75% at 50% 40%, #000 35%, transparent 100%);
+        radial-gradient(ellipse 35% 35% at 70% 55%, rgba(47, 107, 255, 0.1), transparent 70%);
 }
 
 .p-logo {
@@ -138,41 +121,6 @@ body.product footer p {
     border: 1px solid var(--p-line);
     border-radius: 18px;
     box-shadow: var(--p-shadow);
-}
-
-.p-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    color: var(--p-text);
-    background: var(--p-bg);
-    border: 1px solid var(--p-line);
-    border-radius: 999px;
-    padding: 0.3rem 0.4rem 0.3rem 0.75rem;
-    margin-bottom: 1.5rem;
-    box-shadow: var(--p-shadow);
-}
-
-.p-pill:hover {
-    border-color: var(--p-brand);
-}
-
-.p-pill-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--p-brand);
-    box-shadow: 0 0 0 4px var(--p-brand-soft);
-}
-
-.p-pill-link {
-    color: var(--p-brand-ink);
-    font-weight: 600;
-    background: var(--p-brand-soft);
-    border-radius: 999px;
-    padding: 0.1rem 0.6rem;
 }
 
 .p-title {
@@ -286,43 +234,6 @@ body.product footer p {
 .p-prompt {
     color: var(--p-brand);
     user-select: none;
-}
-
-/* Key facts strip */
-.p-stats {
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    margin: 0 0 6rem;
-    border: 1px solid var(--p-line);
-    border-radius: var(--p-radius);
-    background: var(--p-bg);
-    box-shadow: var(--p-shadow);
-    overflow: hidden;
-}
-
-.p-stats li {
-    padding: 1.25rem 1.375rem;
-    border-left: 1px solid var(--p-line);
-}
-
-.p-stats li:first-child {
-    border-left: none;
-}
-
-.p-stats strong {
-    display: block;
-    font-size: 1.0625rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-}
-
-.p-stats span {
-    display: block;
-    margin-top: 0.125rem;
-    font-size: 0.875rem;
-    color: var(--p-muted);
-    line-height: 1.45;
 }
 
 /* Quick start: code window + live graph */
@@ -507,7 +418,7 @@ body.product footer p {
 /* Features */
 .p-features {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
 }
 
@@ -553,259 +464,6 @@ body.product footer p {
     font-size: 0.9375rem;
     color: var(--p-muted);
     line-height: 1.55;
-}
-
-/* Core concepts: a connected row */
-.p-concepts {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    border: 1px solid var(--p-line);
-    border-radius: var(--p-radius);
-    background: var(--p-bg);
-    box-shadow: var(--p-shadow);
-    overflow: hidden;
-}
-
-.p-concept {
-    display: block;
-    padding: 1.375rem 1.25rem;
-    border-left: 1px solid var(--p-line);
-    color: var(--p-text);
-}
-
-.p-concept:first-child {
-    border-left: none;
-}
-
-.p-concept:hover {
-    background: var(--p-surface);
-}
-
-.p-concept-name {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-family: var(--font-mono);
-    font-size: 0.9375rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-}
-
-.p-concept-name::after {
-    content: '↗';
-    color: var(--p-muted);
-    font-size: 0.875rem;
-    transition: transform 0.15s ease, color 0.15s ease;
-}
-
-.p-concept:hover .p-concept-name::after {
-    color: var(--p-brand-ink);
-    transform: translate(2px, -2px);
-}
-
-.p-concept-desc {
-    display: block;
-    font-size: 0.875rem;
-    color: var(--p-muted);
-    line-height: 1.5;
-}
-
-/* Demo GIF */
-.p-demo {
-    margin: 0;
-    background: var(--p-bg);
-    border: 1px solid var(--p-line);
-    border-radius: var(--p-radius);
-    box-shadow: var(--p-shadow-lift);
-    overflow: hidden;
-}
-
-.p-demo-scroll {
-    overflow-x: auto;
-    padding: 1.5rem;
-}
-
-.p-demo-scroll img {
-    display: block;
-    width: 100%;
-    height: auto;
-}
-
-.p-demo figcaption {
-    padding: 0.875rem 1.25rem;
-    border-top: 1px solid var(--p-line);
-    background: var(--p-surface);
-    font-size: 0.875rem;
-    color: var(--p-muted);
-    text-align: center;
-}
-
-/* Use cases */
-.p-cases {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-}
-
-.p-case {
-    position: relative;
-    padding: 1.375rem 1.5rem 1.375rem 1.75rem;
-    background: var(--p-surface);
-    border-radius: var(--p-radius);
-}
-
-.p-case::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 1.5rem;
-    width: 3px;
-    height: 1.25rem;
-    border-radius: 0 3px 3px 0;
-    background: var(--p-grad);
-}
-
-.p-case h3 {
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    margin-bottom: 0.25rem;
-}
-
-.p-case p {
-    font-size: 0.9375rem;
-    color: var(--p-muted);
-    line-height: 1.5;
-}
-
-/* Ecosystem */
-.p-eco {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-}
-
-.p-eco-card {
-    display: flex;
-    flex-direction: column;
-    padding: 1.5rem;
-    background: var(--p-bg);
-    border: 1px solid var(--p-line);
-    border-radius: var(--p-radius);
-    color: var(--p-text);
-    transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
-}
-
-.p-eco-card:hover {
-    border-color: var(--p-brand);
-    box-shadow: var(--p-shadow-lift);
-    transform: translateY(-2px);
-}
-
-.p-eco-name {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-mono);
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-}
-
-.p-tag {
-    font-family: var(--font-sans);
-    font-style: normal;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--p-brand-ink);
-    background: var(--p-brand-soft);
-    border-radius: 999px;
-    padding: 0.1rem 0.5rem;
-}
-
-.p-eco-card p {
-    flex: 1;
-    font-size: 0.9375rem;
-    color: var(--p-muted);
-    line-height: 1.55;
-    margin-bottom: 1rem;
-}
-
-.p-eco-link {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--p-brand-ink);
-}
-
-/* Fit / trade-offs */
-.p-fit {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-}
-
-.p-fit-col {
-    padding: 1.75rem;
-    border: 1px solid var(--p-line);
-    border-radius: var(--p-radius);
-    background: var(--p-bg);
-}
-
-.p-fit-col h3 {
-    font-size: 1.0625rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-}
-
-.p-fit-col ul {
-    list-style: none;
-}
-
-.p-fit-col li {
-    position: relative;
-    padding-left: 1.75rem;
-    margin-bottom: 0.75rem;
-    font-size: 0.9375rem;
-    line-height: 1.5;
-}
-
-.p-fit-col li:last-child {
-    margin-bottom: 0;
-}
-
-.p-fit-col li::before {
-    position: absolute;
-    left: 0;
-    top: 0.05rem;
-    width: 1.125rem;
-    height: 1.125rem;
-    border-radius: 50%;
-    font-size: 0.6875rem;
-    font-weight: 700;
-    line-height: 1.125rem;
-    text-align: center;
-}
-
-.p-fit-yes li::before {
-    content: '✓';
-    color: var(--p-brand-ink);
-    background: var(--p-brand-soft);
-}
-
-.p-fit-no {
-    background: var(--p-surface);
-}
-
-.p-fit-no li {
-    color: var(--p-muted);
-}
-
-.p-fit-no li::before {
-    content: '–';
-    color: var(--p-muted);
-    background: var(--p-line);
 }
 
 /* Closing call to action */
@@ -897,59 +555,11 @@ body.product footer p {
         margin-bottom: 4.5rem;
     }
 
-    .p-stats {
-        grid-template-columns: 1fr 1fr;
-        margin-bottom: 4.5rem;
-    }
-
-    .p-stats li:nth-child(3) {
-        border-left: none;
-    }
-
-    .p-stats li:nth-child(n + 3) {
-        border-top: 1px solid var(--p-line);
-    }
-
     .p-showcase {
         grid-template-columns: 1fr;
     }
 
     .p-features {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .p-concepts {
-        grid-template-columns: 1fr;
-    }
-
-    .p-concept {
-        border-left: none;
-        border-top: 1px solid var(--p-line);
-    }
-
-    .p-concept:first-child {
-        border-top: none;
-    }
-
-    /* The demo is wide: let it scroll sideways instead of shrinking to nothing */
-    .p-demo-scroll {
-        padding: 1rem;
-    }
-
-    .p-demo-scroll img {
-        width: 760px;
-        max-width: none;
-    }
-
-    .p-cases {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .p-eco {
-        grid-template-columns: 1fr;
-    }
-
-    .p-fit {
         grid-template-columns: 1fr;
     }
 
@@ -970,10 +580,6 @@ body.product footer p {
         border-radius: 15px;
     }
 
-    .p-pill {
-        font-size: 0.75rem;
-    }
-
     .p-actions {
         flex-direction: column;
         align-items: stretch;
@@ -992,33 +598,12 @@ body.product footer p {
         font-size: 1rem;
     }
 
-    .p-stats li {
-        padding: 1rem;
-    }
-
-    .p-stats strong {
-        font-size: 1rem;
-    }
-
-    .p-stats span {
-        font-size: 0.8125rem;
-    }
-
     .p-code {
         font-size: 0.75rem;
         padding: 1rem;
     }
 
-    .p-features,
-    .p-cases {
-        grid-template-columns: 1fr;
-    }
-
     .p-feature {
-        padding: 1.25rem;
-    }
-
-    .p-fit-col {
         padding: 1.25rem;
     }
 
