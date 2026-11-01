@@ -6,7 +6,8 @@ Guidance for AI coding agents working in this repository.
 
 Personal website and blog of Ovsep Avakian, served by GitHub Pages from the `master` branch at
 https://hovsep.github.io. It is **plain static HTML + CSS**. There is no build step, no bundler,
-no templating engine, no JavaScript of our own, no package manager, no tests.
+no templating engine, no package manager, no tests, and no JavaScript of our own except the
+one script of the guitar-for-kids deck (see below).
 
 Every page is a hand-written `index.html`. "Deploying" means committing and pushing to `master`.
 
@@ -29,6 +30,9 @@ css/blog.css               Blog index + single post (.content typography, figure
 css/project.css            Project pages only (.content, video embeds, use-cases, gallery, members)
 css/about.css              About page only (bio, talks list)
 css/product.css            FMesh product page only (body.product, p-* components, own tokens)
+css/guitar.css             Guitar-for-kids deck only (body.kids, slides, guitar drawings, --g-* tokens)
+projects/guitar-for-kids/deck.js  The site's only script: slide paging + guitar sounds
+assets/guitar_sounds/      Guitar recordings for the deck (.mp4 originals, .m4a audio that is played)
 ```
 
 `.idea/` is IDE noise and is gitignored. Do not add it to commits.
@@ -62,7 +66,8 @@ css/product.css            FMesh product page only (body.product, p-* components
   gallery images) has a 2px `--text` border and the hard `--shadow`, and turns `--accent` on
   hover; the shared rule lives in `components.css`. Static boxes (features, use-cases, lists,
   figures, code) get a soft 1.5px `--border` and no shadow. Keep that split.
-- **No inline `<style>` blocks, no `style=""` attributes and no JavaScript.**
+- **No inline `<style>` blocks, no `style=""` attributes and no JavaScript** (the guitar deck's
+  `deck.js` is the single exception; do not add scripts to other pages).
 - **External links** get `target="_blank" rel="noopener"`. Internal links do not.
 
 ## Adding a blog post
@@ -125,6 +130,25 @@ background, teal-to-blue brand gradient, soft shadows, dark code window.
   claims the README does not make. Avoid hard-coding version numbers.
 - The code sample is hand-highlighted with spans: `.c` comment, `.s` string, `.k` keyword,
   `.f` function, `.t` type. Keep lines under ~90 characters so they fit the desktop window.
+
+## The guitar-for-kids deck
+
+`projects/guitar-for-kids/` is a small slide deck in Bulgarian for a kindergarten lesson. On the
+home page its card is `.project-card.special` (wood colours, sound hole and strings, a
+"special edition" badge; styles in `home.css`).
+
+- `<body class="kids">`, styles in `css/guitar.css` with `--g-*` tokens for the drawings. The
+  site header, breadcrumb and footer are as on any project page.
+- Slides are `<article class="slide">` inside `.deck .slides`. `deck.js` adds `.is-ready` to the
+  deck and shows one slide at a time (arrows, dots, ← → / PageUp / PageDown, swipe, `#2` in the
+  URL, full screen). Without JS every slide is shown in a column.
+- Slide sizes use container units (`cqi`) of `.deck-stage`, so the deck scales up in full
+  screen. A slide must fit the 4:3 stage at desktop width or the full-screen view gets cut.
+- Guitars are inline SVG drawn with classes (`.g-*` acoustic, `.e-*` electric/bass). The
+  acoustic guitar is defined once as `#acoustic` on slide 1 and reused with `<use>`.
+- `.play-btn[data-sound="x"]` plays `assets/guitar_sounds/x.m4a` (`acoustic`, `bass`,
+  `electric`). The m4a files are the audio of the `.mp4` videos there, levelled with
+  `ffmpeg -i x.mp4 -vn -af loudnorm=I=-16:TP=-1.5:LRA=11 -c:a aac -b:a 160k x.m4a`.
 
 ## Editing CSS
 

@@ -1,0 +1,534 @@
+/* Guitar for kids (projects/guitar-for-kids): a small slide deck.
+   Own --g-* tokens for the guitar drawings; chrome uses the site tokens. */
+
+body.kids {
+    --g-paper: #fff8e6;
+    --g-wood-light: #ffdc94;
+    --g-wood: #f2aa4a;
+    --g-wood-dark: #b4621f;
+    --g-neck: #8a4a1c;
+    --g-board: #3b2417;
+    --g-maple: #f7d79a;
+    --g-fret: #e8e3d8;
+    --g-string: #d4cdbd;
+    --g-metal: #d5d9df;
+    --g-bone: #fffdf5;
+    --g-old: #c98a4b;
+    --g-red: #ff5d50;
+    --g-blue: #5584ff;
+}
+
+body.kids main {
+    max-width: 960px;
+}
+
+/* ---- Stage ---- */
+
+.deck {
+    margin-bottom: 1rem;
+}
+
+.deck-stage {
+    position: relative;
+    container: stage / inline-size;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--g-paper);
+    background-image: radial-gradient(var(--dot) 1px, transparent 1.2px);
+    background-size: 22px 22px;
+    border: 2px solid var(--text);
+    border-radius: calc(var(--radius) + 6px);
+    box-shadow: var(--shadow);
+}
+
+/* Without JS: all slides in a column, no controls */
+.slide + .slide {
+    border-top: 2px dashed var(--border);
+}
+
+.deck-bar {
+    display: none;
+}
+
+/* With JS: one slide at a time, at least 4:3 */
+.deck.is-ready .deck-stage {
+    aspect-ratio: 4 / 3;
+}
+
+.deck.is-ready .slides {
+    flex: 1;
+    display: grid;
+}
+
+.deck.is-ready .slide {
+    grid-area: 1 / 1;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(2%);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+    border: 0;
+}
+
+.deck.is-ready .slide.is-active {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+}
+
+.deck.is-ready .deck-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0 max(0.875rem, 3cqi) max(0.875rem, 2.5cqi);
+}
+
+/* Full screen: the stage keeps 4:3 and grows to fit the screen */
+.deck:fullscreen {
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--g-paper);
+}
+
+.deck:fullscreen .deck-stage {
+    width: min(100vw, 133.33vh);
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* ---- Slide content ---- */
+
+.slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: max(0.75rem, 2.2cqi);
+    padding: max(1.25rem, 4cqi) max(1rem, 4.5cqi) max(0.75rem, 1.5cqi);
+    text-align: center;
+    touch-action: pan-y;
+}
+
+.slide h2 {
+    font-size: max(1.5rem, 5cqi);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.08;
+    max-width: 26ch;
+    text-wrap: balance;
+}
+
+.slide-lead {
+    font-size: max(1rem, 2.6cqi);
+    line-height: 1.4;
+    color: var(--text-muted);
+    max-width: 40ch;
+    text-wrap: balance;
+}
+
+/* ---- Guitar drawings (shared by all slides) ---- */
+
+.stop-light { stop-color: var(--g-wood-light); }
+.stop-wood { stop-color: var(--g-wood); }
+.stop-dark { stop-color: var(--g-wood-dark); }
+
+.g-body { fill: url(#g-sunburst); stroke: var(--text); stroke-width: 4; }
+.g-neck, .g-head, .e-head { fill: var(--g-neck); stroke: var(--text); stroke-width: 3; stroke-linejoin: round; }
+.g-board, .e-board { fill: var(--g-board); }
+.e-maple { fill: var(--g-maple); stroke: var(--text); stroke-width: 2; }
+.g-fret line, .e-fret line { stroke: var(--g-fret); stroke-width: 2.5; }
+.e-fret line { stroke-width: 1.6; }
+.e-fret.dark line { stroke: var(--g-neck); }
+.g-inlay { fill: var(--g-bone); }
+.g-nut { fill: var(--g-bone); stroke: var(--text); stroke-width: 2; }
+.g-peg { fill: var(--g-metal); stroke: var(--text); stroke-width: 2.5; }
+.g-peg line { stroke-width: 4; }
+.g-hole { fill: var(--text); }
+.g-rosette { fill: var(--g-wood-dark); stroke: var(--text); stroke-width: 2.5; }
+.g-rosette-outer { fill: none; stroke: var(--g-wood-dark); stroke-width: 4; }
+.g-bridge { fill: var(--g-board); stroke: var(--text); stroke-width: 2.5; }
+.g-saddle { stroke: var(--g-bone); stroke-width: 4; stroke-linecap: round; }
+.g-string { fill: none; stroke: var(--g-string); stroke-linecap: round; stroke-linejoin: round; }
+.g-pin { fill: var(--g-bone); stroke: var(--text); stroke-width: 1.5; }
+
+.e-body { stroke: var(--text); stroke-width: 4; stroke-linejoin: round; }
+.fill-red { fill: var(--g-red); }
+.fill-blue { fill: var(--g-blue); }
+.e-guard { fill: var(--g-bone); stroke: var(--text); stroke-width: 2; }
+.e-pickup { fill: var(--text); }
+.e-metal { fill: var(--g-metal); stroke: var(--text); stroke-width: 2; }
+
+/* ---- Slide 1: parts ---- */
+
+.parts-art {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.part {
+    cursor: default;
+    outline: none;
+}
+
+.part line {
+    stroke: var(--text);
+    stroke-width: 2.5;
+}
+
+.part circle {
+    fill: var(--accent);
+    stroke: var(--text);
+    stroke-width: 2.5;
+}
+
+.part rect {
+    fill: var(--bg-secondary);
+    stroke: var(--text);
+    stroke-width: 2.5;
+    transition: fill 0.15s ease;
+}
+
+.part text {
+    font-family: var(--font-sans);
+    font-size: 26px;
+    font-weight: 700;
+    text-anchor: middle;
+    fill: var(--text);
+}
+
+.part:hover rect,
+.part:focus-visible rect {
+    fill: var(--accent);
+}
+
+/* ---- Slide 2: timeline ---- */
+
+.timeline {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: max(0.75rem, 2.5cqi);
+    width: 100%;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: max(0.375rem, 1cqi);
+    padding: max(0.875rem, 2.4cqi) max(0.75rem, 2cqi);
+    background: var(--bg-secondary);
+    border: 2px solid var(--text);
+    border-radius: var(--radius);
+}
+
+.step svg {
+    width: 100%;
+    max-width: max(7rem, 18cqi);
+    height: auto;
+}
+
+.step-when {
+    font-family: var(--font-mono);
+    font-size: max(0.75rem, 1.8cqi);
+    font-weight: 600;
+    background: var(--accent);
+    border: 2px solid var(--text);
+    border-radius: 999px;
+    padding: 0.1em 0.7em;
+}
+
+.step h3 {
+    font-size: max(1.0625rem, 2.7cqi);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.step p {
+    font-size: max(0.875rem, 2cqi);
+    line-height: 1.4;
+    color: var(--text-muted);
+}
+
+.t-old { fill: var(--g-old); stroke: var(--text); stroke-width: 3; }
+.t-neck { fill: var(--g-neck); stroke: var(--text); stroke-width: 2.5; }
+.t-pan { fill: var(--g-metal); stroke: var(--text); stroke-width: 3; }
+.t-pickup { fill: var(--text); }
+.t-string { stroke: var(--g-bone); stroke-width: 1.5; }
+
+/* ---- Slide 3: kinds of guitars ---- */
+
+.guitar-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: max(0.75rem, 2.5cqi);
+    width: 100%;
+}
+
+.guitar-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: max(0.375rem, 0.9cqi);
+    padding: max(0.875rem, 2cqi) max(0.75rem, 1.6cqi) max(1rem, 2.2cqi);
+    background: var(--bg-secondary);
+    border: 2px solid var(--text);
+    border-radius: var(--radius);
+}
+
+.guitar-card.bass { --c: var(--g-blue); }
+.guitar-card.acoustic { --c: var(--g-wood); }
+.guitar-card.electric { --c: var(--g-red); }
+
+.guitar-art {
+    position: relative;
+    height: max(9rem, 25cqi);
+    aspect-ratio: 200 / 520;
+}
+
+.guitar-art svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.guitar-card h3 {
+    font-size: max(1.0625rem, 2.6cqi);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+}
+
+.guitar-card p {
+    font-size: max(0.875rem, 1.9cqi);
+    line-height: 1.35;
+    color: var(--text-muted);
+}
+
+/* Big round "play" pill in the guitar's colour */
+.play-btn {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-family: var(--font-sans);
+    font-size: max(1rem, 2.5cqi);
+    font-weight: 800;
+    color: var(--text);
+    background: var(--c);
+    border: 2px solid var(--text);
+    border-radius: 999px;
+    box-shadow: var(--shadow);
+    padding: 0.45em 1.15em;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.play-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.play-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 var(--text);
+}
+
+.play-btn[aria-pressed="true"] {
+    background: var(--bg-secondary);
+}
+
+.play-icon {
+    font-size: 0.8em;
+}
+
+/* While a guitar plays it rocks a little and notes float up */
+.guitar-card.is-playing .guitar-art svg {
+    animation: rock 0.5s ease-in-out infinite alternate;
+    transform-origin: 50% 80%;
+}
+
+.guitar-art::before,
+.guitar-art::after {
+    position: absolute;
+    top: 20%;
+    font-size: max(1.25rem, 3.5cqi);
+    font-weight: 800;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.guitar-art::before { content: '♪'; left: -30%; }
+.guitar-art::after { content: '♫'; right: -35%; }
+
+.guitar-card.is-playing .guitar-art::before { animation: note 1.4s ease-out infinite; }
+.guitar-card.is-playing .guitar-art::after { animation: note 1.4s ease-out 0.7s infinite; }
+
+@keyframes rock {
+    from { transform: rotate(-4deg); }
+    to { transform: rotate(4deg); }
+}
+
+@keyframes note {
+    0% { opacity: 0; transform: translateY(40%); }
+    20% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-160%); }
+}
+
+/* ---- Controls ---- */
+
+.deck-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: max(2.75rem, 6.5cqi);
+    height: max(2.75rem, 6.5cqi);
+    padding: 0;
+    color: var(--text);
+    background: var(--bg-secondary);
+    border: 2px solid var(--text);
+    border-radius: 50%;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.deck-btn svg {
+    width: 45%;
+    height: 45%;
+}
+
+.deck-btn:hover:not(:disabled) {
+    background: var(--accent);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.deck-btn:active:not(:disabled) {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 var(--text);
+}
+
+.deck-btn:disabled {
+    opacity: 0.3;
+    box-shadow: none;
+    cursor: default;
+}
+
+.deck-full {
+    position: absolute;
+    top: max(0.75rem, 2cqi);
+    right: max(0.75rem, 2cqi);
+    z-index: 1;
+    width: max(2.25rem, 5cqi);
+    height: max(2.25rem, 5cqi);
+    border-radius: 10px;
+}
+
+.deck-full[hidden] {
+    display: none;
+}
+
+.deck-dots {
+    display: flex;
+    gap: max(0.5rem, 1.2cqi);
+}
+
+.deck-dot {
+    width: max(0.875rem, 1.8cqi);
+    height: max(0.875rem, 1.8cqi);
+    padding: 0;
+    background: var(--bg-secondary);
+    border: 2px solid var(--text);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: width 0.2s ease, background-color 0.15s ease;
+}
+
+.deck-dot[aria-current="step"] {
+    width: max(2rem, 4.5cqi);
+    background: var(--accent);
+}
+
+.deck-hint {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+/* ---- Narrow stage (phones): stack the cards ---- */
+
+@container stage (max-width: 560px) {
+    .timeline,
+    .guitar-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .step {
+        display: grid;
+        grid-template-columns: 6rem 1fr;
+        column-gap: 0.875rem;
+        row-gap: 0.25rem;
+        align-items: center;
+        text-align: left;
+    }
+
+    .step svg {
+        grid-row: span 3;
+    }
+
+    .step-when {
+        justify-self: start;
+    }
+
+    .guitar-card {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        column-gap: 1rem;
+        row-gap: 0.25rem;
+        align-items: center;
+        text-align: left;
+    }
+
+    .guitar-art {
+        grid-row: span 3;
+        height: 8.5rem;
+    }
+
+    .play-btn {
+        justify-self: start;
+        margin-top: 0.25rem;
+    }
+
+    .slide {
+        padding-top: 3.75rem;
+    }
+
+    .slide h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Responsive - Tablet */
+@media (max-width: 768px) {
+    .deck-hint {
+        margin-bottom: 2rem;
+    }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 480px) {
+    .deck-hint {
+        display: none;
+    }
+}

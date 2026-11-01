@@ -21,6 +21,98 @@
     height: 20px;
 }
 
+/* Special edition project card: a guitar top with a sound hole and six strings.
+   Its wood colours are local to the card. */
+.project-card.special {
+    --wood-light: #fff3d4;
+    --wood: #ffd27a;
+    --wood-dark: #f0a043;
+    --rosette: #a8561b;
+    --string: #6f6252;
+    --hole: 1.9rem;
+    --deco: 11rem;
+
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-right: calc(var(--deco) + 0.5rem);
+    background-image: linear-gradient(100deg, var(--wood-light) 35%, var(--wood) 75%, var(--wood-dark));
+}
+
+.project-card.special::before,
+.project-card.special::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: var(--deco);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Sound hole with a rosette */
+.project-card.special::before {
+    background: radial-gradient(circle at 58% 50%,
+        var(--text) 0 var(--hole),
+        var(--wood) 0 calc(var(--hole) * 1.12),
+        var(--rosette) 0 calc(var(--hole) * 1.28),
+        var(--wood) 0 calc(var(--hole) * 1.36),
+        var(--rosette) 0 calc(var(--hole) * 1.44),
+        transparent 0);
+}
+
+/* Six strings across it, fading in from the left */
+.project-card.special::after {
+    background: repeating-linear-gradient(to bottom, transparent 0 7px, var(--string) 7px 8.5px) center / 100% 51px no-repeat;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 30%);
+    mask-image: linear-gradient(to right, transparent, black 30%);
+}
+
+.project-card.special .project-header {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+}
+
+.project-card.special .project-desc {
+    color: var(--text);
+}
+
+.special-badge {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.6;
+    color: var(--wood-light);
+    background: var(--text);
+    border-radius: 999px;
+    padding: 0.1rem 0.6rem;
+    transform: rotate(-3deg);
+    white-space: nowrap;
+}
+
+/* Hover: keep the wood, give the badge the accent and strum the strings */
+.project-card.special:hover {
+    background-color: var(--wood-light);
+}
+
+.project-card.special:hover .special-badge {
+    color: var(--text);
+    background: var(--accent);
+}
+
+.project-card.special:hover::after {
+    animation: strum 0.08s linear 8;
+}
+
+@keyframes strum {
+    25% { transform: translateY(-0.75px); }
+    75% { transform: translateY(0.75px); }
+}
+
 /* Responsive - Tablet */
 @media (max-width: 768px) {
     .social {
@@ -33,5 +125,10 @@
     .social {
         gap: 0.75rem;
         margin-bottom: 2.5rem;
+    }
+
+    .project-card.special {
+        --hole: 1.35rem;
+        --deco: 6rem;
     }
 }
