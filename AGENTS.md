@@ -7,35 +7,9 @@ Guidance for AI coding agents working in this repository.
 Personal website and blog of Ovsep Avakian, served by GitHub Pages from the `master` branch at
 https://hovsep.github.io. It is **plain static HTML + CSS**. There is no build step, no bundler,
 no templating engine, no package manager, no tests, and no JavaScript of our own except the
-one script of the guitar-for-kids deck (see below).
+one script of the guitar-for-kids deck (`projects/guitar-for-kids/deck.js`).
 
 Every page is a hand-written `index.html`. "Deploying" means committing and pushing to `master`.
-
-## Layout
-
-```
-index.html                 Home page (social icon row, Projects list)
-about/index.html           About page (bio, Talks list)
-blog/index.html            Blog index (list of posts, newest first)
-blog/<slug>/index.html     One blog post
-blog/<slug>/image/         Images for that post
-blog/<slug>/video/         Videos for that post (.mp4 / .mov)
-projects/<slug>/index.html One project page
-projects/<slug>/image/     Images for that project
-assets/talks/              Slide PDFs linked from the About page (kebab-case file names)
-css/base.css               CSS variables (colours, fonts), reset, body, main/footer, section titles
-css/components.css         Shared: site-header + nav, breadcrumb, page-header, link-card, btn, badge, feature, project-card
-css/home.css               Home page only (social icon row)
-css/blog.css               Blog index + single post (.content typography, figures, gists, post-nav)
-css/project.css            Project pages only (.content, video embeds, use-cases, gallery, members)
-css/about.css              About page only (bio, talks list)
-css/product.css            FMesh product page only (body.product, p-* components, own tokens)
-css/guitar.css             Guitar-for-kids deck only (body.kids, slides, guitar drawings, --g-* tokens)
-projects/guitar-for-kids/deck.js  The site's only script: slide paging + guitar sounds
-assets/guitar_sounds/      Guitar recordings for the deck (.mp4 originals, .m4a audio that is played)
-```
-
-`.idea/` is IDE noise and is gitignored. Do not add it to commits.
 
 ## Conventions that are easy to get wrong
 
@@ -70,85 +44,19 @@ assets/guitar_sounds/      Guitar recordings for the deck (.mp4 originals, .m4a 
   `deck.js` is the single exception; do not add scripts to other pages).
 - **External links** get `target="_blank" rel="noopener"`. Internal links do not.
 
-## Adding a blog post
+## Writing
 
-1. Pick a kebab-case slug. Create `blog/<slug>/index.html` by copying the most recent post
-   (check `git log` or the top of `blog/index.html`) and replacing title, date, breadcrumb
-   `.current` text, and content.
-2. `<title>` is `Post Title | Ovsep Avakian`.
-3. Put media in `blog/<slug>/image/` and `blog/<slug>/video/`. Reference them as `image/foo.png`.
-4. Add a card at the **top** of `.posts` in `blog/index.html` with date, title, and a 1–2
-   sentence excerpt.
-5. Content markup available inside `<div class="content">` (styled in `css/blog.css`):
-   - `<p>`, `<h2>` (section headings; `h1` is reserved for the post title), `<ul>`, `<ol>`,
-     `<blockquote>`, `<strong>`, `<em>`, inline `<code>`.
-   - Image with caption:
-     ```html
-     <figure>
-         <a href="image/x.png" target="_blank" rel="noopener"><img src="image/x.png" alt="..."></a>
-         <figcaption>Caption</figcaption>
-     </figure>
-     ```
-   - Diagram on a padded white card (for SVGs / transparent PNGs): `<figure class="diagram">...</figure>`.
-   - Video: `<video width="100%" muted autoplay loop src="video/x.mp4"></video>` (add `controls`
-     for longer clips).
-   - Code samples are **GitHub Gists**, not `<pre>` blocks:
-     ```html
-     <div class="gist-wrapper">
-         <script src="https://gist.github.com/hovsep/<id>.js"></script>
-     </div>
-     ```
-6. Keep the author's voice: first person, casual, short paragraphs, occasional humour. Do not
-   rewrite prose unless asked; when asked to "polish", fix grammar and clarity, not tone.
+Keep the author's voice: first person, casual, short paragraphs, occasional humour. Do not
+rewrite prose unless asked; when asked to "polish", fix grammar and clarity, not tone.
 
-## Adding a project page
+## Page-specific notes
 
-1. Create `projects/<slug>/index.html` by copying `projects/php-elephant/index.html` (photo
-   gallery) or `projects/the-horrvas/index.html` (people grid). `projects/fmesh/` is a product
-   landing page, not a template for ordinary projects (see below).
-2. Breadcrumb is `<a href="../../#projects">projects</a> / <span class="current"><slug></span>`;
-   the nav's `projects` link gets `class="active"`.
-3. Add a `.project-card` to the Projects section of the root `index.html`.
-4. Sections use `<h2 class="section-title">` and the components in `css/components.css`
-   (`.links-grid` + `.link-card`, `.features` + `.feature`, `.badges`, `.btn`) and
-   `css/project.css` (`.use-cases`, `.gallery`, `.members`, `.tracks` for SoundCloud players). YouTube `<iframe>`s inside
-   `.content` scale to the column width automatically.
-
-## The FMesh product page
-
-`projects/fmesh/index.html` is deliberately **not** in the personal-site style. It is a landing
-page that sends visitors to the FMesh repo, so it looks like a tech product site: white
-background, teal-to-blue brand gradient, soft shadows, dark code window.
-
-- `<body class="product">`, styles in `css/product.css`. All its classes start with `p-`
-  (`.p-hero`, `.p-section`, `.p-btn`, ...). Its colours are `--p-*` tokens defined on
-  `body.product` in that file; do not use them elsewhere, and do not use the personal-site
-  hard-shadow components on this page.
-- The site header and footer stay as on every other page. There is no breadcrumb.
-- Facts on the page (features, limits, ecosystem, examples count) come from the FMesh README
-  and repos. Re-check them against `github.com/hovsep/fmesh` before changing copy; do not add
-  claims the README does not make. Avoid hard-coding version numbers.
-- The code sample is hand-highlighted with spans: `.c` comment, `.s` string, `.k` keyword,
-  `.f` function, `.t` type. Keep lines under ~90 characters so they fit the desktop window.
-
-## The guitar-for-kids deck
-
-`projects/guitar-for-kids/` is a small slide deck in Bulgarian for a kindergarten lesson. On the
-home page its card is `.project-card.special` (wood colours, sound hole and strings, a
-"special edition" badge; styles in `home.css`).
-
-- `<body class="kids">`, styles in `css/guitar.css` with `--g-*` tokens for the drawings. The
-  site header, breadcrumb and footer are as on any project page.
-- Slides are `<article class="slide">` inside `.deck .slides`. `deck.js` adds `.is-ready` to the
-  deck and shows one slide at a time (arrows, dots, ← → / PageUp / PageDown, swipe, `#2` in the
-  URL, full screen). Without JS every slide is shown in a column.
-- Slide sizes use container units (`cqi`) of `.deck-stage`, so the deck scales up in full
-  screen. A slide must fit the 4:3 stage at desktop width or the full-screen view gets cut.
-- Guitars are inline SVG drawn with classes (`.g-*` acoustic, `.e-*` electric/bass). The
-  acoustic guitar is defined once as `#acoustic` on slide 1 and reused with `<use>`.
-- `.play-btn[data-sound="x"]` plays `assets/guitar_sounds/x.m4a` (`acoustic`, `bass`,
-  `electric`). The m4a files are the audio of the `.mp4` videos there, levelled with
-  `ffmpeg -i x.mp4 -vn -af loudnorm=I=-16:TP=-1.5:LRA=11 -c:a aac -b:a 160k x.m4a`.
+- Adding a blog post or a project page: skills `add-blog-post` and `add-project-page`
+  (`.claude/skills/`).
+- The FMesh product page (`projects/fmesh/`, `css/product.css`) and the guitar-for-kids deck
+  (`projects/guitar-for-kids/`, `css/guitar.css`, `assets/guitar_sounds/`) have their own
+  rules in `projects/fmesh/CLAUDE.md` and `projects/guitar-for-kids/CLAUDE.md`. Read the
+  matching file before touching either page or its CSS.
 
 ## Editing CSS
 
